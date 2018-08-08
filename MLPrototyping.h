@@ -1,14 +1,14 @@
 #pragma once
 
-#ifdef MLPROTOTYPING_EXPORTS
-#define MLPROTOTYPING_EXPORTS __declspec(dllexport)
+#ifdef MLPrototyping_Exports
+#define MLPrototyping_Exports __declspec(dllexport)
 #else
-#define MLPROTOTYPING_EXPORTS __declspec(dllimport)
+#define MLPrototyping_Exports __declspec(dllimport)
 #endif
 
 namespace MLPrototyping
 {
-	class MLPROTOTYPING_EXPORTS CMLPrototyping final
+	class MLPrototyping_Exports CMLPrototyping final
 	{
 	public:
 		~CMLPrototyping();
