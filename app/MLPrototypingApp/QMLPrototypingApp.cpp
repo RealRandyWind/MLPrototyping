@@ -17,7 +17,7 @@
 using namespace MLPrototypingApp;
 
 QMLPrototypingApp::QMLPrototypingApp() :
-	//API(CMLPrototyping::GetInstance()),
+	API(CMLPrototyping::GetInstance()),
 	Canvas(new QLabel(this))
 {
 	CreateMain();

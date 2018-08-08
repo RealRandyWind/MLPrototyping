@@ -12,10 +12,18 @@ namespace MLPrototyping
 	{
 	public:
 		~CMLPrototyping();
+
 		static CMLPrototyping* GetInstance();
+
 
 	private:
 		CMLPrototyping();
+
 		static CMLPrototyping* Instance;
+
+
 	};
+
+
+
 }

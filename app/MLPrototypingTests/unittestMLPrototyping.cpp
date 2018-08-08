@@ -8,11 +8,14 @@ namespace MLPrototypingTest
 	TEST_CLASS(UnitTestMLPrototyping)
 	{
 	public:
-		
 		TEST_METHOD(TestMethod1)
 		{
 			// TODO: Your test code here
 		}
 
+
 	};
+
+
+
 }
