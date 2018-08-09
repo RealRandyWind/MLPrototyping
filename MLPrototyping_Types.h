@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <stdlib.h>
 #include <inttypes.h>
 #include <chrono>
@@ -8,6 +7,8 @@
 namespace MLPrototyping
 {
 	using bool_t = bool;
+
+	using char_t = char;
 
 	using string_t = char *;
 
@@ -19,7 +20,11 @@ namespace MLPrototyping
 
 	using raw_t = uint8_t;
 
-	using int_t = int;
+	using block_t = uint64_t;
+
+	using byte_t = unsigned char;
+
+	using integer_t = int;
 
 	using enum_t = size_t;
 
@@ -29,12 +34,14 @@ namespace MLPrototyping
 	
 	using duration_t = clock_t::duration;
 
-
+	using return_t = decltype(EXIT_SUCCESS);
 
 	const size_t bytesize = 8;
 	const decltype("") nullstr = "";
 	const decltype('\0') nullchr = '\0';
 	const decltype(nullptr) null = nullptr;
+	const decltype(0) none = 0;
+	const decltype(0) unknown = 0;
 	const decltype(EXIT_SUCCESS) success = EXIT_SUCCESS;
 	const decltype(EXIT_FAILURE) failure = EXIT_FAILURE;
 

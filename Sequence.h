@@ -6,34 +6,61 @@
 namespace MLPrototyping
 {
 	template<typename TypeData>
-	struct TData;
+	struct TSequence;
 
 	template<typename TypeData>
-	struct TData
+	struct TSequence
 	{
-		size_t _Size, _BufferSize;
+		size_t _Size, _BufferSize, _ActiveIndex, _LastIndex;
 		bool_t _bIterateAll, _bClearData;
 		TypeData *_Data;
 
-		TData()
+		TSequence()
 		{
 			_Size = _BufferSize = 0;
+			_ActiveIndex = _LastIndex = 0;
 			_bIterateAll = false;
 			_bClearData = true;
 			_Data = nullptr;
 		}
 
-		TData(size_t ReserveSize) : TData()
+		TSequence(size_t ReserveSize) : TSequence()
 		{
 			Reserve(ReserveSize);
 		}
 
-		~TData()
+		~TSequence()
 		{
 			if (_bClearData && _Data)
 			{
 				free(_Data);
 			}
+		}
+
+		void Swap(TypeData Rhs)
+		{
+			if (_Size < _BufferSize)
+			{
+				++_Size;
+			}
+
+			++_ActiveIndex;
+			if (_ActiveIndex >= _BufferSize)
+			{
+				_ActiveIndex = 0;
+			}
+
+			_Data[_ActiveIndex] = Rhs;
+		}
+
+		TypeData & Active()
+		{
+			return Data[_ActiveIndex];
+		}
+
+		const TypeData & Active() const
+		{
+			return Data[_ActiveIndex];
 		}
 
 		size_t Size()
@@ -75,11 +102,13 @@ namespace MLPrototyping
 
 		TypeData & operator[](size_t Index)
 		{
+			_LastIndex = Index;
 			return _Data[Index];
 		}
 
 		const TypeData & operator[](size_t Index) const
 		{
+			_LastIndex = Index;
 			return _Data[Index];
 		}
 
@@ -87,7 +116,7 @@ namespace MLPrototyping
 		{
 			_Data = (TypeData *) realloc(_Data, ReserveSize * sizeof(TypeData));
 			_BufferSize = ReserveSize;
-			if (ReserveSize < _Size) { _Size = ReserveSize;  }
+			if (ReserveSize < _Size) { _Size = ReserveSize; }
 		}
 
 		TypeData * begin()

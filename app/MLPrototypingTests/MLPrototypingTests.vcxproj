@@ -171,6 +171,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="unittestMLPrototyping.cpp" />
+    <ClCompile Include="unittestMLPrototypingAPI.cpp" />
+    <ClCompile Include="unittestMLPrototypingMath.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MLPrototyping.vcxproj">

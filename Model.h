@@ -71,10 +71,14 @@ namespace MLPrototyping
 		void Validate(TData<FSample> &Samples, FPerformence &Performance)
 		{
 			FLabel Label;
+			time_t Start;
 
 			for (const auto &Sample : Samples)
 			{
+				Start = clock_t::now();
 				_Use(Sample.Feature, Label);
+				Performance.RunningTime += (clock_t::now() - Start);
+				++Performance.N;
 			}
 		}
 

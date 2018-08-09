@@ -5,10 +5,10 @@
 
 namespace MLPrototyping
 {
-	template<size_t SizeData, typename TypeData = real_t>
+	template<size_t SizeData, typename TypeData>
 	struct TPoint;
 
-	template<size_t SizeData, typename TypeData = real_t>
+	template<size_t SizeData, typename TypeData>
 	struct TPoint
 	{
 		TypeData _Data[SizeData];
@@ -32,6 +32,7 @@ namespace MLPrototyping
 		{
 			FDescriptor _Descriptor;
 
+			_Descriptor.Type = none;
 			_Descriptor.SizeOf = sizeof(TypeData);
 			_Descriptor.Size = SizeData;
 			_Descriptor.bHeap = true;
@@ -80,15 +81,46 @@ namespace MLPrototyping
 			TPoint<SizeLhs, TypeLhs> Lhs;
 			size_t Index, End;
 
-			End = SizeData;
+			End = Min(SizeData, SizeLhs);
 			for (Index = 0; Index < End; ++Index)
 			{
 				Lhs._Data[Index] = static_cast<TypeLhs>(_Data[Index]);
 			}
+			End = SizeLhs;
+			for (; Index < End; ++Index)
+			{
+				Lhs._Data[Index] = TypeLhs();
+			}
 			return Lhs;
 		}
 
+		template<typename TypeRhs>
+		TPoint<SizeData, TypeData> & operator=(const TypeRhs &Rhs)
+		{
+			size_t Index, End;
 
+			End = SizeData;
+			for (Index = 0; Index < End; ++Index)
+			{
+				_Data[Index] = static_cast<TypeData>(Rhs);
+			}
+			return *this;
+		}
 
+		template<size_t SizeRhs, typename TypRhs>
+		TPoint<SizeData, TypeData> & operator=(const TPoint<SizeRhs, TypRhs> &Rhs)
+		{
+			size_t Index, End;
+
+			End = Min(SizeData, SizeRhs);
+			for (Index = 0; Index < End; ++Index)
+			{
+				_Data[Index] = static_cast<TypeData>(Rhs._Data[Index]);
+			}
+			return *this;
+		}
 	};
+
+
+
 }

@@ -6,7 +6,7 @@ namespace MLPrototyping
 {
 	struct FDescriptor
 	{
-		size_t SizeOf, Size;
+		size_t Type, SizeOf, Size;
 		bool_t bHeap;
 		pointer_t Pointer;
 	};
@@ -18,19 +18,7 @@ namespace MLPrototyping
 	}
 
 	template<typename Type>
-	const Type Min(const Type &Lhs, const Type &Rhs) const
-	{
-		return Lhs < Rhs ? Lhs : Rhs;
-	}
-
-	template<typename Type>
 	Type Max(const Type &Lhs, const Type &Rhs)
-	{
-		return Lhs > Rhs ? Lhs : Rhs;
-	}
-
-	template<typename Type>
-	const Type Max(const Type &Lhs, const Type &Rhs) const
 	{
 		return Lhs > Rhs ? Lhs : Rhs;
 	}
