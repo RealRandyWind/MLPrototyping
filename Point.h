@@ -35,7 +35,8 @@ namespace MLPrototyping
 			_Descriptor.Type = none;
 			_Descriptor.SizeOf = sizeof(TypeData);
 			_Descriptor.Size = SizeData;
-			_Descriptor.bHeap = true;
+			_Descriptor._Size = SizeData;
+			_Descriptor.bHeap = false;
 			_Descriptor.Pointer = (pointer_t) &_Data[0];
 			return _Descriptor;
 		}
