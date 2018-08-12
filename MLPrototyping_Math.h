@@ -4,6 +4,7 @@
 #include "MLPrototyping_Definitions.h"
 #include "Point.h"
 #include <math.h>
+#include <limits.h>
 
 namespace MLPrototyping
 {
@@ -47,6 +48,41 @@ namespace MLPrototyping
 	{
 		TPoint<4, Type> Point;
 		struct { Type R, G, B, A; };
+	};
+
+	template<typename Type>
+	struct TLimit
+	{
+		static Type Upper()
+		{
+			return std::numeric_limits<Type>::max();
+		}
+
+		static Type Lower()
+		{
+			if (std::numeric_limits<Type>::is_bounded)
+			{
+				return std::numeric_limits<Type>::lowest();
+			}
+			return std::numeric_limits<Type>::min();
+		}
+
+		static Type Epsilon()
+		{
+			return std::numeric_limits<Type>::epsilon();
+		}
+
+		static Type Infinity()
+		{
+			if (!std::numeric_limits<Type>::has_infinity) { return Type(); }
+			return std::numeric_limits<Type>::infinity();
+		}
+
+		static Type NaN()
+		{
+			if (!std::numeric_limits<Type>::has_quiet_NaN) { return Type(); }
+			return std::numeric_limits<Type>::quiet_NaN();
+		}
 	};
 
 	/* Vector @ Vector */
@@ -233,7 +269,7 @@ namespace MLPrototyping
 		End = Size;
 		for (Index = 0; Index < End; ++Index)
 		{
-			Result[Index] = Rhs + Lhs[Index];
+			Result[Index] = Lhs[Index] + Rhs;
 		}
 		return Result;
 	}
@@ -247,7 +283,7 @@ namespace MLPrototyping
 		End = Size;
 		for (Index = 0; Index < End; ++Index)
 		{
-			Result[Index] = Rhs - Lhs[Index];
+			Result[Index] = Lhs[Index] - Rhs;
 		}
 		return Result;
 	}
@@ -261,7 +297,7 @@ namespace MLPrototyping
 		End = Size;
 		for (Index = 0; Index < End; ++Index)
 		{
-			Result[Index] = Rhs * Lhs[Index];
+			Result[Index] = Lhs[Index] * Rhs;
 		}
 		return Result;
 	}
@@ -275,7 +311,7 @@ namespace MLPrototyping
 		End = Size;
 		for (Index = 0; Index < End; ++Index)
 		{
-			Result[Index] = Rhs / Lhs[Index];
+			Result[Index] = Lhs[Index] / Rhs;
 		}
 		return Result;
 	}

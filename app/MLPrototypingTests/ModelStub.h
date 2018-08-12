@@ -1,9 +1,9 @@
 #pragma once;
 
 
-#include "MLPrototyping_Definitions.h";
-#include "MLPrototyping_Types.h";
-#include "MLPrototyping_Math.h";
+#include "MLPrototyping_Definitions.h"
+#include "MLPrototyping_Types.h"
+#include "MLPrototyping_Math.h"
 #include "Model.h"
 #include "Point.h"
 #include "Sequence.h"
@@ -55,7 +55,7 @@ namespace MLPrototypingTest
 
 		virtual void _Optimize(const FSample &Sample) override
 		{
-			State.Difference += Parameters.Weight * (Sample.Label + Sum(Sample.Feature));
+			State.Difference += Parameters.Weight * (Sum(Sample.Label) + Sum(Sample.Feature));
 		}
 
 		virtual void _Optimize() override

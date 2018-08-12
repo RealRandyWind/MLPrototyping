@@ -24,7 +24,7 @@ namespace MLPrototyping
 	}
 
 	template<typename Type>
-	Type & Swap(Type &Lhs, Type &Rhs)
+	Type &Swap(Type &Lhs, Type &Rhs)
 	{
 		Type Temp;
 

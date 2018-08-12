@@ -270,21 +270,25 @@ namespace MLPrototypingTest
 
 		TEST_METHOD(TestModel)
 		{
+			/*(F|L|M)\d   ${1}2*/
 			const real_t Zero = 0, Half = .5, One = 1, Two = 2, Three = 3;
-			const size_t N0 = 0, L1 = 1, F1 = 2, L2 = 2, F2 = 4, L3 = 3, F3 = 6, LN = 2048, FN = 4096;
+			const size_t N0 = 0, L1 = 1, F1 = 2, L2 = 2, F2 = 4, L3 = 3, F3 = 6, LN = 256, FN = 512;
 			size_t Index, End;
 			real_t RU, RT, RO, RO1;;
 			
+			/* 2D Feature 1D Label, 2 Data tests */
+			RU = F1 * One; RT = Half - RU; RO = RT + F1 * Half * (F1 * One + L1 * Half), RO1 = Half * RO;
 			TModelStub<F1, L1> M1;
-			TData<TModelStub<F1, L1>::FFeature> Features(F1, true);
-			TData<TModelStub<F1, L1>::FLabel> Labels;
-			TData<TModelStub<F1, L1>::FSample> Samples(F1, true);
+			TModelStub<F1, L1>::FPerformence Performance1;
+			TData<TModelStub<F1, L1>::FFeature> Features1(F1, true);
+			TData<TModelStub<F1, L1>::FLabel> Labels1;
+			TData<TModelStub<F1, L1>::FSample> Samples1(F1, true);
 			End = F1;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Features[Index] = One;
-				Samples[Index].Feature = Two;
-				Samples[Index].Label = Half;
+				Features1[Index] = One;
+				Samples1[Index].Feature = One;
+				Samples1[Index].Label = Half;
 			}
 			Assert::AreEqual(M1.FeatureSize(), F1, L"", LINE_INFO());
 			Assert::AreEqual(M1.LabelSize(), L1, L"", LINE_INFO());
@@ -305,9 +309,232 @@ namespace MLPrototypingTest
 			{
 				Assert::AreEqual(Zero, Value, L"", LINE_INFO());
 			}
-			Assert::AreEqual(N0, Labels.Size(), L"", LINE_INFO());
-			M1.Use(Features, Labels);
-			Assert::AreEqual(F1, Labels.Size(), L"", LINE_INFO());
+			Assert::AreEqual(N0, Labels1.Size(), L"", LINE_INFO());
+			M1.Use(Features1, Labels1);
+			Assert::AreEqual(F1, Labels1.Size(), L"", LINE_INFO());
+			for (const auto &Label : Labels1)
+			{
+				for (const auto &Value : Label)
+				{
+					Assert::AreEqual(RU, Value, L"", LINE_INFO());
+				}
+			}
+			M1.Train(Samples1);
+			for (const auto &Value : M1.State.Difference)
+			{
+				Assert::AreEqual(RT, Value, L"", LINE_INFO());
+			}
+			M1.Optimize(Samples1);
+			for (const auto &Value : M1.State.Difference)
+			{
+				Assert::AreEqual(RO, Value, L"", LINE_INFO());
+			}
+			M1.Optimize();
+			for (const auto &Value : M1.State.Difference)
+			{
+				Assert::AreEqual(RO1, Value, L"", LINE_INFO());
+			}
+			M1.Validate(Samples1, Performance1);
+			Assert::AreEqual(F1, Performance1.N, L"", LINE_INFO());
+			for (const auto &Value : Performance1.ErrorMin)
+			{
+				Assert::AreEqual(Half - RU, Value, L"", LINE_INFO());
+			}
+
+			/* 4D Feature 2D Label, 4 Data tests */
+			RU = F2 * One; RT = Half - RU; RO = RT + F2 * Half * (F2 * One + L2 * Half), RO1 = Half * RO;
+			TModelStub<F2, L2> M2;
+			TModelStub<F2, L2>::FPerformence Performance2;
+			TData<TModelStub<F2, L2>::FFeature> Features2(F2, true);
+			TData<TModelStub<F2, L2>::FLabel> Labels2;
+			TData<TModelStub<F2, L2>::FSample> Samples2(F2, true);
+			End = F2;
+			for (Index = 0; Index < End; ++Index)
+			{
+				Features2[Index] = One;
+				Samples2[Index].Feature = One;
+				Samples2[Index].Label = Half;
+			}
+			Assert::AreEqual(M2.FeatureSize(), F2, L"", LINE_INFO());
+			Assert::AreEqual(M2.LabelSize(), L2, L"", LINE_INFO());
+			M2.Parameters = { One, Half, Zero, F2 };
+			M2.Parameters.Alpha = One;
+			M2.Parameters.Weight = Half;
+			M2.Parameters.Difference = Zero;
+			M2.Parameters.Size = F2;
+			Assert::IsFalse(M2.Initialized(), L"", LINE_INFO());
+			M2.Initialize();
+			Assert::IsTrue(M2.Initialized(), L"", LINE_INFO());
+			Assert::AreEqual(F2, M2.State.Weights.Size(), L"", LINE_INFO());
+			for (const auto &Weight : M2.State.Weights)
+			{
+				Assert::AreEqual(One, Weight, L"", LINE_INFO());
+			}
+			for (const auto &Value : M2.State.Difference)
+			{
+				Assert::AreEqual(Zero, Value, L"", LINE_INFO());
+			}
+			Assert::AreEqual(N0, Labels2.Size(), L"", LINE_INFO());
+			M2.Use(Features2, Labels2);
+			Assert::AreEqual(F2, Labels2.Size(), L"", LINE_INFO());
+			for (const auto &Label : Labels2)
+			{
+				for (const auto &Value : Label)
+				{
+					Assert::AreEqual(RU, Value, L"", LINE_INFO());
+				}
+			}
+			M2.Train(Samples2);
+			for (const auto &Value : M2.State.Difference)
+			{
+				Assert::AreEqual(RT, Value, L"", LINE_INFO());
+			}
+			M2.Optimize(Samples2);
+			for (const auto &Value : M2.State.Difference)
+			{
+				Assert::AreEqual(RO, Value, L"", LINE_INFO());
+			}
+			M2.Optimize();
+			for (const auto &Value : M2.State.Difference)
+			{
+				Assert::AreEqual(RO1, Value, L"", LINE_INFO());
+			}
+			M2.Validate(Samples2, Performance2);
+			Assert::AreEqual(F2, Performance2.N, L"", LINE_INFO());
+			for (const auto &Value : Performance2.ErrorMin)
+			{
+				Assert::AreEqual(Half - RU, Value, L"", LINE_INFO());
+			}
+
+			/* 6D Feature 3D Label, 6 Data tests */
+			RU = F3 * One; RT = Half - RU; RO = RT + F3 * Half * (F3 * One + L3 * Half), RO1 = Half * RO;
+			TModelStub<F3, L3> M3;
+			TModelStub<F3, L3>::FPerformence Performance3;
+			TData<TModelStub<F3, L3>::FFeature> Features3(F3, true);
+			TData<TModelStub<F3, L3>::FLabel> Labels3;
+			TData<TModelStub<F3, L3>::FSample> Samples3(F3, true);
+			End = F3;
+			for (Index = 0; Index < End; ++Index)
+			{
+				Features3[Index] = One;
+				Samples3[Index].Feature = One;
+				Samples3[Index].Label = Half;
+			}
+			Assert::AreEqual(M3.FeatureSize(), F3, L"", LINE_INFO());
+			Assert::AreEqual(M3.LabelSize(), L3, L"", LINE_INFO());
+			M3.Parameters = { One, Half, Zero, F3 };
+			M3.Parameters.Alpha = One;
+			M3.Parameters.Weight = Half;
+			M3.Parameters.Difference = Zero;
+			M3.Parameters.Size = F3;
+			Assert::IsFalse(M3.Initialized(), L"", LINE_INFO());
+			M3.Initialize();
+			Assert::IsTrue(M3.Initialized(), L"", LINE_INFO());
+			Assert::AreEqual(F3, M3.State.Weights.Size(), L"", LINE_INFO());
+			for (const auto &Weight : M3.State.Weights)
+			{
+				Assert::AreEqual(One, Weight, L"", LINE_INFO());
+			}
+			for (const auto &Value : M3.State.Difference)
+			{
+				Assert::AreEqual(Zero, Value, L"", LINE_INFO());
+			}
+			Assert::AreEqual(N0, Labels3.Size(), L"", LINE_INFO());
+			M3.Use(Features3, Labels3);
+			Assert::AreEqual(F3, Labels3.Size(), L"", LINE_INFO());
+			for (const auto &Label : Labels3)
+			{
+				for (const auto &Value : Label)
+				{
+					Assert::AreEqual(RU, Value, L"", LINE_INFO());
+				}
+			}
+			M3.Train(Samples3);
+			for (const auto &Value : M3.State.Difference)
+			{
+				Assert::AreEqual(RT, Value, L"", LINE_INFO());
+			}
+			M3.Optimize(Samples3);
+			for (const auto &Value : M3.State.Difference)
+			{
+				Assert::AreEqual(RO, Value, L"", LINE_INFO());
+			}
+			M3.Optimize();
+			for (const auto &Value : M3.State.Difference)
+			{
+				Assert::AreEqual(RO1, Value, L"", LINE_INFO());
+			}
+			M3.Validate(Samples3, Performance3);
+			Assert::AreEqual(F3, Performance3.N, L"", LINE_INFO());
+			for (const auto &Value : Performance3.ErrorMin)
+			{
+				Assert::AreEqual(Half - RU, Value, L"", LINE_INFO());
+			}
+
+			/* 2ND Feature ND Label, 2N Data tests */
+			RU = FN * One; RT = Half - RU; RO = RT + FN * Half * (FN * One + LN * Half), RO1 = Half * RO;
+			TModelStub<FN, LN> MN;
+			TModelStub<FN, LN>::FPerformence PerformanceN;
+			TData<TModelStub<FN, LN>::FFeature> FeaturesN(FN, true);
+			TData<TModelStub<FN, LN>::FLabel> LabelsN;
+			TData<TModelStub<FN, LN>::FSample> SamplesN(FN, true);
+			End = FN;
+			for (Index = 0; Index < End; ++Index)
+			{
+				FeaturesN[Index] = One;
+				SamplesN[Index].Feature = One;
+				SamplesN[Index].Label = Half;
+			}
+			Assert::AreEqual(MN.FeatureSize(), FN, L"", LINE_INFO());
+			Assert::AreEqual(MN.LabelSize(), LN, L"", LINE_INFO());
+			MN.Parameters = { One, Half, Zero, FN };
+			MN.Parameters.Alpha = One;
+			MN.Parameters.Weight = Half;
+			MN.Parameters.Difference = Zero;
+			MN.Parameters.Size = FN;
+			Assert::IsFalse(MN.Initialized(), L"", LINE_INFO());
+			MN.Initialize();
+			Assert::IsTrue(MN.Initialized(), L"", LINE_INFO());
+			Assert::AreEqual(FN, MN.State.Weights.Size(), L"", LINE_INFO());
+			for (const auto &Weight : MN.State.Weights)
+			{
+				Assert::AreEqual(One, Weight, L"", LINE_INFO());
+			}
+			for (const auto &Value : MN.State.Difference)
+			{
+				Assert::AreEqual(Zero, Value, L"", LINE_INFO());
+			}
+			Assert::AreEqual(N0, LabelsN.Size(), L"", LINE_INFO());
+			MN.Use(FeaturesN, LabelsN);
+			Assert::AreEqual(FN, LabelsN.Size(), L"", LINE_INFO());
+			for (const auto &Label : LabelsN)
+			{
+				for (const auto &Value : Label)
+				{
+					Assert::AreEqual(RU, Value, L"", LINE_INFO());
+				}
+			}
+			MN.Train(SamplesN);
+			for (const auto &Value : MN.State.Difference)
+			{
+				Assert::AreEqual(RT, Value, L"", LINE_INFO());
+			}
+			MN.Optimize(SamplesN);
+			for (const auto &Value : MN.State.Difference)
+			{
+				Assert::AreEqual(RO, Value, L"", LINE_INFO());
+			}
+			MN.Optimize();
+			for (const auto &Value : MN.State.Difference)
+			{
+				Assert::AreEqual(RO1, Value, L"", LINE_INFO());
+			}
+			MN.Validate(SamplesN, PerformanceN);
+			Assert::AreEqual(FN, PerformanceN.N, L"", LINE_INFO());
+			for (const auto &Value : PerformanceN.ErrorMin)
+			{
+				Assert::AreEqual(Half - RU, Value, L"", LINE_INFO());
+			}
 		}
 
 

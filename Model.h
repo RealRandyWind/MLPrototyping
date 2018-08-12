@@ -2,6 +2,7 @@
 
 #include "MLPrototyping_Types.h"
 #include "MLPrototyping_Definitions.h"
+#include "MLPrototyping_Math.h"
 #include "Point.h"
 #include "Data.h"
 
@@ -10,6 +11,7 @@ namespace MLPrototyping
 	template<size_t SizeFeature, size_t SizeLabel>
 	struct TModel
 	{
+		using FLimit = TLimit<real_t>;
 		using FFeature = TPoint<SizeFeature, real_t>;
 
 		using FLabel = TPoint<SizeLabel, real_t>;
@@ -22,7 +24,8 @@ namespace MLPrototyping
 
 		struct FPerformence
 		{
-			FLabel ErrorMin, ErrorMax, ErrorMean, ErrorSD, ErrorSkew;
+			FLabel ErrorMin, ErrorMax, ErrorMean, ErrorSD, ErrorSkew, LabelScore;
+			real_t ModelScore;
 			size_t ComplexOperations, SimpleOperations, MemoryReads, MemoryWrites;
 			size_t N, NThreads;
 			duration_t RunningTime;
@@ -97,12 +100,23 @@ namespace MLPrototyping
 
 			if (!_bInitialized) { return; }
 
+			Performance.ErrorMin = FLimit::Infinity();
+			Performance.ErrorMax = -FLimit::Infinity();
+			Performance.ErrorMean = 0;
+			Performance.ErrorSD = 0;
+			Performance.ErrorSkew = 0;
+			Performance.LabelScore = 0;
+			Performance.N = 0;
+			Performance.NThreads = 0;
+			Performance.RunningTime = duration_t();
+
 			for (const auto &Sample : Samples)
 			{
 				Start = clock_t::now();
 				_Use(Sample.Feature, Label);
 				Performance.RunningTime += (clock_t::now() - Start);
 				++Performance.N;
+				_Validate(Label, Sample.Label, Performance);
 			}
 		}
 
@@ -135,6 +149,23 @@ namespace MLPrototyping
 
 		virtual void _Optimize() = 0;
 
+		virtual void _Validate(const FLabel &Label, const FLabel &Target, FPerformence &Performence)
+		{
+			FLabel ErrorMean, ErrorSD, ErrorSkew;
+			real_t N, K;
+
+			N = static_cast<real_t>(Performence.N);
+			K = static_cast<real_t>(Performence.N - 1);
+			ErrorMean = Target - Label;
+			ErrorSD = ErrorMean * ErrorMean;
+			ErrorSkew = ErrorSD * ErrorMean;
+
+			Performence.ErrorMean = ((Performence.ErrorMean / K) + ErrorMean) / N;
+			Performence.ErrorSD = ((Performence.ErrorSD / K) + ErrorSD) / N;
+			Performence.ErrorSkew = ((Performence.ErrorSD / K) + ErrorSkew) / N;
+			Performence.ErrorMin = Min(ErrorMean, Performence.ErrorMin);
+			Performence.ErrorMax = Max(ErrorMean, Performence.ErrorMax);
+		}
 
 	};
 
