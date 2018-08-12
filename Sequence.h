@@ -12,7 +12,7 @@ namespace MLPrototyping
 	struct TSequence
 	{
 		size_t _Size, _BufferSize, _ActiveIndex, _LastIndex, _IncrementSize;
-		bool_t _bIterateAll, _bClearDataOnDestroy, _bFixedSize, _bResizeOnAccess, _bSizeOnAccess, _bHeap;
+		bool_t _bIterateAll, _bClearDataOnDestroy, _bClearDataOnReplace, _bFixedSize, _bResizeOnAccess, _bSizeOnAccess, _bHeap;
 		TypeData *_Data;
 
 		TSequence()
@@ -22,15 +22,16 @@ namespace MLPrototyping
 			_ActiveIndex = _LastIndex = 0;
 			_bIterateAll = false;
 			_bClearDataOnDestroy = true;
+			_bClearDataOnReplace = _bClearDataOnDestroy;
 			_bFixedSize = false;
 			_bResizeOnAccess = true;
 			_bSizeOnAccess = false;
 			_Data = nullptr;
 		}
 
-		TSequence(size_t ReserveSize) : TSequence()
+		TSequence(size_t ReserveSize, bool_t SetSizeToReserveSize = false) : TSequence()
 		{
-			Reserve(ReserveSize);
+			Reserve(ReserveSize, SetSizeToReserveSize);
 		}
 
 		~TSequence()
@@ -54,6 +55,11 @@ namespace MLPrototyping
 		void ClearDataOnDestroy(bool_t IsTrue = true)
 		{
 			_bClearDataOnDestroy = IsTrue;
+		}
+
+		void ClearDataOnReplace(bool_t IsTrue = true)
+		{
+			_bClearDataOnReplace = IsTrue;
 		}
 
 		void FixedSize(bool_t IsTrue = true)
@@ -141,6 +147,7 @@ namespace MLPrototyping
 
 		TypeData *Data(TypeData *Pointer, size_t SizeData, size_t SizeBuffer = 0, bool_t bHeap = true)
 		{
+			if (_bClearDataOnReplace && _Data) { free(_Data); _Data = nullptr; }
 			if (SizeBuffer < SizeData) { SizeBuffer = SizeData; }
 			_Size = SizeData;
 			_BufferSize = SizeBuffer;
@@ -188,9 +195,10 @@ namespace MLPrototyping
 			return *this[Index];
 		}
 
-		void Reserve(size_t ReserveSize)
+		void Reserve(size_t ReserveSize, bool_t SetSizeToReserveSize = false)
 		{
 			_Data = (TypeData *) realloc(_Data, ReserveSize * sizeof(TypeData));
+			if (SetSizeToReserveSize) { _Size = ReserveSize; }
 			_BufferSize = ReserveSize;
 			if (ReserveSize < _Size) { _Size = ReserveSize; }
 		}

@@ -28,6 +28,22 @@ namespace MLPrototyping
 			duration_t RunningTime;
 		};
 
+		bool_t _bInitialized;
+
+		TModel()
+		{
+			_bInitialized = false;
+		}
+
+		~TModel()
+		{
+
+		}
+
+		bool_t Initialized()
+		{
+			return _bInitialized;
+		}
 
 		size_t FeatureSize()
 		{
@@ -41,12 +57,16 @@ namespace MLPrototyping
 
 		void Initialize()
 		{
+			_bInitialized = false;
 			_Initialize();
+			_bInitialized = true;
 		}
 
 		void Train(TData<FSample> &Samples)
 		{
 			FLabel Label;
+
+			if (!_bInitialized) { return; }
 
 			for (const auto &Sample : Samples)
 			{
@@ -58,6 +78,8 @@ namespace MLPrototyping
 		void Use(TData<FFeature> &Features, TData<FLabel> &Labels)
 		{
 			size_t Index, End;
+
+			if (!_bInitialized) { return; }
 
 			End = Features.Size();
 			Labels._Size = End;
@@ -73,6 +95,8 @@ namespace MLPrototyping
 			FLabel Label;
 			time_t Start;
 
+			if (!_bInitialized) { return; }
+
 			for (const auto &Sample : Samples)
 			{
 				Start = clock_t::now();
@@ -84,6 +108,8 @@ namespace MLPrototyping
 
 		void Optimize(TData<FSample> &Samples)
 		{
+			if (!_bInitialized) { return; }
+
 			for (const auto &Sample : Samples)
 			{
 				_Optimize(Sample);
@@ -92,6 +118,8 @@ namespace MLPrototyping
 
 		void Optimize()
 		{
+			if (!_bInitialized) { return; }
+
 			_Optimize();
 		}
 

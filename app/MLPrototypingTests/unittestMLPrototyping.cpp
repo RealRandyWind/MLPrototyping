@@ -7,13 +7,12 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 #include "Sequence.h"
 #include "Data.h"
 #include "Model.h"
+#include "ModelStub.h"
 
 using namespace MLPrototyping;
 
 namespace MLPrototypingTest
 {		
-	
-
 	TEST_CLASS(UnitTestMLPrototyping)
 	{
 	public:
@@ -215,30 +214,102 @@ namespace MLPrototypingTest
 			}
 		}
 
-		TEST_METHOD(TestModel)
-		{
-			// TODO: Your test code here
-		}
-
 		TEST_METHOD(TestData)
 		{
-			// TODO: Your test code here
+			const real_t Zero = 0, One = 1, Two = 2, Three = 3, Four = 4;
+			const size_t HD0 = 0, HD1 = 1, HD2 = 2, HD3 = 3, HDN = 4096, HSK = 8192;
+			TData<real_t> D0, D1, D2, D3, DN;
+			size_t Size = 0;
+
+			/* reserve buffer tests */
+			D1.Reserve(HD1);
+			Assert::AreEqual(D1.BufferSize(), HD1, L"", LINE_INFO());
+			Assert::AreEqual(D1.Size(), HD0, L"", LINE_INFO());
+			D2.Reserve(HD2);
+			Assert::AreEqual(D2.BufferSize(), HD2, L"", LINE_INFO());
+			Assert::AreEqual(D2.Size(), HD0, L"", LINE_INFO());
+			D3.Reserve(HD3);
+			Assert::AreEqual(D3.BufferSize(), HD3, L"", LINE_INFO());
+			Assert::AreEqual(D3.Size(), HD0, L"", LINE_INFO());
+			DN.Reserve(HDN);
+			Assert::AreEqual(DN.BufferSize(), HDN, L"", LINE_INFO());
+			Assert::AreEqual(DN.Size(), HD0, L"", LINE_INFO());
+
+			/* index access tests */
+			D1[HD1 - 1] = One;
+			D1[HD1 - 1] = Two;
+			Assert::AreEqual(D1._Data[HD1 - 1], Two, L"", LINE_INFO());
+			D2[HD2 - 1] = One;
+			D2[HD2 - 1] = Two;
+			Assert::AreEqual(D2._Data[HD2 - 1], Two, L"", LINE_INFO());
+			D3[HD3 - 1] = One;
+			D3[HD3 - 1] = Two;
+			Assert::AreEqual(D3._Data[HD3 - 1], Two, L"", LINE_INFO());
+			DN[HDN - 1] = One;
+			DN[HDN - 1] = Two;
+			Assert::AreEqual(DN._Data[HDN - 1], Two, L"", LINE_INFO());
+			const auto ConstValue = DN[HDN - 1];
+			Assert::AreEqual(ConstValue, Two, L"", LINE_INFO());
+
+
+			/* constructor tests */
+			Assert::AreEqual(D0.BufferSize(), HD0, L"", LINE_INFO());
+			Assert::IsTrue(D0.Empty(), L"", LINE_INFO());
+			TData<real_t> SK(HSK);
+			Assert::AreEqual(SK.BufferSize(), HSK, L"", LINE_INFO());
+
+			/* iterator tests */
+			for (auto &Value : SK) { Assert::Fail(L"", LINE_INFO()); }
+			SK.IterateAll();
+			Size = 0;
+			for (auto &Value : SK) { Value = Zero; ++Size; }
+			Assert::AreEqual(Size, HSK, L"", LINE_INFO());
+			SK.IterateAll(false);
+			for (auto &Value : SK) { Assert::Fail(L"", LINE_INFO()); }
 		}
 
-		TEST_METHOD(TestLVQ1)
+		TEST_METHOD(TestModel)
 		{
-			// TODO: Your test code here
+			const real_t Zero = 0, Half = .5, One = 1, Two = 2, Three = 3;
+			const size_t N0 = 0, L1 = 1, F1 = 2, L2 = 2, F2 = 4, L3 = 3, F3 = 6, LN = 2048, FN = 4096;
+			size_t Index, End;
+			real_t RU, RT, RO, RO1;;
+			
+			TModelStub<F1, L1> M1;
+			TData<TModelStub<F1, L1>::FFeature> Features(F1, true);
+			TData<TModelStub<F1, L1>::FLabel> Labels;
+			TData<TModelStub<F1, L1>::FSample> Samples(F1, true);
+			End = F1;
+			for (Index = 0; Index < End; ++Index)
+			{
+				Features[Index] = One;
+				Samples[Index].Feature = Two;
+				Samples[Index].Label = Half;
+			}
+			Assert::AreEqual(M1.FeatureSize(), F1, L"", LINE_INFO());
+			Assert::AreEqual(M1.LabelSize(), L1, L"", LINE_INFO());
+			M1.Parameters = { One, Half, Zero, F1 };
+			M1.Parameters.Alpha = One;
+			M1.Parameters.Weight = Half;
+			M1.Parameters.Difference = Zero;
+			M1.Parameters.Size = F1;
+			Assert::IsFalse(M1.Initialized(), L"", LINE_INFO());
+			M1.Initialize();
+			Assert::IsTrue(M1.Initialized(), L"", LINE_INFO());
+			Assert::AreEqual(F1, M1.State.Weights.Size(), L"", LINE_INFO());
+			for (const auto &Weight : M1.State.Weights)
+			{
+				Assert::AreEqual(One, Weight, L"", LINE_INFO());
+			}
+			for (const auto &Value : M1.State.Difference)
+			{
+				Assert::AreEqual(Zero, Value, L"", LINE_INFO());
+			}
+			Assert::AreEqual(N0, Labels.Size(), L"", LINE_INFO());
+			M1.Use(Features, Labels);
+			Assert::AreEqual(F1, Labels.Size(), L"", LINE_INFO());
 		}
 
-		TEST_METHOD(TestNN)
-		{
-			// TODO: Your test code here
-		}
-
-		TEST_METHOD(TestSMLVQ)
-		{
-			// TODO: Your test code here
-		}
 
 	};
 

@@ -37,8 +37,10 @@ namespace MLPrototyping
 	using return_t = decltype(EXIT_SUCCESS);
 
 	const size_t bytesize = 8;
+	/*
 	const decltype("") nullstr = "";
 	const decltype('\0') nullchr = '\0';
+	*/
 	const decltype(nullptr) null = nullptr;
 	const decltype(0) none = 0;
 	const decltype(0) unknown = 0;

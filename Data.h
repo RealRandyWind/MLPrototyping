@@ -12,7 +12,7 @@ namespace MLPrototyping
 	struct TData
 	{
 		size_t _Size, _BufferSize;
-		bool_t _bIterateAll, _bClearDataOnDestroy, _bHeap;
+		bool_t _bIterateAll, _bClearDataOnDestroy, _bClearDataOnReplace, _bHeap;
 		TypeData *_Data;
 
 		TData()
@@ -20,13 +20,14 @@ namespace MLPrototyping
 			_Size = _BufferSize = 0;
 			_bIterateAll = false;
 			_bClearDataOnDestroy = true;
+			_bClearDataOnReplace = _bClearDataOnDestroy;
 			_bHeap = true;
 			_Data = nullptr;
 		}
 
-		TData(size_t ReserveSize) : TData()
+		TData(size_t ReserveSize, bool_t SetSizeToReserveSize = false) : TData()
 		{
-			Reserve(ReserveSize);
+			Reserve(ReserveSize, SetSizeToReserveSize);
 		}
 
 		~TData()
@@ -52,6 +53,11 @@ namespace MLPrototyping
 			_bClearDataOnDestroy = IsTrue;
 		}
 
+		void ClearDataOnReplace(bool_t IsTrue = true)
+		{
+			_bClearDataOnReplace = IsTrue;
+		}
+
 		size_t Size()
 		{
 			return _Size;
@@ -74,6 +80,7 @@ namespace MLPrototyping
 
 		TypeData *Data(TypeData *Pointer, size_t SizeData, size_t SizeBuffer = 0, bool_t bHeap = true)
 		{
+			if (_bClearDataOnReplace && _Data) { free(_Data); _Data = nullptr; }
 			if (SizeBuffer < SizeData) { SizeBuffer = SizeData; }
 			_Size = SizeData;
 			_BufferSize = SizeBuffer;
@@ -115,9 +122,10 @@ namespace MLPrototyping
 			return _Data[Index];
 		}
 
-		void Reserve(size_t ReserveSize)
+		void Reserve(size_t ReserveSize, bool_t SetSizeToReserveSize = false)
 		{
 			_Data = (TypeData *) realloc(_Data, ReserveSize * sizeof(TypeData));
+			if (SetSizeToReserveSize) { _Size = ReserveSize; }
 			_BufferSize = ReserveSize;
 			if (ReserveSize < _Size) { _Size = ReserveSize;  }
 		}
