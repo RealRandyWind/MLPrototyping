@@ -38,6 +38,7 @@ namespace MLPrototyping
 
 	const size_t bytesize = 8;
 	/*
+	const decltype(nullptr) nullptr = nullptr;
 	const decltype("") nullstr = "";
 	const decltype('\0') nullchr = '\0';
 	*/

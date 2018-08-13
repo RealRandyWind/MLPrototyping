@@ -15,6 +15,8 @@ namespace MLPrototyping
 
 		static CMLPrototyping* GetInstance();
 
+		void ModelData();
+
 
 	private:
 		CMLPrototyping();

@@ -43,6 +43,11 @@ namespace MLPrototyping
 			return !_Size || !_Data;
 		}
 
+		const bool_t Empty() const
+		{
+			return !_Size || !_Data;
+		}
+
 		void IterateAll(bool_t IsTrue = true)
 		{
 			_bIterateAll = IsTrue;
@@ -59,6 +64,11 @@ namespace MLPrototyping
 		}
 
 		size_t Size()
+		{
+			return _Size;
+		}
+
+		const size_t Size() const
 		{
 			return _Size;
 		}

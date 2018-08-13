@@ -47,6 +47,11 @@ namespace MLPrototyping
 			return !_Size || !_Data;
 		}
 
+		const bool_t Empty() const
+		{
+			return !_Size || !_Data;
+		}
+
 		void IterateAll(bool_t IsTrue = true)
 		{
 			_bIterateAll = IsTrue;
@@ -130,7 +135,17 @@ namespace MLPrototyping
 			return _Size;
 		}
 
+		const size_t Size() const
+		{
+			return _Size;
+		}
+
 		size_t BufferSize()
+		{
+			return _BufferSize;
+		}
+
+		const size_t BufferSize() const
 		{
 			return _BufferSize;
 		}
@@ -222,6 +237,7 @@ namespace MLPrototyping
 		{
 			return _bIterateAll ? &_Data[_BufferSize] : &_Data[_Size];
 		}
+
 
 	};
 

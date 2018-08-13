@@ -18,6 +18,11 @@ namespace MLPrototyping
 			return SizeData;
 		}
 
+		const size_t Size() const
+		{
+			return SizeData;
+		}
+
 		TypeData * Data()
 		{
 			return &_Data[SizeData];

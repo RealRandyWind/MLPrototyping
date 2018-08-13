@@ -279,7 +279,7 @@ namespace MLPrototypingTest
 			/* 2D Feature 1D Label, 2 Data tests */
 			RU = F1 * One; RT = Half - RU; RO = RT + F1 * Half * (F1 * One + L1 * Half), RO1 = Half * RO;
 			TModelStub<F1, L1> M1;
-			TModelStub<F1, L1>::FPerformence Performance1;
+			TData<TModelStub<F1, L1>::FError> Errors1;
 			TData<TModelStub<F1, L1>::FFeature> Features1(F1, true);
 			TData<TModelStub<F1, L1>::FLabel> Labels1;
 			TData<TModelStub<F1, L1>::FSample> Samples1(F1, true);
@@ -334,17 +334,19 @@ namespace MLPrototypingTest
 			{
 				Assert::AreEqual(RO1, Value, L"", LINE_INFO());
 			}
-			M1.Validate(Samples1, Performance1);
-			Assert::AreEqual(F1, Performance1.N, L"", LINE_INFO());
-			for (const auto &Value : Performance1.ErrorMin)
+			M1.Validate(Samples1, Errors1);
+			for (const auto &Error : Errors1)
 			{
-				Assert::AreEqual(Half - RU, Value, L"", LINE_INFO());
+				for (const auto &Value : Error.Value)
+				{
+					Assert::AreEqual(Half - RU, Value, L"", LINE_INFO());
+				}
 			}
 
 			/* 4D Feature 2D Label, 4 Data tests */
 			RU = F2 * One; RT = Half - RU; RO = RT + F2 * Half * (F2 * One + L2 * Half), RO1 = Half * RO;
 			TModelStub<F2, L2> M2;
-			TModelStub<F2, L2>::FPerformence Performance2;
+			TData<TModelStub<F2, L2>::FError> Errors2;
 			TData<TModelStub<F2, L2>::FFeature> Features2(F2, true);
 			TData<TModelStub<F2, L2>::FLabel> Labels2;
 			TData<TModelStub<F2, L2>::FSample> Samples2(F2, true);
@@ -399,17 +401,19 @@ namespace MLPrototypingTest
 			{
 				Assert::AreEqual(RO1, Value, L"", LINE_INFO());
 			}
-			M2.Validate(Samples2, Performance2);
-			Assert::AreEqual(F2, Performance2.N, L"", LINE_INFO());
-			for (const auto &Value : Performance2.ErrorMin)
+			M2.Validate(Samples2, Errors2);
+			for (const auto &Error : Errors2)
 			{
-				Assert::AreEqual(Half - RU, Value, L"", LINE_INFO());
+				for (const auto &Value : Error.Value)
+				{
+					Assert::AreEqual(Half - RU, Value, L"", LINE_INFO());
+				}
 			}
 
 			/* 6D Feature 3D Label, 6 Data tests */
 			RU = F3 * One; RT = Half - RU; RO = RT + F3 * Half * (F3 * One + L3 * Half), RO1 = Half * RO;
 			TModelStub<F3, L3> M3;
-			TModelStub<F3, L3>::FPerformence Performance3;
+			TData<TModelStub<F3, L3>::FError> Errors3;
 			TData<TModelStub<F3, L3>::FFeature> Features3(F3, true);
 			TData<TModelStub<F3, L3>::FLabel> Labels3;
 			TData<TModelStub<F3, L3>::FSample> Samples3(F3, true);
@@ -464,17 +468,19 @@ namespace MLPrototypingTest
 			{
 				Assert::AreEqual(RO1, Value, L"", LINE_INFO());
 			}
-			M3.Validate(Samples3, Performance3);
-			Assert::AreEqual(F3, Performance3.N, L"", LINE_INFO());
-			for (const auto &Value : Performance3.ErrorMin)
+			M3.Validate(Samples3, Errors3);
+			for (const auto &Error : Errors3)
 			{
-				Assert::AreEqual(Half - RU, Value, L"", LINE_INFO());
+				for (const auto &Value : Error.Value)
+				{
+					Assert::AreEqual(Half - RU, Value, L"", LINE_INFO());
+				}
 			}
 
 			/* 2ND Feature ND Label, 2N Data tests */
 			RU = FN * One; RT = Half - RU; RO = RT + FN * Half * (FN * One + LN * Half), RO1 = Half * RO;
 			TModelStub<FN, LN> MN;
-			TModelStub<FN, LN>::FPerformence PerformanceN;
+			TData<TModelStub<FN, LN>::FError> ErrorsN;
 			TData<TModelStub<FN, LN>::FFeature> FeaturesN(FN, true);
 			TData<TModelStub<FN, LN>::FLabel> LabelsN;
 			TData<TModelStub<FN, LN>::FSample> SamplesN(FN, true);
@@ -529,11 +535,13 @@ namespace MLPrototypingTest
 			{
 				Assert::AreEqual(RO1, Value, L"", LINE_INFO());
 			}
-			MN.Validate(SamplesN, PerformanceN);
-			Assert::AreEqual(FN, PerformanceN.N, L"", LINE_INFO());
-			for (const auto &Value : PerformanceN.ErrorMin)
+			MN.Validate(SamplesN, ErrorsN);
+			for (const auto &Error : ErrorsN)
 			{
-				Assert::AreEqual(Half - RU, Value, L"", LINE_INFO());
+				for (const auto &Value : Error.Value)
+				{
+					Assert::AreEqual(Half - RU, Value, L"", LINE_INFO());
+				}
 			}
 		}
 
