@@ -26,6 +26,7 @@ namespace MLPrototyping
 			_bFixedSize = false;
 			_bResizeOnAccess = true;
 			_bSizeOnAccess = false;
+			_bHeap = true;
 			_Data = nullptr;
 		}
 
@@ -36,10 +37,11 @@ namespace MLPrototyping
 
 		~TSequence()
 		{
-			if (_bClearDataOnDestroy && _Data)
+			if (_bHeap && _bClearDataOnDestroy && _Data)
 			{
-				free(_Data);
+				free((void *) _Data);
 			}
+			_Data = nullptr;
 		}
 
 		bool_t Empty()
@@ -162,7 +164,7 @@ namespace MLPrototyping
 
 		TypeData *Data(TypeData *Pointer, size_t SizeData, size_t SizeBuffer = 0, bool_t bHeap = true)
 		{
-			if (_bClearDataOnReplace && _Data) { free(_Data); _Data = nullptr; }
+			if (_bHeap && _bClearDataOnReplace && _Data) { free((void *) _Data); _Data = nullptr; }
 			if (SizeBuffer < SizeData) { SizeBuffer = SizeData; }
 			_Size = SizeData;
 			_BufferSize = SizeBuffer;
@@ -212,6 +214,12 @@ namespace MLPrototyping
 
 		void Reserve(size_t ReserveSize, bool_t SetSizeToReserveSize = false)
 		{
+			if (_bHeap)
+			{
+				_Data = nullptr;
+				_bHeap = true;
+				_bClearDataOnDestroy = true;
+			}
 			_Data = (TypeData *) realloc(_Data, ReserveSize * sizeof(TypeData));
 			if (SetSizeToReserveSize) { _Size = ReserveSize; }
 			_BufferSize = ReserveSize;

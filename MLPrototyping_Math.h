@@ -5,6 +5,7 @@
 #include "Point.h"
 #include <math.h>
 #include <limits.h>
+#include <random>
 
 namespace MLPrototyping
 {
@@ -48,6 +49,107 @@ namespace MLPrototyping
 	{
 		TPoint<4, Type> Point;
 		struct { Type R, G, B, A; };
+	};
+
+	template<typename Type>
+	struct TDistribution
+	{
+		Type operator()() { return Next(); }
+
+		template<size_t SizeLhs>
+		TPoint<SizeLhs, Type> operator()()
+		{
+			TPoint<SizeLhs, Type> Point;
+			
+			for (auto &Value : Point) { Value = Next(); }
+			return Point;
+		}
+
+		template<size_t SizeLhs>
+		void Populate(TPoint<SizeLhs, Type> &Point)
+		{
+			for (auto &Value : Point) { Value = Next(); }
+		}
+
+		void Populate(Type &Value) { Value = Next(); }
+
+		virtual void Seed(size_t SeedIn) = 0;
+
+		virtual Type Next() = 0;
+
+		virtual void Reset() = 0;
+	};
+
+	template<typename Type>
+	struct TNormal : TDistribution<Type>
+	{
+		std::default_random_engine Generator;
+
+		std::normal_distribution<Type> Distribution;
+
+		TNormal()
+		{
+			Generator = std::default_random_engine();
+			Distribution = std::normal_distribution<Type>();
+		}
+		
+		~TNormal() { }
+
+		void Parameters(Type Mean, Type SD)
+		{
+			Distribution.param(std::normal_distribution<Type>::param_type(Mean, SD));
+		}
+
+		virtual void Seed(size_t SeedIn) override
+		{
+			return Generator.seed(static_cast<unsigned int>(SeedIn));
+		}
+
+		virtual Type Next() override
+		{
+			return Distribution(Generator);
+		}
+
+		virtual void Reset() override
+		{
+			Distribution.reset();
+		}
+	};
+
+	template<typename Type>
+	struct TGamma : TDistribution<Type>
+	{
+		std::default_random_engine Generator;
+
+		std::gamma_distribution<Type> Distribution;
+
+		TGamma()
+		{
+			Generator = std::default_random_engine();
+			Distribution = std::gamma_distribution<Type>();
+		}
+
+		~TGamma() { }
+
+		void Parameters(Type Alpha, Type Beta)
+		{
+			Distribution.param(std::gamma_distribution<Type>::param_type(Alpha, Beta));
+		}
+
+		virtual void Seed(size_t SeedIn) override
+		{
+			return Generator.seed(static_cast<unsigned int>(SeedIn));
+		}
+
+		virtual Type Next() override
+		{
+			return Distribution(Generator);
+		}
+
+		virtual void Reset() override
+		{
+			Distribution.reset();
+		}
 	};
 
 	template<typename Type>
@@ -439,6 +541,18 @@ namespace MLPrototyping
 	}
 
 	template<size_t Size, typename Type>
+	void MinInto(TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
+	{
+		size_t Index, End;
+
+		End = Size;
+		for (Index = 0; Index < End; ++Index)
+		{
+			Lhs[Index] = Min(Lhs[Index], Rhs[Index]);
+		}
+	}
+
+	template<size_t Size, typename Type>
 	TPoint<Size, Type> Max(const TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
 	{
 		size_t Index, End;
@@ -450,6 +564,18 @@ namespace MLPrototyping
 			Result[Index] = Max(Lhs[Index], Rhs[Index]);
 		}
 		return Result;
+	}
+
+	template<size_t Size, typename Type>
+	void MaxInto(TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
+	{
+		size_t Index, End;
+
+		End = Size;
+		for (Index = 0; Index < End; ++Index)
+		{
+			Lhs[Index] = Max(Lhs[Index], Rhs[Index]);
+		}
 	}
 
 

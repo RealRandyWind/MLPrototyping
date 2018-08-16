@@ -56,6 +56,22 @@ namespace MLPrototypingTest
 			Assert::AreEqual(Min(Maximum, Upper), Upper, L"", LINE_INFO());
 		}
 
+		TEST_METHOD(TestDistribution)
+		{
+			const real_t Mean = -.5, SD = 1.5;
+			const size_t N0 = 0;
+			real_t Number;
+			TPoint<4096, real_t> PND;
+
+			TNormal<real_t> NDistribution;
+			NDistribution.Seed(N0);
+			NDistribution.Parameters(Mean, SD);
+			PND = NDistribution();
+			Number = NDistribution();
+			NDistribution.Populate(PND);
+			NDistribution.Populate(Number);
+		}
+
 		TEST_METHOD(TestSum)
 		{
 			const size_t ND1 = 1, ND2 = 2, ND3 = 3, NDN = 4096;

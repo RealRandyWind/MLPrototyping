@@ -45,6 +45,9 @@
     <ClInclude Include="MLPrototyping_Math.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MLPrototyping_Parameters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

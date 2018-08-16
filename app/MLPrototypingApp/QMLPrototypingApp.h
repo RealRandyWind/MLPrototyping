@@ -4,6 +4,7 @@
 #include <QtCore\QtCore>
 #include <QtGui\QtGui>
 #include <QtWidgets\QtWidgets>
+#include <QtCharts\QtCharts>
 
 using namespace MLPrototyping;
 
@@ -23,15 +24,17 @@ namespace MLPrototypingApp
 	private:
 		CMLPrototyping *API;
 
-		QLabel *Canvas;
+		QPainter *Painter;
+
+		QChartView *Canvas;
 
 		QStatusBar* MainStatusBar;
+
+		QScatterSeries *Series;
 
 
 		/* Menus */
 		QMenu* FileMenu;
-
-		QMenu* ProjectMenu;
 
 		QMenu* SelectMenu;
 
@@ -39,7 +42,16 @@ namespace MLPrototypingApp
 
 
 		/* Actions */
+		QActionGroup* DataActionGroup;
+
+		QActionGroup* ModelActionGroup;
+
+
 		QAction* ExitAction;
+
+		QAction* GenerateNormalDataAction;
+
+		QAction* GenerateGammaDataAction;
 
 
 		void CreateMain();
@@ -54,6 +66,11 @@ namespace MLPrototypingApp
 		void contextMenuEvent(QContextMenuEvent *Event) override;
 #endif
 
+	public slots:
+
+		void GenerateNormalData();
+
+		void GenerateGammaData();
 
 	};
 
