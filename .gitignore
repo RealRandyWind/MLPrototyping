@@ -17,8 +17,8 @@
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
-x64/
-x86/
+#x64/
+#x86/
 bld/
 [Bb]in/
 [Oo]bj/
@@ -289,6 +289,6 @@ __pycache__/
 
 # Custom
 _local
-deps
+dep
 resources
 bin

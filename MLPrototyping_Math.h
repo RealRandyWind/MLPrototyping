@@ -54,25 +54,32 @@ namespace MLPrototyping
 	template<typename Type>
 	struct TDistribution
 	{
+		Type &operator()(Type &Value) { Value = Next();  return Value; }
+
+		template<size_t SizeLhs>
+		TPoint<SizeLhs, Type> &operator()(TPoint<SizeLhs, Type> &Point)
+		{
+			for (auto &Value : Point) { Value = Next(); }
+			return Point;
+		}
+
 		Type operator()() { return Next(); }
 
 		template<size_t SizeLhs>
 		TPoint<SizeLhs, Type> operator()()
 		{
 			TPoint<SizeLhs, Type> Point;
-			
+
 			for (auto &Value : Point) { Value = Next(); }
 			return Point;
 		}
 
+		/*
+		const Type operator()() const { return *this(); }
+
 		template<size_t SizeLhs>
-		void Populate(TPoint<SizeLhs, Type> &Point)
-		{
-			for (auto &Value : Point) { Value = Next(); }
-		}
-
-		void Populate(Type &Value) { Value = Next(); }
-
+		const TPoint<SizeLhs, Type> operator()() const { return *this(); }
+		*/
 		virtual void Seed(size_t SeedIn) = 0;
 
 		virtual Type Next() = 0;
@@ -92,7 +99,7 @@ namespace MLPrototyping
 			Generator = std::default_random_engine();
 			Distribution = std::normal_distribution<Type>();
 		}
-		
+
 		~TNormal() { }
 
 		void Parameters(Type Mean, Type SD)
@@ -153,6 +160,42 @@ namespace MLPrototyping
 	};
 
 	template<typename Type>
+	struct TUniform : TDistribution<Type>
+	{
+		std::default_random_engine Generator;
+
+		std::uniform_real_distribution<Type> Distribution;
+
+		TUniform()
+		{
+			Generator = std::default_random_engine();
+			Distribution = std::uniform_real_distribution<Type>();
+		}
+
+		~TUniform() { }
+
+		void Parameters(Type Lower, Type Upper)
+		{
+			Distribution.param(std::uniform_real_distribution<Type>::param_type(Lower, Upper));
+		}
+
+		virtual void Seed(size_t SeedIn) override
+		{
+			return Generator.seed(static_cast<unsigned int>(SeedIn));
+		}
+
+		virtual Type Next() override
+		{
+			return Distribution(Generator);
+		}
+
+		virtual void Reset() override
+		{
+			Distribution.reset();
+		}
+	};
+
+	template<typename Type>
 	struct TLimit
 	{
 		static Type Upper()
@@ -184,6 +227,25 @@ namespace MLPrototyping
 		{
 			if (!std::numeric_limits<Type>::has_quiet_NaN) { return Type(); }
 			return std::numeric_limits<Type>::quiet_NaN();
+		}
+	};
+
+	template<typename Type>
+	struct TAngle
+	{
+		static Type Sin(Type Theta)
+		{
+			return sin<Type>(Theta);
+		}
+
+		static Type Cos(Type Theta)
+		{
+			return cos<Type>(Theta);
+		}
+
+		static Type Tan(Type Theta)
+		{
+			return tan<Type>(Theta);
 		}
 	};
 

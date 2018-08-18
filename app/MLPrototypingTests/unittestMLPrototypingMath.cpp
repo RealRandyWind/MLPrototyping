@@ -68,8 +68,8 @@ namespace MLPrototypingTest
 			NDistribution.Parameters(Mean, SD);
 			PND = NDistribution();
 			Number = NDistribution();
-			NDistribution.Populate(PND);
-			NDistribution.Populate(Number);
+			NDistribution(PND);
+			NDistribution(Number);
 		}
 
 		TEST_METHOD(TestSum)
