@@ -28,9 +28,9 @@ namespace MLPrototyping
 
 		void ModelData(TData<FGammaDataParameters::FPoint> &, TSequence<FGammaDataParameters> &, size_t = 0);
 
-		void ModelData(TData<FHyperRingDataParameters::FPoint> &, FHyperRingDataParameters &, size_t = 0);
+		void ModelData(TData<FRingDataParameters::FPoint> &, FRingDataParameters &, size_t = 0);
 
-		void ModelData(TData<FHyperRingDataParameters::FPoint> &, TSequence<FHyperRingDataParameters> &, size_t = 0);
+		void ModelData(TData<FRingDataParameters::FPoint> &, TSequence<FRingDataParameters> &, size_t = 0);
 
 
 	private:

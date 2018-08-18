@@ -6,9 +6,11 @@
 #define MLPrototypingApp_Title tr("MLPrototyping")
 #define MLPrototypingApp_FileTitle tr("File")
 #define MLPrototypingApp_SelectTitle tr("Select")
+#define MLPrototypingApp_GenerateTitle tr("Generate")
 #define MLPrototypingApp_ExitTile tr("Exit")
-#define MLPrototypingApp_GenerateNormalDataTile tr("Generate Normal")
-#define MLPrototypingApp_GenerateGammaDataTile tr("Generate Gamma")
+#define MLPrototypingApp_GenerateNormalDataTile tr("Normal Data")
+#define MLPrototypingApp_GenerateGammaDataTile tr("Gamma Data")
+#define MLPrototypingApp_GenerateRingDataTile tr("Ring Data")
 #define MLPrototypingApp_WindowSize QSize(720, 720)
 #define MLPrototypingApp_ImageFormat QImage::Format_RGBA8888
 #define MLPrototypingApp_Disabled false
@@ -57,9 +59,14 @@ void QMLPrototypingApp::CreateActions()
 	GenerateGammaDataAction->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::ALT + Qt::Key_G));
 	connect(GenerateGammaDataAction, SIGNAL(triggered()), this, SLOT(GenerateGammaData()));
 
+	GenerateRingDataAction = new QAction(MLPrototypingApp_GenerateRingDataTile, this);
+	GenerateRingDataAction->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::ALT + Qt::Key_R));
+	connect(GenerateRingDataAction, SIGNAL(triggered()), this, SLOT(GenerateRingData()));
+
 	DataActionGroup = new QActionGroup(this);
 	DataActionGroup->addAction(GenerateNormalDataAction);
 	DataActionGroup->addAction(GenerateGammaDataAction);
+	DataActionGroup->addAction(GenerateRingDataAction);
 }
 
 void QMLPrototypingApp::CreateMenus()
@@ -69,8 +76,11 @@ void QMLPrototypingApp::CreateMenus()
 	FileMenu->addAction(ExitAction);
 
 	SelectMenu = menuBar()->addMenu(MLPrototypingApp_SelectTitle);
-	SelectMenu->setEnabled(MLPrototypingApp_Enable);
-	SelectMenu->addActions(DataActionGroup->actions());
+	SelectMenu->setEnabled(MLPrototypingApp_Disabled);
+
+	GenerateMenu = menuBar()->addMenu(MLPrototypingApp_GenerateTitle);
+	GenerateMenu->setEnabled(MLPrototypingApp_Enable);
+	GenerateMenu->addActions(DataActionGroup->actions());
 
 	ContextMenu = new QMenu(this);
 	ContextMenu->addActions(DataActionGroup->actions());
@@ -146,6 +156,48 @@ void QMLPrototypingApp::GenerateGammaData()
 	List[1].Norm = 0.6;
 	List[1].Mean = { -2, 0 };
 	List[1].Along = { 1, 0 };
+
+	API->ModelData(Data, List);
+
+	for (auto &Point : Data)
+	{
+		Series->append(Point[0], Point[1]);
+	}
+
+	auto Chart = Canvas->chart();
+	auto Legend = Chart->legend();
+	Chart->setTitle("Scatter Plot 2D");
+	Chart->setDropShadowEnabled(false);
+	Chart->createDefaultAxes();
+	Chart->axisX()->setRange(-8, 8);
+	Chart->axisY()->setRange(-8, 8);
+	Legend->setMarkerShape(QLegend::MarkerShapeFromSeries);
+}
+
+void QMLPrototypingApp::GenerateRingData()
+{
+	TData<FRingDataParameters::FPoint> Data;
+	TSequence<FRingDataParameters> List;
+
+	auto API = CMLPrototyping::GetInstance();
+
+	Series->clear();
+	Series->setName("Ring Data");
+	Series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
+	Series->setMarkerSize(6.0);
+	Series->setBorderColor(Qt::transparent);
+
+	List.Reserve(2, true);
+	List[0].N = 1024;
+	List[0].SD = 0.2;
+	List[0].Readius = 2.5;
+	List[0].Norm = 1;
+	List[0].Mean = { 4, 4 };
+	List[1].N = 1024;
+	List[1].SD = 0.5;
+	List[1].Readius = 3;
+	List[1].Norm = 1;
+	List[1].Mean = { -4, -4 };
 
 	API->ModelData(Data, List);
 

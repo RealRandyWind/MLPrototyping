@@ -70,6 +70,22 @@ namespace MLPrototypingTest
 			Number = NDistribution();
 			NDistribution(PND);
 			NDistribution(Number);
+
+			TGamma<real_t> GDistribution;
+			GDistribution.Seed(N0);
+			GDistribution.Parameters(Mean, SD);
+			PND = GDistribution();
+			Number = GDistribution();
+			GDistribution(PND);
+			GDistribution(Number);
+
+			TUniform<real_t> UDistribution;
+			UDistribution.Seed(N0);
+			UDistribution.Parameters(Mean, SD);
+			PND = UDistribution();
+			Number = UDistribution();
+			UDistribution(PND);
+			UDistribution(Number);
 		}
 
 		TEST_METHOD(TestSum)

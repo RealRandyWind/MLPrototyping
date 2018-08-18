@@ -9,6 +9,9 @@
 
 namespace MLPrototyping
 {
+	template<size_t Size, typename Type>
+	using TQuinsor = TPoint<Size, Type>;
+
 	template<typename Type>
 	union TPoint1D
 	{
@@ -74,12 +77,6 @@ namespace MLPrototyping
 			return Point;
 		}
 
-		/*
-		const Type operator()() const { return *this(); }
-
-		template<size_t SizeLhs>
-		const TPoint<SizeLhs, Type> operator()() const { return *this(); }
-		*/
 		virtual void Seed(size_t SeedIn) = 0;
 
 		virtual Type Next() = 0;
@@ -227,25 +224,6 @@ namespace MLPrototyping
 		{
 			if (!std::numeric_limits<Type>::has_quiet_NaN) { return Type(); }
 			return std::numeric_limits<Type>::quiet_NaN();
-		}
-	};
-
-	template<typename Type>
-	struct TAngle
-	{
-		static Type Sin(Type Theta)
-		{
-			return sin<Type>(Theta);
-		}
-
-		static Type Cos(Type Theta)
-		{
-			return cos<Type>(Theta);
-		}
-
-		static Type Tan(Type Theta)
-		{
-			return tan<Type>(Theta);
 		}
 	};
 

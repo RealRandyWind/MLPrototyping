@@ -15,7 +15,7 @@ namespace MLPrototyping
 		FPoint Mean;
 	};
 
-	struct FHyperRingDataParameters
+	struct FRingDataParameters
 	{
 		using FPoint = TPoint<2, real_t>;
 

@@ -38,6 +38,8 @@ namespace MLPrototypingApp
 
 		QMenu* SelectMenu;
 
+		QMenu* GenerateMenu;
+
 		QMenu* ContextMenu;
 
 
@@ -52,6 +54,8 @@ namespace MLPrototypingApp
 		QAction* GenerateNormalDataAction;
 
 		QAction* GenerateGammaDataAction;
+
+		QAction* GenerateRingDataAction;
 
 
 		void CreateMain();
@@ -71,6 +75,8 @@ namespace MLPrototypingApp
 		void GenerateNormalData();
 
 		void GenerateGammaData();
+
+		void GenerateRingData();
 
 	};
 
