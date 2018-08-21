@@ -2,14 +2,12 @@
 
 #include "MLPrototyping_Types.h"
 #include "MLPrototyping_Definitions.h"
+#include "Resource.h"
 
 namespace MLPrototyping
 {
 	template<typename TypeData>
-	struct TData;
-
-	template<typename TypeData>
-	struct TData
+	struct TData : public CResource
 	{
 		size_t _Size, _BufferSize;
 		bool_t _bIterateAll, _bClearDataOnDestroy, _bClearDataOnReplace, _bHeap;
@@ -79,6 +77,36 @@ namespace MLPrototyping
 			return _BufferSize;
 		}
 
+		size_t SizeOf()
+		{
+			return sizeof(TypeData) * _Size;
+		}
+
+		const size_t SizeOf() const
+		{
+			return sizeof(TypeData) * _Size;
+		}
+
+		size_t BufferSizeOf()
+		{
+			return sizeof(TypeData) * _BufferSize;
+		}
+
+		const size_t BufferSizeOf() const
+		{
+			return sizeof(TypeData) * _BufferSize;
+		}
+
+		byte_t * Bytes()
+		{
+			return (byte_t *) &_Data[0];
+		}
+
+		const byte_t * Bytes() const
+		{
+			return (byte_t *) &_Data[0];
+		}
+
 		TypeData * Data()
 		{
 			return &_Data[0];
@@ -113,6 +141,7 @@ namespace MLPrototyping
 			_Descriptor.SizeOf = sizeof(TypeData);
 			_Descriptor.Size = _Size;
 			_Descriptor._Size = _BufferSize;
+			_Descriptor.N = 0;
 			_Descriptor.bHeap = _bHeap;
 			_Descriptor.Pointer = (pointer_t) &_Data[0];
 			return _Descriptor;

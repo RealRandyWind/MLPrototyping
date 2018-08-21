@@ -3,13 +3,14 @@
 #include "MLPrototyping_Types.h"
 #include "MLPrototyping_Definitions.h"
 #include "MLPrototyping_Math.h"
+#include "Resource.h"
 #include "Point.h"
 #include "Data.h"
 
 namespace MLPrototyping
 {
 	template<size_t SizeFeature, size_t SizeLabel>
-	struct TModel
+	struct TModel : public CResource
 	{
 		using FFeature = TPoint<SizeFeature, real_t>;
 

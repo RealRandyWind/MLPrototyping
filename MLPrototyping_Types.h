@@ -22,7 +22,7 @@ namespace MLPrototyping
 
 	using block_t = uint64_t;
 
-	using byte_t = unsigned char;
+	using byte_t = char;
 
 	using integer_t = int;
 

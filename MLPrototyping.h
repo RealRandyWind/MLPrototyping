@@ -18,25 +18,43 @@ namespace MLPrototyping
 	public:
 		~CMLPrototyping();
 
-		static CMLPrototyping* GetInstance();
+		static CMLPrototyping* Instance();
 
-		void ModelData(TData<FNormalDataParameters::FPoint> &, FNormalDataParameters &, size_t = 0);
+		/* Normal Data */
 
-		void ModelData(TData<FNormalDataParameters::FPoint> &, TSequence<FNormalDataParameters> &, size_t = 0);
+		void ModelData(TData<FNormalDataParameters::FFeature> &, FNormalDataParameters &, size_t = 0);
 
-		void ModelData(TData<FGammaDataParameters::FPoint> &, FGammaDataParameters &, size_t = 0);
+		void ModelData(TData<FNormalDataParameters::FFeature> &, TSequence<FNormalDataParameters> &, size_t = 0);
 
-		void ModelData(TData<FGammaDataParameters::FPoint> &, TSequence<FGammaDataParameters> &, size_t = 0);
+		void ModelData(TData<FNormalDataParameters::FSample> &, FNormalDataParameters &, size_t = 0);
 
-		void ModelData(TData<FRingDataParameters::FPoint> &, FRingDataParameters &, size_t = 0);
+		void ModelData(TData<FNormalDataParameters::FSample> &, TSequence<FNormalDataParameters> &, size_t = 0);
 
-		void ModelData(TData<FRingDataParameters::FPoint> &, TSequence<FRingDataParameters> &, size_t = 0);
+		/* Gamma Data */
+
+		void ModelData(TData<FGammaDataParameters::FFeature> &, FGammaDataParameters &, size_t = 0);
+
+		void ModelData(TData<FGammaDataParameters::FFeature> &, TSequence<FGammaDataParameters> &, size_t = 0);
+
+		void ModelData(TData<FGammaDataParameters::FSample> &, FGammaDataParameters &, size_t = 0);
+
+		void ModelData(TData<FGammaDataParameters::FSample> &, TSequence<FGammaDataParameters> &, size_t = 0);
+
+		/* Ring Data */
+
+		void ModelData(TData<FRingDataParameters::FFeature> &, FRingDataParameters &, size_t = 0);
+
+		void ModelData(TData<FRingDataParameters::FFeature> &, TSequence<FRingDataParameters> &, size_t = 0);
+
+		void ModelData(TData<FRingDataParameters::FSample> &, FRingDataParameters &, size_t = 0);
+
+		void ModelData(TData<FRingDataParameters::FSample> &, TSequence<FRingDataParameters> &, size_t = 0);
 
 
 	private:
 		CMLPrototyping();
 
-		static CMLPrototyping* Instance;
+		static CMLPrototyping* _Instance;
 
 
 	};

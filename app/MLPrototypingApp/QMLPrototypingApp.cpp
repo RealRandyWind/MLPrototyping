@@ -11,8 +11,8 @@
 #define MLPrototypingApp_GenerateNormalDataTile tr("Normal Data")
 #define MLPrototypingApp_GenerateGammaDataTile tr("Gamma Data")
 #define MLPrototypingApp_GenerateRingDataTile tr("Ring Data")
+#define MLPrototypingApp_ScatterPlotTile tr("Scatter Plot")
 #define MLPrototypingApp_WindowSize QSize(720, 720)
-#define MLPrototypingApp_ImageFormat QImage::Format_RGBA8888
 #define MLPrototypingApp_Disabled false
 #define MLPrototypingApp_Enable true
 #define MLPrototypingApp_Visible true
@@ -22,11 +22,12 @@ using namespace MLPrototypingApp;
 using namespace MLPrototyping;
 
 QMLPrototypingApp::QMLPrototypingApp() :
-	API(CMLPrototyping::GetInstance()),
+	API(CMLPrototyping::Instance()),
 	Canvas(new QChartView(new QChart(), this)),
+	Chart(Canvas->chart()),
 	Series(new QScatterSeries())
 {
-	Canvas ->chart()->addSeries(Series);
+	Chart->addSeries(Series);
 	CreateMain();
 	CreateActions();
 	CreateMenus();
@@ -88,26 +89,22 @@ void QMLPrototypingApp::CreateMenus()
 
 void QMLPrototypingApp::GenerateNormalData()
 {
-	TData<FNormalDataParameters::FPoint> Data;
+	TData<FNormalDataParameters::FFeature> Data;
 	TSequence<FNormalDataParameters> List;
 
-	auto API = CMLPrototyping::GetInstance();
-	
 	Series->clear();
-	Series->setName("Normal Data");
-	Series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
-	Series->setMarkerSize(6.0);
-	Series->setBorderColor(Qt::transparent);
-
 	List.Reserve(3, true);
+	List[0] = FNormalDataParameters::Default();
 	List[0].N = 1024;
 	List[0].SD = 1.2;
 	List[0].Norm = 1;
 	List[0].Mean = { -3, 4 };
+	List[1] = FNormalDataParameters::Default();
 	List[1].N = 1024;
 	List[1].SD = 1;
 	List[1].Norm = 1;
 	List[1].Mean = { -4, -4 };
+	List[2] = FNormalDataParameters::Default();
 	List[2].N = 1024;
 	List[2].SD = 0.8;
 	List[2].Norm = 1;
@@ -120,100 +117,90 @@ void QMLPrototypingApp::GenerateNormalData()
 		Series->append(Point[0], Point[1]);
 	}
 
-	auto Chart = Canvas->chart();
-	auto Legend = Chart->legend();
-	Chart->setTitle("Scatter Plot 2D");
-	Chart->setDropShadowEnabled(false);
-	Chart->createDefaultAxes();
-	Chart->axisX()->setRange(-8, 8);
-	Chart->axisY()->setRange(-8, 8);
-	Legend->setMarkerShape(QLegend::MarkerShapeFromSeries);
-}
-
-void QMLPrototypingApp::GenerateGammaData()
-{
-	TData<FGammaDataParameters::FPoint> Data;
-	TSequence<FGammaDataParameters> List;
-
-	auto API = CMLPrototyping::GetInstance();
-
-	Series->clear();
-	Series->setName("Gamma Data");
+	Series->setName(MLPrototypingApp_GenerateNormalDataTile);
 	Series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
 	Series->setMarkerSize(6.0);
 	Series->setBorderColor(Qt::transparent);
 
-	List.Reserve(2, true);
-	List[0].N = 1024;
-	List[0].Alpha = 1.2;
-	List[0].Beta = 2.8;
-	List[0].Norm = 0.6;
-	List[0].Mean = { -6, -6 };
-	List[0].Along = { 1, 1 };
-	List[1].N = 1024;
-	List[1].Alpha = 2.0;
-	List[1].Beta = 2.0;
-	List[1].Norm = 0.6;
-	List[1].Mean = { -2, 0 };
-	List[1].Along = { 1, 0 };
+	Chart->legend()->setMarkerShape(QLegend::MarkerShapeFromSeries);
+	Chart->setTitle(MLPrototypingApp_ScatterPlotTile);
+	Chart->setDropShadowEnabled(false);
+	Chart->createDefaultAxes();
+	Chart->axisX()->setRange(-8, 8);
+	Chart->axisY()->setRange(-8, 8);
+}
 
-	API->ModelData(Data, List);
+void QMLPrototypingApp::GenerateGammaData()
+{
+	TData<FGammaDataParameters::FFeature> Data;
+	FGammaDataParameters Item;
+
+	Series->clear();
+	Item = FGammaDataParameters::Default();
+	Item.N = 1024;
+	Item.Alpha = 1.2;
+	Item.Beta = 2.8;
+	Item.Norm = 0.6;
+	Item.Mean = { -6, -6 };
+
+	API->ModelData(Data, Item);
 
 	for (auto &Point : Data)
 	{
 		Series->append(Point[0], Point[1]);
 	}
 
-	auto Chart = Canvas->chart();
-	auto Legend = Chart->legend();
-	Chart->setTitle("Scatter Plot 2D");
-	Chart->setDropShadowEnabled(false);
-	Chart->createDefaultAxes();
-	Chart->axisX()->setRange(-8, 8);
-	Chart->axisY()->setRange(-8, 8);
-	Legend->setMarkerShape(QLegend::MarkerShapeFromSeries);
-}
-
-void QMLPrototypingApp::GenerateRingData()
-{
-	TData<FRingDataParameters::FPoint> Data;
-	TSequence<FRingDataParameters> List;
-
-	auto API = CMLPrototyping::GetInstance();
-
-	Series->clear();
-	Series->setName("Ring Data");
+	Series->setName(MLPrototypingApp_GenerateGammaDataTile);
 	Series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
 	Series->setMarkerSize(6.0);
 	Series->setBorderColor(Qt::transparent);
 
+	Chart->legend()->setMarkerShape(QLegend::MarkerShapeFromSeries);
+	Chart->setTitle(MLPrototypingApp_ScatterPlotTile);
+	Chart->setDropShadowEnabled(false);
+	Chart->createDefaultAxes();
+	Chart->axisX()->setRange(-8, 8);
+	Chart->axisY()->setRange(-8, 8);
+}
+
+void QMLPrototypingApp::GenerateRingData()
+{
+	TData<FRingDataParameters::FFeature> Data;
+	TSequence<FRingDataParameters> List;
+	
+	Series->clear();
 	List.Reserve(2, true);
+	List[0] = FRingDataParameters::Default();
 	List[0].N = 1024;
-	List[0].SD = 0.2;
-	List[0].Readius = 2.5;
+	List[0].SD = 1.0;
+	List[0].Readius = 4;
 	List[0].Norm = 1;
-	List[0].Mean = { 4, 4 };
+	List[0].Mean = { 2, 2 };
+	List[1] = FRingDataParameters::Default();
 	List[1].N = 1024;
 	List[1].SD = 0.5;
-	List[1].Readius = 3;
+	List[1].Readius = 2;
 	List[1].Norm = 1;
 	List[1].Mean = { -4, -4 };
 
 	API->ModelData(Data, List);
 
 	for (auto &Point : Data)
-	{
+	{		
 		Series->append(Point[0], Point[1]);
 	}
 
-	auto Chart = Canvas->chart();
-	auto Legend = Chart->legend();
-	Chart->setTitle("Scatter Plot 2D");
+	Series->setName(MLPrototypingApp_GenerateRingDataTile);
+	Series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
+	Series->setMarkerSize(6.0);
+	Series->setBorderColor(Qt::transparent);
+
+	Chart->legend()->setMarkerShape(QLegend::MarkerShapeFromSeries);
+	Chart->setTitle(MLPrototypingApp_ScatterPlotTile);
 	Chart->setDropShadowEnabled(false);
 	Chart->createDefaultAxes();
 	Chart->axisX()->setRange(-8, 8);
 	Chart->axisY()->setRange(-8, 8);
-	Legend->setMarkerShape(QLegend::MarkerShapeFromSeries);
 }
 
 #ifndef QT_NO_CONTEXTMENU

@@ -6,9 +6,6 @@
 namespace MLPrototyping
 {
 	template<size_t SizeData, typename TypeData>
-	struct TPoint;
-
-	template<size_t SizeData, typename TypeData>
 	struct TPoint
 	{
 		TypeData _Data[SizeData];
@@ -21,6 +18,26 @@ namespace MLPrototyping
 		const size_t Size() const
 		{
 			return SizeData;
+		}
+
+		size_t SizeOf()
+		{
+			return sizeof(TypeData) * SizeData;
+		}
+
+		const size_t SizeOf() const
+		{
+			return sizeof(TypeData) * SizeData;
+		}
+
+		byte_t * Bytes()
+		{
+			return (byte_t *) &_Data[0];
+		}
+
+		const byte_t * Bytes() const
+		{
+			return (byte_t *) &_Data[0];
 		}
 
 		TypeData * Data()
@@ -41,6 +58,7 @@ namespace MLPrototyping
 			_Descriptor.SizeOf = sizeof(TypeData);
 			_Descriptor.Size = SizeData;
 			_Descriptor._Size = SizeData;
+			_Descriptor.N = 0;
 			_Descriptor.bHeap = false;
 			_Descriptor.Pointer = (pointer_t) &_Data[0];
 			return _Descriptor;

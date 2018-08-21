@@ -14,6 +14,28 @@ namespace MLPrototypingTest
 	TEST_CLASS(UnitTestMLPrototypingMath)
 	{
 	public:
+		TEST_METHOD(TestQuinsor)
+		{
+			const size_t N0 = 0, ND1 = 1, ND2 = 2, ND3 = 3, NDN = 4096;
+			const real_t Zero = 0, One = 1, Two = 2 , Half = .5;
+			size_t Index, End;
+			/*
+			TPoint<ND1, real_t> P1;
+			TQuinsor<ND1, real_t> Q1, R1;
+			Q1 = Half;
+			Q1[ND1 - 1] = 1;
+			P1 = Two;
+			IntoPoint(P1, Q1);
+			Assert::AreEqual(One, Norm(P1), L"", LINE_INFO());
+			IntoQuinsor(R1, P1);
+			End = ND1;
+			for (Index = 0; Index < End; ++Index)
+			{
+				Assert::AreEqual(Q1[Index], R1[Index], L"", LINE_INFO());
+			}
+			*/
+		}
+
 		TEST_METHOD(TestPointTypes)
 		{
 			const real_t Zero = 0, Half = .5, One = 1, OneHalf = 1.5;
@@ -58,14 +80,14 @@ namespace MLPrototypingTest
 
 		TEST_METHOD(TestDistribution)
 		{
-			const real_t Mean = -.5, SD = 1.5;
+			const real_t Parm1 = .5, Parm2 = 1.5;
 			const size_t N0 = 0;
 			real_t Number;
 			TPoint<4096, real_t> PND;
 
 			TNormal<real_t> NDistribution;
 			NDistribution.Seed(N0);
-			NDistribution.Parameters(Mean, SD);
+			NDistribution.Parameters(Parm1, Parm2);
 			PND = NDistribution();
 			Number = NDistribution();
 			NDistribution(PND);
@@ -73,7 +95,7 @@ namespace MLPrototypingTest
 
 			TGamma<real_t> GDistribution;
 			GDistribution.Seed(N0);
-			GDistribution.Parameters(Mean, SD);
+			GDistribution.Parameters(Parm1, Parm2);
 			PND = GDistribution();
 			Number = GDistribution();
 			GDistribution(PND);
@@ -81,7 +103,7 @@ namespace MLPrototypingTest
 
 			TUniform<real_t> UDistribution;
 			UDistribution.Seed(N0);
-			UDistribution.Parameters(Mean, SD);
+			UDistribution.Parameters(Parm1, Parm2);
 			PND = UDistribution();
 			Number = UDistribution();
 			UDistribution(PND);

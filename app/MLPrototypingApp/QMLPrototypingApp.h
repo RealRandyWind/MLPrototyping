@@ -30,6 +30,8 @@ namespace MLPrototypingApp
 
 		QStatusBar* MainStatusBar;
 
+		QChart *Chart;
+
 		QScatterSeries *Series;
 
 

@@ -52,6 +52,7 @@ namespace MLPrototyping
 	{
 		TPoint<4, Type> Point;
 		struct { Type R, G, B, A; };
+		struct { Type C, M, Y, K; };
 	};
 
 	template<typename Type>
@@ -617,7 +618,22 @@ namespace MLPrototyping
 			Lhs[Index] = Max(Lhs[Index], Rhs[Index]);
 		}
 	}
+	
+	/*
+	template<size_t Size, typename Type>
+	TPoint<Size, Type> &IntoPoint(TPoint<Size, Type> &Lhs, const TQuinsor<Size, Type> &Rhs)
+	{
+		size_t Index, End;
+		Type Scale, Theta;
 
+	}
 
+	template<size_t Size, typename Type>
+	TQuinsor<Size, Type> &IntoQuinsor(TQuinsor<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
+	{
+		size_t Index, End;
+		Type Scale, Theta;
+	}
+	*/
 
 }

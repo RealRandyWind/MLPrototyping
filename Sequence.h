@@ -6,9 +6,6 @@
 namespace MLPrototyping
 {
 	template<typename TypeData>
-	struct TSequence;
-
-	template<typename TypeData>
 	struct TSequence
 	{
 		size_t _Size, _BufferSize, _ActiveIndex, _LastIndex, _IncrementSize;
@@ -152,6 +149,36 @@ namespace MLPrototyping
 			return _BufferSize;
 		}
 
+		size_t SizeOf()
+		{
+			return sizeof(TypeData) * _Size;
+		}
+
+		const size_t SizeOf() const
+		{
+			return sizeof(TypeData) * _Size;
+		}
+
+		size_t BufferSizeOf()
+		{
+			return sizeof(TypeData) * _BufferSize;
+		}
+
+		const size_t BufferSizeOf() const
+		{
+			return sizeof(TypeData) * _BufferSize;
+		}
+
+		byte_t * Bytes()
+		{
+			return (byte_t *) &_Data[0];
+		}
+
+		const byte_t * Bytes() const
+		{
+			return (byte_t *) &_Data[0];
+		}
+
 		TypeData * Data()
 		{
 			return &_Data[0];
@@ -209,7 +236,8 @@ namespace MLPrototyping
 
 		const TypeData & operator[](size_t Index) const
 		{
-			return *this[Index];
+			if (Index >= _Size) { exit(failure); }
+			return _Data[Index];
 		}
 
 		void Reserve(size_t ReserveSize, bool_t SetSizeToReserveSize = false)
