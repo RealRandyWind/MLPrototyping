@@ -50,7 +50,7 @@ namespace MLPrototyping
 			return &_Data[SizeData];
 		}
 
-		FDescriptor Descriptor()
+		const FDescriptor Descriptor() const
 		{
 			FDescriptor _Descriptor;
 
@@ -62,11 +62,6 @@ namespace MLPrototyping
 			_Descriptor.bHeap = false;
 			_Descriptor.Pointer = (pointer_t) &_Data[0];
 			return _Descriptor;
-		}
-
-		const FDescriptor Descriptor() const
-		{
-			return Descriptor();
 		}
 
 		TypeData & operator[](size_t Index)

@@ -128,12 +128,7 @@ namespace MLPrototyping
 			return &_Data[0];
 		}
 
-		const TypeData *Data(TypeData *Pointer, size_t SizeData, size_t SizeBuffer = 0, bool_t bHeap = true) const
-		{
-			return Data(Pointer, SizeData, SizeBuffer, bHeap);
-		}
-
-		FDescriptor Descriptor()
+		const FDescriptor Descriptor() const
 		{
 			FDescriptor _Descriptor;
 
@@ -145,11 +140,6 @@ namespace MLPrototyping
 			_Descriptor.bHeap = _bHeap;
 			_Descriptor.Pointer = (pointer_t) &_Data[0];
 			return _Descriptor;
-		}
-
-		const FDescriptor Descriptor() const
-		{
-			return Descriptor();
 		}
 
 		TypeData & operator[](size_t Index)

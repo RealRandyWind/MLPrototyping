@@ -13,13 +13,13 @@ namespace MLPrototyping
 {
 	class MLPrototyping_Exports CResource;
 	
-	struct MLPrototyping_Exports FResourceSlot
+	struct MLPrototyping_Exports _FResource
 	{
 		size_t Id;
 		CResource *Pointer;
 	};
 
-	template struct MLPrototyping_Exports TSequence<FResourceSlot>;
+	template struct MLPrototyping_Exports TSequence<_FResource>;
 
 	class MLPrototyping_Exports CResource
 	{
@@ -46,7 +46,7 @@ namespace MLPrototyping
 
 		static size_t _NextId;
 		static size_t _Count;
-		static TSequence<FResourceSlot> _List;
+		static TSequence<_FResource> _List;
 
 
 	};

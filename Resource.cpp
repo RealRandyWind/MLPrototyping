@@ -5,7 +5,7 @@ using namespace MLPrototyping;
 
 size_t CResource::_NextId = 0;
 size_t CResource::_Count = 0;
-TSequence<FResourceSlot> CResource::_List = TSequence<FResourceSlot>();
+TSequence<_FResource> CResource::_List = TSequence<_FResource>();
 
 CResource::CResource()
 {
