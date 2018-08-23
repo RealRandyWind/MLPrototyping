@@ -16,8 +16,9 @@ namespace MLPrototyping
 
 			struct FParameters
 			{
-				real_t LearningRate;
-				size_t KNearest, NPrototypes;
+				real_t LearningRate, GenerateSD;
+				size_t KNearest, NPrototypes, GenerateSeed;
+				FFeature GenerateMean;
 			};
 
 			struct FNeighbour
@@ -40,16 +41,28 @@ namespace MLPrototyping
 		protected:
 			virtual void _Initialize() override
 			{
+				const real_t Zero = 0;
+				TNormal<real_t> Distribution;
+				
 				if (Parameters.KNearest > Parameters.NPrototypes) { return;  }
+				
+				Distribution.Seed(Parameters.GenerateSeed);
+				Distribution.Parameters(Zero, Parameters.GenerateSD);
 
 				State.Prototypes.Reserve(Parameters.NPrototypes, true);
 				State.Neighbours.Reserve(Parameters.KNearest, true);
 				
-				for (auto &Prototype : State.Prototypes) { Prototype = { 0 }; }
+				for (auto &Prototype : State.Prototypes)
+				{
+					Prototype.Label = 0;
+					Distribution(Prototype.Feature);
+				}
+				
 				for (auto &Neighbour : State.Neighbours)
 				{
-					Neighbour = { 0 };
 					Neighbour.Distance2 = TLimit<real_t>::Infinity();
+					Neighbour.Direction = 0;
+					Neighbour.Prototype = nullptr;
 				}
 			}
 
