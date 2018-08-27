@@ -70,7 +70,7 @@ namespace MLPrototyping
 			for (const auto &Sample : Samples)
 			{
 				_Use(Sample.Feature, Label);
-				_Train(Label, Sample.Label);
+				_Train(Label, Sample);
 			}
 		}
 
@@ -132,7 +132,7 @@ namespace MLPrototyping
 
 		virtual void _Use(const FFeature &, FLabel &) = 0;
 
-		virtual void _Train(const FLabel &, const FLabel &) = 0;
+		virtual void _Train(const FLabel &, const FSample &) = 0;
 
 		virtual void _Optimize(const FSample &) { }
 
