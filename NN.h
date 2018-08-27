@@ -60,11 +60,13 @@ namespace MLPrototyping
 				State.Neighbours.IterateAll(false);
 			}
 
-			virtual void _Use(const FFeature &Feature, FLabel &Label) override
+			virtual void _Use(const FFeature &Feature, FLabel &Label, bool_t bTraining) override
 			{
 				real_t Distance2;
 				const real_t One = 1;
 				const real_t OneByKNearest = One / Parameters.KNearest;
+				
+				if (bTraining) { return; }
 
 				for (auto &Prototype : State.Prototypes)
 				{

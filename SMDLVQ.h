@@ -10,7 +10,7 @@ namespace MLPrototyping
 	namespace LVQ
 	{
 		template<size_t SizeFeature, size_t SizeLabel>
-		struct TLVQ1 : public TModel<SizeFeature, SizeLabel>
+		struct TSMDLVQ : public TModel<SizeFeature, SizeLabel>
 		{
 			using FPrototype = FSample;
 
