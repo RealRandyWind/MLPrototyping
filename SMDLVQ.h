@@ -12,12 +12,19 @@ namespace MLPrototyping
 		template<size_t SizeFeature, size_t SizeLabel>
 		struct TSMDLVQ : public TModel<SizeFeature, SizeLabel>
 		{
-			using FPrototype = FSample;
+			struct FPrototype
+			{
+				FLabel Label;
+				FFeature Feature, Direction;
+				real_t Positive, Negative, SD;
+				FPrototype *Alter;
+			};
 
 			struct FParameters
 			{
-				real_t LearningRate;
+				real_t LearningRate, SplitTreshold, MergeTreshold;
 				size_t KNearest, NPrototypes;
+				bool_t Dynamic;
 			};
 
 			struct FNeighbour
