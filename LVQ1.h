@@ -58,6 +58,7 @@ namespace MLPrototyping
 				for (auto &Prototype : State.Prototypes)
 				{
 					Prototype.Label = 0;
+					Prototype.Feature = 0;
 				}
 				
 				for (auto &Neighbour : State.Neighbours)
@@ -74,7 +75,8 @@ namespace MLPrototyping
 				FFeature Direction;
 				const real_t One = 1;
 				const real_t OneByKNearest = One / Parameters.KNearest;
-
+				
+				State.Neighbours.Reset();
 				for (auto &Prototype : State.Prototypes)
 				{
 					Direction = Prototype.Feature - Feature;
@@ -86,7 +88,7 @@ namespace MLPrototyping
 					}
 				}
 
-				Label = { 0 };
+				Label = 0;
 				for (const auto &Neighbour : State.Neighbours)
 				{
 					Label += Neighbour.Prototype->Label;

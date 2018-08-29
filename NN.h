@@ -67,7 +67,8 @@ namespace MLPrototyping
 				const real_t OneByKNearest = One / Parameters.KNearest;
 				
 				if (bTraining) { return; }
-
+				
+				State.Neighbours.Reset();
 				for (auto &Prototype : State.Prototypes)
 				{
 					Distance2 = Norm2(Prototype.Feature - Feature);
@@ -77,7 +78,7 @@ namespace MLPrototyping
 					}
 				}
 
-				Label = { 0 };
+				Label = 0;
 				for (const auto &Neighbour : State.Neighbours)
 				{
 					Label += Neighbour.Prototype->Label;

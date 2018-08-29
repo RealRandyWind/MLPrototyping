@@ -80,6 +80,11 @@ namespace MLPrototyping
 		{
 			_bSizeOnAccess = IsTrue;
 		}
+		
+		void Reset()
+		{
+			_Size = _ActiveIndex = _LastIndex = 0;
+		}
 
 		void Add(TypeData Rhs)
 		{
