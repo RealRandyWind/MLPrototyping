@@ -17,7 +17,7 @@ namespace MLPrototyping
 				FLabel Label;
 				FFeature Feature, Direction;
 				real_t Positive, Negative, SD;
-				FPrototype *Alter;
+				FPrototype *Partner;
 			};
 
 			struct FParameters
@@ -73,7 +73,7 @@ namespace MLPrototyping
 					Prototype.Positive = 0;
 					Prototype.Negative = 0;
 					Prototype.SD = 0;
-					Prototype.Alter = nullptr;
+					Prototype.Partner = nullptr;
 				}
 				
 				State.Neighbors.IterateAll();

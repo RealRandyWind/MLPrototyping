@@ -292,3 +292,4 @@ _local
 dep
 resources
 bin
+*.code-workspace
