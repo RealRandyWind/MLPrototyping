@@ -10,14 +10,21 @@ namespace MLPrototyping
 	namespace LVQ
 	{
 		template<size_t SizeFeature, size_t SizeLabel>
-		struct TLVQ1 : public TModel<SizeFeature, SizeLabel>
+		struct TSMDLVQ : public TModel<SizeFeature, SizeLabel>
 		{
-			using FPrototype = FSample;
+			struct FPrototype
+			{
+				FLabel Label;
+				FFeature Feature, Direction;
+				real_t Positive, Negative, SD;
+				FPrototype *Partner;
+			};
 
 			struct FParameters
 			{
-				real_t LearningRate;
+				real_t LearningRate, SplitTreshold, MergeTreshold;
 				size_t KNearest, NPrototypes;
+				bool_t bDynamic;
 			};
 
 			struct FNeighbour
@@ -36,6 +43,11 @@ namespace MLPrototyping
 			FParameters Parameters;
 			FState State;
 			
+			TSequence<FPrototype> Prototypes()
+			{
+				return State.Prototypes;
+			}
+			
 			const TSequence<FPrototype> Prototypes() const
 			{
 				return State.Prototypes;
@@ -50,23 +62,28 @@ namespace MLPrototyping
 		protected:
 			virtual void _Initialize() override
 			{
-				if (Parameters.KNearest > Parameters.NPrototypes) { return;  }
-
 				State.Prototypes.Reserve(Parameters.NPrototypes, true);
-				State.Neighbours.Reserve(Parameters.KNearest, true);
+				State.Neighbours.Reserve(Parameters.KNearest);
 				
 				for (auto &Prototype : State.Prototypes)
 				{
 					Prototype.Label = 0;
 					Prototype.Feature = 0;
+					Prototype.Direction = 0;
+					Prototype.Positive = 0;
+					Prototype.Negative = 0;
+					Prototype.SD = 0;
+					Prototype.Partner = nullptr;
 				}
 				
+				State.Neighbors.IterateAll();
 				for (auto &Neighbour : State.Neighbours)
 				{
 					Neighbour.Distance2 = TLimit<real_t>::Infinity();
 					Neighbour.Direction = 0;
 					Neighbour.Prototype = nullptr;
 				}
+				State.Neighbors.IterateAll(false);
 			}
 
 			virtual void _Use(const FFeature &Feature, FLabel &Label, bool_t bTraining) override

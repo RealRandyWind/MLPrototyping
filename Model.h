@@ -66,11 +66,11 @@ namespace MLPrototyping
 			FLabel Label;
 
 			if (!_bInitialized) { return; }
-
+			
 			for (const auto &Sample : Samples)
 			{
-				_Use(Sample.Feature, Label);
-				_Train(Label, Sample.Label);
+				_Use(Sample.Feature, Label, true);
+				_Train(Label, Sample);
 			}
 		}
 
@@ -130,9 +130,9 @@ namespace MLPrototyping
 	protected:
 		virtual void _Initialize() = 0;
 
-		virtual void _Use(const FFeature &, FLabel &) = 0;
+		virtual void _Use(const FFeature &, FLabel &, bool_t = false) = 0;
 
-		virtual void _Train(const FLabel &, const FLabel &) = 0;
+		virtual void _Train(const FLabel &, const FSample &) = 0;
 
 		virtual void _Optimize(const FSample &) { }
 
