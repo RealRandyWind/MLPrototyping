@@ -9,7 +9,6 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 #include "Data.h"
 #include "Model.h"
 #include "ModelStub.h"
-#include "LVQ1.h"
 
 using namespace MLPrototyping;
 
@@ -588,19 +587,6 @@ namespace MLPrototypingTest
 			}
 		}
 
-		TEST_METHOD(TestLVQ1)
-		{
-			const real_t Alpha = 0.01;
-			const size_t K = 3, N = 9;
-			LVQ::TLVQ1<3, 3> LVQ1;
-
-			Assert::IsFalse(LVQ1.Initialized(), nullptr, LINE_INFO());
-			LVQ1.Parameters.KNearest = K;
-			LVQ1.Parameters.NPrototypes = N;
-			LVQ1.Parameters.LearningRate = Alpha;
-			LVQ1.Initialize();
-			Assert::IsTrue(LVQ1.Initialized(), nullptr, LINE_INFO());
-		}
 
 	};
 

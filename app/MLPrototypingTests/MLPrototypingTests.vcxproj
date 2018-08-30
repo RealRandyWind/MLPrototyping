@@ -290,6 +290,7 @@ PowerShell.exe -Command Copy-Item $(SolutionDir)lib\$(Platform)\*.lib $(OutDir) 
     </ClCompile>
     <ClCompile Include="unittestMLPrototyping.cpp" />
     <ClCompile Include="unittestMLPrototypingAPI.cpp" />
+    <ClCompile Include="unittestMLPrototypingLVQ.cpp" />
     <ClCompile Include="unittestMLPrototypingMath.cpp" />
   </ItemGroup>
   <ItemGroup>
