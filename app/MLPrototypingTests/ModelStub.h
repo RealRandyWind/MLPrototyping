@@ -43,14 +43,14 @@ namespace MLPrototypingTest
 			State.Difference = Parameters.Difference;
 		}
 
-		virtual void _Use(const FFeature &Feature, FLabel &Label) override
+		virtual void _Use(const FFeature &Feature, FLabel &Label, bool_t bTraning) override
 		{
 			Label = Sum(Feature);
 		}
 
-		virtual void _Train(const FLabel &Label, const FLabel &Target) override
+		virtual void _Train(const FLabel &Label, const FSample &Sample) override
 		{
-			State.Difference = Target - Label;
+			State.Difference = Sample.Label - Label;
 		}
 
 		virtual void _Optimize(const FSample &Sample) override

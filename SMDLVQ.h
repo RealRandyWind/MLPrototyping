@@ -48,11 +48,6 @@ namespace MLPrototyping
 				return State.Prototypes;
 			}
 			
-			const TSequence<FPrototype> Prototypes() const
-			{
-				return State.Prototypes;
-			}
-			
 			const TSequence<const FPrototype> Prototypes() const
 			{
 				return State.Prototypes;
@@ -76,14 +71,14 @@ namespace MLPrototyping
 					Prototype.Partner = nullptr;
 				}
 				
-				State.Neighbors.IterateAll();
+				State.Neighbours.IterateAll();
 				for (auto &Neighbour : State.Neighbours)
 				{
 					Neighbour.Distance2 = TLimit<real_t>::Infinity();
 					Neighbour.Direction = 0;
 					Neighbour.Prototype = nullptr;
 				}
-				State.Neighbors.IterateAll(false);
+				State.Neighbours.IterateAll(false);
 			}
 
 			virtual void _Use(const FFeature &Feature, FLabel &Label, bool_t bTraining) override

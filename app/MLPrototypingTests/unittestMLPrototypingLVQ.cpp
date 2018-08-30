@@ -5,6 +5,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 #include "NN.h"
 #include "LVQ1.h"
+#include "SMDLVQ.h"
 
 
 using namespace MLPrototyping;
@@ -17,7 +18,9 @@ namespace MLPrototypingTest
 	public:
 		TEST_METHOD(TestNN)
 		{
-			Assert::Fail();
+			const real_t Alpha = 0.01;
+			const size_t K = 3, N = 9;
+			TNN<3, 3> NN;
 		}
 
 		TEST_METHOD(TestLVQ1)
@@ -36,9 +39,10 @@ namespace MLPrototypingTest
 
 		TEST_METHOD(TestSMDLVQ)
 		{
-			Assert::Fail();
+			const real_t Alpha = 0.01;
+			const size_t K = 3, N = 9;
+			TSMDLVQ<3, 3> SMDLVQ;
 		}
-
 	};
 
 
