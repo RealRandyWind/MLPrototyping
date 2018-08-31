@@ -3,45 +3,138 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+#include "MLPrototyping_Types.h"
+#include "MLPrototyping_Math.h"
 #include "NN.h"
 #include "LVQ1.h"
 #include "SMDLVQ.h"
+#include "Data.h"
 
 
 using namespace MLPrototyping;
 using namespace LVQ;
 
 namespace MLPrototypingTest
-{		
+{
 	TEST_CLASS(UnitTestMLPrototypingLVQ)
 	{
 	public:
 		TEST_METHOD(TestNN)
 		{
-			const real_t Alpha = 0.01;
-			const size_t K = 3, N = 9;
-			TNN<3, 3> NN;
+			const size_t K = 3, N = 9, DN = 512, FN = 3, LN = 3;
+			TNN<FN, LN> Model;
+			TData<TNN<FN, LN>::FSample> Samples(DN, true);
+			TData<TNN<FN, LN>::FFeature> Features(DN, true);
+			TData<TNN<FN, LN>::FLabel> Labels;
+			TData<TNN<FN, LN>::FError> Errors;
+			TNormal<real_t> Distribution;
+
+			for (auto &Sample : Samples)
+			{
+				Distribution(Sample.Feature);
+				Distribution(Sample.Label);
+			}
+
+			for (auto &Feature : Features)
+			{
+				Distribution(Feature);
+			}
+
+			Model.Parameters.KNearest = K;
+			Model.Parameters.NPrototypes = N;
+			Model.Initialize();
+
+			Model.Train(Samples);
+			Model.Validate(Samples, Errors);
+			Model.Use(Features, Labels);
+			Model.Optimize(Samples);
+			Model.Optimize();
 		}
 
 		TEST_METHOD(TestLVQ1)
 		{
 			const real_t Alpha = 0.01;
-			const size_t K = 3, N = 9;
-			TLVQ1<3, 3> LVQ1;
+			const size_t K = 3, N = 9, DN = 512, FN = 3, LN = 3;
+			TLVQ1<FN, LN> Model;
+			TData<TLVQ1<FN, LN>::FSample> Samples(DN, true);
+			TData<TLVQ1<FN, LN>::FFeature> Features(DN, true);
+			TData<TLVQ1<FN, LN>::FLabel> Labels;
+			TData<TLVQ1<FN, LN>::FError> Errors;
+			TNormal<real_t> Distribution;
 
-			Assert::IsFalse(LVQ1.Initialized(), nullptr, LINE_INFO());
-			LVQ1.Parameters.KNearest = K;
-			LVQ1.Parameters.NPrototypes = N;
-			LVQ1.Parameters.LearningRate = Alpha;
-			LVQ1.Initialize();
-			Assert::IsTrue(LVQ1.Initialized(), nullptr, LINE_INFO());
+			for (auto &Sample : Samples)
+			{
+				Distribution(Sample.Feature);
+				Distribution(Sample.Label);
+			}
+
+			for (auto &Feature : Features)
+			{
+				Distribution(Feature);
+			}
+
+			Model.Parameters.KNearest = K;
+			Model.Parameters.NPrototypes = N;
+			Model.Parameters.LearningRate = Alpha;
+			Model.Initialize();
+
+			for (auto &Prototype : Model.Prototypes())
+			{
+				Distribution(Prototype.Feature);
+				Distribution(Prototype.Label);
+			}
+
+			Model.Train(Samples);
+			Model.Validate(Samples, Errors);
+			Model.Use(Features, Labels);
+			Model.Optimize(Samples);
+			Model.Optimize();
 		}
 
 		TEST_METHOD(TestSMDLVQ)
 		{
-			const real_t Alpha = 0.01;
-			const size_t K = 3, N = 9;
-			TSMDLVQ<3, 3> SMDLVQ;
+			const real_t Alpha = 0.01, Beta = 0.05, Gamma = 0.03;
+			const size_t K = 3, N = 9, DN = 512, FN = 3, LN = 3;
+			TSMDLVQ<FN, LN> Model;
+			TData<TSMDLVQ<FN, LN>::FSample> Samples(DN, true);
+			TData<TSMDLVQ<FN, LN>::FFeature> Features(DN, true);
+			TData<TSMDLVQ<FN, LN>::FLabel> Labels;
+			TData<TSMDLVQ<FN, LN>::FError> Errors;
+			TNormal<real_t> Distribution;
+
+			for (auto &Sample : Samples)
+			{
+				Distribution(Sample.Feature);
+				Distribution(Sample.Label);
+			}
+
+			for (auto &Feature : Features)
+			{
+				Distribution(Feature);
+			}
+
+			Model.Parameters.bDynamic = false;
+			Model.Parameters.KNearest = K;
+			Model.Parameters.NPrototypes = N;
+			Model.Parameters.LearningRate = Alpha;
+			Model.Parameters.MergeTreshold = Beta;
+			Model.Parameters.SplitTreshold = Gamma;
+			Model.Initialize();
+
+			for (auto &Prototype : Model.Prototypes())
+			{
+				Distribution(Prototype.Feature);
+				Distribution(Prototype.Label);
+			}
+
+			Model.Train(Samples);
+			Model.Validate(Samples, Errors);
+			Model.Use(Features, Labels);
+			Model.Optimize(Samples);
+			Model.Optimize();
+
+			Model.Parameters.bDynamic = true;
+			Model.Use(Features, Labels);
 		}
 	};
 
