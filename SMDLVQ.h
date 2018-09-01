@@ -43,12 +43,12 @@ namespace MLPrototyping
 			FParameters Parameters;
 			FState State;
 			
-			TSequence<FPrototype> Prototypes()
+			TSequence<FPrototype> &Prototypes()
 			{
 				return State.Prototypes;
 			}
 			
-			const TSequence<const FPrototype> Prototypes() const
+			const TSequence<const FPrototype> &Prototypes() const
 			{
 				return State.Prototypes;
 			}
