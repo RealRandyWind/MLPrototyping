@@ -297,6 +297,7 @@ PowerShell.exe -ExecutionPolicy bypass -File $(ProjectDir)QtMoc.ps1 $(ProjectDir
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\MLPrototypingScript\Generate.h" />
     <ClInclude Include="MLPrototypingApp_Definitions.h" />
     <ClInclude Include="QMLPrototypingApp.h" />
     <ClInclude Include="stdafx.h" />

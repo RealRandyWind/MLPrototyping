@@ -1,2 +1,0 @@
-Param([string]$Path=$PSScriptRoot+"\", [string]$Regex="Q*.h")
-Get-ChildItem $Path -Filter $Regex | Foreach { Invoke-Command -ScriptBlock ({ moc -i ($Path + $_.name) -o ($Path + ($_.name -replace ".h", ".moc")) }) }
