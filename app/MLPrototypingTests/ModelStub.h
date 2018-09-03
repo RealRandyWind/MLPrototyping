@@ -34,7 +34,7 @@ namespace MLPrototypingTest
 
 
 	protected:
-		virtual void _Initialize() override
+		virtual void_t _Initialize() override
 		{
 			State.Weights.Reserve(Parameters.Size, true);
 			for (auto &Weight : State.Weights)
@@ -45,22 +45,22 @@ namespace MLPrototypingTest
 			State.Difference = Parameters.Difference;
 		}
 
-		virtual void _Use(const typename FModel::FFeature &Feature, typename FModel::FLabel &Label, bool_t bTraning) override
+		virtual void_t _Use(const typename FModel::FFeature &Feature, typename FModel::FLabel &Label, bool_t bTraning) override
 		{
 			Label = Sum(Feature);
 		}
 
-		virtual void _Train(const typename FModel::FLabel &Label, const typename FModel::FSample &Sample) override
+		virtual void_t _Train(const typename FModel::FLabel &Label, const typename FModel::FSample &Sample) override
 		{
 			State.Difference = Sample.Label - Label;
 		}
 
-		virtual void _Optimize(const typename FModel::FSample &Sample) override
+		virtual void_t _Optimize(const typename FModel::FSample &Sample) override
 		{
 			State.Difference += Parameters.Weight * (Sum(Sample.Label) + Sum(Sample.Feature));
 		}
 
-		virtual void _Optimize() override
+		virtual void_t _Optimize() override
 		{
 			State.Difference *= Parameters.Weight;
 		}

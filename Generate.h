@@ -18,7 +18,7 @@ namespace MLPrototyping
 
 		using FRing = typename TRingDataParameters<SizeFeature, SizeLabel>;
 
-		static void ModelData(TData<typename FNormal::FFeature> &Data, FNormal &Parameters, size_t Seed = 0)
+		static void_t ModelData(TData<typename FNormal::FFeature> &Data, FNormal &Parameters, size_t Seed = 0)
 		{
 			TSequence<FNormal> List;
 
@@ -26,7 +26,7 @@ namespace MLPrototyping
 			ModelData(Data, List, Seed);
 		}
 
-		static void ModelData(TData<typename FNormal::FFeature> &Data, TSequence<FNormal> &List, size_t Seed = 0)
+		static void_t ModelData(TData<typename FNormal::FFeature> &Data, TSequence<FNormal> &List, size_t Seed = 0)
 		{
 			const real_t Zero = 0;
 			size_t Index, End = 0, Offset = 0, N = 0;
@@ -51,7 +51,7 @@ namespace MLPrototyping
 			}
 		}
 
-		static void ModelData(TData<typename FNormal::FSample> &Data, FNormal &Parameters, size_t Seed = 0)
+		static void_t ModelData(TData<typename FNormal::FSample> &Data, FNormal &Parameters, size_t Seed = 0)
 		{
 			TSequence<FNormal> List;
 
@@ -59,7 +59,7 @@ namespace MLPrototyping
 			ModelData(Data, List, Seed);
 		}
 
-		static void ModelData(TData<typename FNormal::FSample> &Data, TSequence<FNormal> &List, size_t Seed = 0)
+		static void_t ModelData(TData<typename FNormal::FSample> &Data, TSequence<FNormal> &List, size_t Seed = 0)
 		{
 			const real_t Zero = 0;
 			size_t Index, End = 0, Offset = 0, N = 0;
@@ -84,7 +84,7 @@ namespace MLPrototyping
 			}
 		}
 
-		static void ModelData(TData<typename FGamma::FFeature> &Data, FGamma &Parameters, size_t Seed = 0)
+		static void_t ModelData(TData<typename FGamma::FFeature> &Data, FGamma &Parameters, size_t Seed = 0)
 		{
 			TSequence<FGamma> List;
 
@@ -92,7 +92,7 @@ namespace MLPrototyping
 			ModelData(Data, List, Seed);
 		}
 
-		static void ModelData(TData<typename FGamma::FFeature> &Data, TSequence<FGamma> &List, size_t Seed = 0)
+		static void_t ModelData(TData<typename FGamma::FFeature> &Data, TSequence<FGamma> &List, size_t Seed = 0)
 		{
 			size_t Index, End = 0, Offset = 0, N = 0;
 			TGamma<real_t> Distribution;
@@ -116,7 +116,7 @@ namespace MLPrototyping
 			}
 		}
 
-		static void ModelData(TData<typename FGamma::FSample> &Data, FGamma &Parameters, size_t Seed = 0)
+		static void_t ModelData(TData<typename FGamma::FSample> &Data, FGamma &Parameters, size_t Seed = 0)
 		{
 			TSequence<FGamma> List;
 
@@ -124,7 +124,7 @@ namespace MLPrototyping
 			ModelData(Data, List, Seed);
 		}
 
-		static void ModelData(TData<typename FGamma::FSample> &Data, TSequence<FGamma> &List, size_t Seed = 0)
+		static void_t ModelData(TData<typename FGamma::FSample> &Data, TSequence<FGamma> &List, size_t Seed = 0)
 		{
 			size_t Index, End = 0, Offset = 0, N = 0;
 			TGamma<real_t> Distribution;
@@ -149,7 +149,7 @@ namespace MLPrototyping
 			}
 		}
 
-		static void ModelData(TData<typename FRing::FFeature> &Data, FRing &Parameters, size_t Seed = 0)
+		static void_t ModelData(TData<typename FRing::FFeature> &Data, FRing &Parameters, size_t Seed = 0)
 		{
 			TSequence<FRing> List;
 
@@ -157,7 +157,7 @@ namespace MLPrototyping
 			ModelData(Data, List, Seed);
 		}
 
-		static void ModelData(TData<typename FRing::FFeature> &Data, TSequence<FRing> &List, size_t Seed = 0)
+		static void_t ModelData(TData<typename FRing::FFeature> &Data, TSequence<FRing> &List, size_t Seed = 0)
 		{
 			const real_t Zero = 0;
 			size_t Index, End = 0, Offset = 0, N = 0;
@@ -186,7 +186,7 @@ namespace MLPrototyping
 			}
 		}
 
-		static void ModelData(TData<typename FRing::FSample> &Data, FRing &Parameters, size_t Seed = 0)
+		static void_t ModelData(TData<typename FRing::FSample> &Data, FRing &Parameters, size_t Seed = 0)
 		{
 			TSequence<FRing> List;
 
@@ -194,7 +194,7 @@ namespace MLPrototyping
 			ModelData(Data, List, Seed);
 		}
 
-		static void ModelData(TData<typename FRing::FSample> &Data, TSequence<FRing> &List, size_t Seed = 0)
+		static void_t ModelData(TData<typename FRing::FSample> &Data, TSequence<FRing> &List, size_t Seed = 0)
 		{
 			const real_t Zero = 0;
 			size_t Index, End = 0, Offset = 0, N = 0;

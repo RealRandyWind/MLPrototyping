@@ -54,14 +54,14 @@ namespace MLPrototyping
 			return SizeLabel;
 		}
 
-		void Initialize()
+		void_t Initialize()
 		{
 			_bInitialized = false;
 			_Initialize();
 			_bInitialized = true;
 		}
 
-		void Train(const TData<FSample> &Samples)
+		void_t Train(const TData<FSample> &Samples)
 		{
 			FLabel Label;
 
@@ -74,7 +74,7 @@ namespace MLPrototyping
 			}
 		}
 
-		void Use(const TData<FFeature> &Features, TData<FLabel> &Labels)
+		void_t Use(const TData<FFeature> &Features, TData<FLabel> &Labels)
 		{
 			size_t Index, End;
 
@@ -88,7 +88,7 @@ namespace MLPrototyping
 			}
 		}
 
-		void Validate(const TData<FSample> &Samples, TData<FError> &Errors)
+		void_t Validate(const TData<FSample> &Samples, TData<FError> &Errors)
 		{
 			time_t Start;
 			size_t Index, End;
@@ -109,7 +109,7 @@ namespace MLPrototyping
 			}
 		}
 
-		void Optimize(const TData<FSample> &Samples)
+		void_t Optimize(const TData<FSample> &Samples)
 		{
 			if (!_bInitialized) { return; }
 
@@ -119,7 +119,7 @@ namespace MLPrototyping
 			}
 		}
 
-		void Optimize()
+		void_t Optimize()
 		{
 			if (!_bInitialized) { return; }
 
@@ -128,17 +128,17 @@ namespace MLPrototyping
 
 
 	protected:
-		virtual void _Initialize() = 0;
+		virtual void_t _Initialize() = 0;
 
-		virtual void _Use(const FFeature &, FLabel &, bool_t = false) = 0;
+		virtual void_t _Use(const FFeature &, FLabel &, bool_t = false) = 0;
 
-		virtual void _Train(const FLabel &, const FSample &) = 0;
+		virtual void_t _Train(const FLabel &, const FSample &) = 0;
 
-		virtual void _Optimize(const FSample &) { }
+		virtual void_t _Optimize(const FSample &) { }
 
-		virtual void _Optimize() { }
+		virtual void_t _Optimize() { }
 
-		virtual void _Validate(const FSample &Sample, FError &Error)
+		virtual void_t _Validate(const FSample &Sample, FError &Error)
 		{
 			Error.Value = Sample.Label - Error.Label;
 			Error.Weight = 1;

@@ -36,7 +36,7 @@ namespace MLPrototyping
 		{
 			if (_bHeap && _bClearDataOnDestroy && _Data)
 			{
-				free((void *) _Data);
+				free((void_t *) _Data);
 			}
 			_Data = nullptr;
 		}
@@ -51,42 +51,42 @@ namespace MLPrototyping
 			return !_Size || !_Data;
 		}
 
-		void IterateAll(bool_t IsTrue = true)
+		void_t IterateAll(bool_t IsTrue = true)
 		{
 			_bIterateAll = IsTrue;
 		}
 
-		void ClearDataOnDestroy(bool_t IsTrue = true)
+		void_t ClearDataOnDestroy(bool_t IsTrue = true)
 		{
 			_bClearDataOnDestroy = IsTrue;
 		}
 
-		void ClearDataOnReplace(bool_t IsTrue = true)
+		void_t ClearDataOnReplace(bool_t IsTrue = true)
 		{
 			_bClearDataOnReplace = IsTrue;
 		}
 
-		void FixedSize(bool_t IsTrue = true)
+		void_t FixedSize(bool_t IsTrue = true)
 		{
 			_bFixedSize = IsTrue;
 		}
 
-		void ResizeOnAccess(bool_t IsTrue = true)
+		void_t ResizeOnAccess(bool_t IsTrue = true)
 		{
 			_bResizeOnAccess = IsTrue;
 		}
 
-		void SizeOnAccess(bool_t IsTrue = true)
+		void_t SizeOnAccess(bool_t IsTrue = true)
 		{
 			_bSizeOnAccess = IsTrue;
 		}
 		
-		void Reset()
+		void_t Reset()
 		{
 			_Size = _ActiveIndex = _LastIndex = 0;
 		}
 
-		void Add(TypeData Rhs)
+		void_t Add(TypeData Rhs)
 		{
 			bool_t bResize = !_bFixedSize && _Size >= _BufferSize;
 
@@ -98,7 +98,7 @@ namespace MLPrototyping
 			++_Size;
 		}
 
-		void Swap(TypeData Rhs)
+		void_t Swap(TypeData Rhs)
 		{
 			if (_Size < _BufferSize)
 			{
@@ -196,7 +196,7 @@ namespace MLPrototyping
 
 		TypeData *Data(TypeData *Pointer, size_t SizeData, size_t SizeBuffer = 0, bool_t bHeap = true)
 		{
-			if (_bHeap && _bClearDataOnReplace && _Data) { free((void *) _Data); _Data = nullptr; }
+			if (_bHeap && _bClearDataOnReplace && _Data) { free((void_t *) _Data); _Data = nullptr; }
 			if (SizeBuffer < SizeData) { SizeBuffer = SizeData; }
 			_Size = SizeData;
 			_BufferSize = SizeBuffer;
@@ -235,7 +235,7 @@ namespace MLPrototyping
 			return _Data[Index];
 		}
 
-		void Reserve(size_t ReserveSize, bool_t SetSizeToReserveSize = false)
+		void_t Reserve(size_t ReserveSize, bool_t SetSizeToReserveSize = false)
 		{
 			if (_bHeap)
 			{

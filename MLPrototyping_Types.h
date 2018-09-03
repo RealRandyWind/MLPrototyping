@@ -6,6 +6,8 @@
 
 namespace MLPrototyping
 {
+	using void_t = void;
+
 	using bool_t = bool;
 
 	using char_t = char;

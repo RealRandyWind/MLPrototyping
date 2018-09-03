@@ -78,11 +78,11 @@ namespace MLPrototyping
 			return Point;
 		}
 
-		virtual void Seed(size_t SeedIn) = 0;
+		virtual void_t Seed(size_t SeedIn) = 0;
 
 		virtual Type Next() = 0;
 
-		virtual void Reset() = 0;
+		virtual void_t Reset() = 0;
 	};
 
 	template<typename Type>
@@ -100,12 +100,12 @@ namespace MLPrototyping
 
 		~TNormal() { }
 
-		void Parameters(Type Mean, Type SD)
+		void_t Parameters(Type Mean, Type SD)
 		{
 			Distribution.param(std::normal_distribution<Type>::param_type(Mean, SD));
 		}
 
-		virtual void Seed(size_t SeedIn) override
+		virtual void_t Seed(size_t SeedIn) override
 		{
 			return Generator.seed(static_cast<unsigned int>(SeedIn));
 		}
@@ -115,7 +115,7 @@ namespace MLPrototyping
 			return Distribution(Generator);
 		}
 
-		virtual void Reset() override
+		virtual void_t Reset() override
 		{
 			Distribution.reset();
 		}
@@ -136,12 +136,12 @@ namespace MLPrototyping
 
 		~TGamma() { }
 
-		void Parameters(Type Alpha, Type Beta)
+		void_t Parameters(Type Alpha, Type Beta)
 		{
 			Distribution.param(std::gamma_distribution<Type>::param_type(Alpha, Beta));
 		}
 
-		virtual void Seed(size_t SeedIn) override
+		virtual void_t Seed(size_t SeedIn) override
 		{
 			return Generator.seed(static_cast<unsigned int>(SeedIn));
 		}
@@ -151,7 +151,7 @@ namespace MLPrototyping
 			return Distribution(Generator);
 		}
 
-		virtual void Reset() override
+		virtual void_t Reset() override
 		{
 			Distribution.reset();
 		}
@@ -172,12 +172,12 @@ namespace MLPrototyping
 
 		~TUniform() { }
 
-		void Parameters(Type Lower, Type Upper)
+		void_t Parameters(Type Lower, Type Upper)
 		{
 			Distribution.param(std::uniform_real_distribution<Type>::param_type(Lower, Upper));
 		}
 
-		virtual void Seed(size_t SeedIn) override
+		virtual void_t Seed(size_t SeedIn) override
 		{
 			return Generator.seed(static_cast<unsigned int>(SeedIn));
 		}
@@ -187,7 +187,7 @@ namespace MLPrototyping
 			return Distribution(Generator);
 		}
 
-		virtual void Reset() override
+		virtual void_t Reset() override
 		{
 			Distribution.reset();
 		}
@@ -582,7 +582,7 @@ namespace MLPrototyping
 	}
 
 	template<size_t Size, typename Type>
-	void MinInto(TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
+	void_t MinInto(TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
 	{
 		size_t Index, End;
 
@@ -608,7 +608,7 @@ namespace MLPrototyping
 	}
 
 	template<size_t Size, typename Type>
-	void MaxInto(TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
+	void_t MaxInto(TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
 	{
 		size_t Index, End;
 

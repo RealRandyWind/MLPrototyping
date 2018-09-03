@@ -18,33 +18,33 @@ namespace MLPrototyping
 
 		/* Normal Data */
 
-		void ModelData(TData<FNormalDataParameters::FFeature> &, FNormalDataParameters &, size_t = 0);
+		void_t ModelData(TData<FNormalDataParameters::FFeature> &, FNormalDataParameters &, size_t = 0);
 
-		void ModelData(TData<FNormalDataParameters::FFeature> &, TSequence<FNormalDataParameters> &, size_t = 0);
+		void_t ModelData(TData<FNormalDataParameters::FFeature> &, TSequence<FNormalDataParameters> &, size_t = 0);
 
-		void ModelData(TData<FNormalDataParameters::FSample> &, FNormalDataParameters &, size_t = 0);
+		void_t ModelData(TData<FNormalDataParameters::FSample> &, FNormalDataParameters &, size_t = 0);
 
-		void ModelData(TData<FNormalDataParameters::FSample> &, TSequence<FNormalDataParameters> &, size_t = 0);
+		void_t ModelData(TData<FNormalDataParameters::FSample> &, TSequence<FNormalDataParameters> &, size_t = 0);
 
 		/* Gamma Data */
 
-		void ModelData(TData<FGammaDataParameters::FFeature> &, FGammaDataParameters &, size_t = 0);
+		void_t ModelData(TData<FGammaDataParameters::FFeature> &, FGammaDataParameters &, size_t = 0);
 
-		void ModelData(TData<FGammaDataParameters::FFeature> &, TSequence<FGammaDataParameters> &, size_t = 0);
+		void_t ModelData(TData<FGammaDataParameters::FFeature> &, TSequence<FGammaDataParameters> &, size_t = 0);
 
-		void ModelData(TData<FGammaDataParameters::FSample> &, FGammaDataParameters &, size_t = 0);
+		void_t ModelData(TData<FGammaDataParameters::FSample> &, FGammaDataParameters &, size_t = 0);
 
-		void ModelData(TData<FGammaDataParameters::FSample> &, TSequence<FGammaDataParameters> &, size_t = 0);
+		void_t ModelData(TData<FGammaDataParameters::FSample> &, TSequence<FGammaDataParameters> &, size_t = 0);
 
 		/* Ring Data */
 
-		void ModelData(TData<FRingDataParameters::FFeature> &, FRingDataParameters &, size_t = 0);
+		void_t ModelData(TData<FRingDataParameters::FFeature> &, FRingDataParameters &, size_t = 0);
 
-		void ModelData(TData<FRingDataParameters::FFeature> &, TSequence<FRingDataParameters> &, size_t = 0);
+		void_t ModelData(TData<FRingDataParameters::FFeature> &, TSequence<FRingDataParameters> &, size_t = 0);
 
-		void ModelData(TData<FRingDataParameters::FSample> &, FRingDataParameters &, size_t = 0);
+		void_t ModelData(TData<FRingDataParameters::FSample> &, FRingDataParameters &, size_t = 0);
 
-		void ModelData(TData<FRingDataParameters::FSample> &, TSequence<FRingDataParameters> &, size_t = 0);
+		void_t ModelData(TData<FRingDataParameters::FSample> &, TSequence<FRingDataParameters> &, size_t = 0);
 
 
 	private:

@@ -48,7 +48,7 @@ namespace MLPrototyping
 
 
 		protected:
-			virtual void _Initialize() override
+			virtual void_t _Initialize() override
 			{
 				State.Prototypes.Reserve(Parameters.NPrototypes);
 				State.Neighbours.Reserve(Parameters.KNearest);
@@ -62,7 +62,7 @@ namespace MLPrototyping
 				State.Neighbours.IterateAll(false);
 			};
 
-			virtual void _Use(const typename FModel::FFeature &Feature, typename FModel::FLabel &Label, bool_t bTraining) override
+			virtual void_t _Use(const typename FModel::FFeature &Feature, typename FModel::FLabel &Label, bool_t bTraining) override
 			{
 				real_t Distance2;
 				const real_t One = 1;
@@ -88,7 +88,7 @@ namespace MLPrototyping
 				Label *= OneByKNearest;
 			};
 
-			virtual void _Train(const typename FModel::FLabel &Label, const typename FModel::FSample &Sample) override
+			virtual void_t _Train(const typename FModel::FLabel &Label, const typename FModel::FSample &Sample) override
 			{
 				State.Prototypes.Add(Sample);
 			};

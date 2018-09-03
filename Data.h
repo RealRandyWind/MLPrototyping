@@ -47,17 +47,17 @@ namespace MLPrototyping
 			return !_Size || !_Data;
 		}
 
-		void IterateAll(bool_t IsTrue = true)
+		void_t IterateAll(bool_t IsTrue = true)
 		{
 			_bIterateAll = IsTrue;
 		}
 
-		void ClearDataOnDestroy(bool_t IsTrue = true)
+		void_t ClearDataOnDestroy(bool_t IsTrue = true)
 		{
 			_bClearDataOnDestroy = IsTrue;
 		}
 
-		void ClearDataOnReplace(bool_t IsTrue = true)
+		void_t ClearDataOnReplace(bool_t IsTrue = true)
 		{
 			_bClearDataOnReplace = IsTrue;
 		}
@@ -152,7 +152,7 @@ namespace MLPrototyping
 			return _Data[Index];
 		}
 
-		void Reserve(size_t ReserveSize, bool_t SetSizeToReserveSize = false)
+		void_t Reserve(size_t ReserveSize, bool_t SetSizeToReserveSize = false)
 		{
 			if (_bHeap)
 			{
