@@ -1,10 +1,6 @@
 #pragma once
 
-#ifdef MLPrototyping_Exports
-#define MLPrototyping_Exports __declspec(dllexport)
-#else
-#define MLPrototyping_Exports __declspec(dllimport)
-#endif
+#include "MLPrototyping_Configurations.h"
 
 #include "MLPrototyping_Types.h"
 #include "Point.h"
@@ -17,8 +13,11 @@ namespace MLPrototyping
 	struct TNormalDataParameters
 	{
 		using FModel = TModel<SizeFeature, SizeLabel>;
+
 		using FFeature = typename FModel::FFeature;
+
 		using FLabel = typename FModel::FLabel;
+
 		using FSample = typename FModel::FSample;
 
 		size_t N;
@@ -40,14 +39,18 @@ namespace MLPrototyping
 	};
 
 	template struct MLPrototyping_Exports TNormalDataParameters<2, 3>;
+
 	using FNormalDataParameters = TNormalDataParameters<2, 3>;
 	
 	template<size_t SizeFeature, size_t SizeLabel>
 	struct TRingDataParameters
 	{
 		using FModel = TModel<SizeFeature, SizeLabel>;
+
 		using FFeature = typename FModel::FFeature;
+
 		using FLabel = typename FModel::FLabel;
+
 		using FSample = typename FModel::FSample;
 
 		size_t N;
@@ -70,14 +73,18 @@ namespace MLPrototyping
 	};
 
 	template struct MLPrototyping_Exports TRingDataParameters<2, 3>;
+
 	using FRingDataParameters = TRingDataParameters<2, 3>;
 
 	template<size_t SizeFeature, size_t SizeLabel>
 	struct TGammaDataParameters
 	{
 		using FModel = TModel<SizeFeature, SizeLabel>;
+
 		using FFeature = typename FModel::FFeature;
+
 		using FLabel = typename FModel::FLabel;
+
 		using FSample = typename FModel::FSample;
 
 		size_t N;
@@ -102,5 +109,6 @@ namespace MLPrototyping
 	};
 
 	template struct MLPrototyping_Exports TGammaDataParameters<2, 3>;
+
 	using FGammaDataParameters = TGammaDataParameters<2, 3>;
 }

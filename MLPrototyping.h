@@ -1,10 +1,6 @@
 #pragma once
 
-#ifdef MLPrototyping_Exports
-#define MLPrototyping_Exports __declspec(dllexport)
-#else
-#define MLPrototyping_Exports __declspec(dllimport)
-#endif
+#include "MLPrototyping_Configurations.h"
 
 #include "MLPrototyping_Types.h"
 #include "MLPrototyping_Parameters.h"

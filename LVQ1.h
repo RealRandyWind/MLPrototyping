@@ -12,7 +12,9 @@ namespace MLPrototyping
 		template<size_t SizeFeature, size_t SizeLabel>
 		struct TLVQ1 : public TModel<SizeFeature, SizeLabel>
 		{
-			using FPrototype = FSample;
+			using FModel = TModel<SizeFeature, SizeLabel>;
+
+			using FPrototype = typename FModel::FSample;
 
 			struct FParameters
 			{
@@ -23,7 +25,7 @@ namespace MLPrototyping
 			struct FNeighbour
 			{
 				real_t Distance2;
-				FFeature Direction;
+				typename FModel::FFeature Direction;
 				FPrototype *Prototype;
 			};
 
@@ -47,7 +49,7 @@ namespace MLPrototyping
 			}
 
 		protected:
-			virtual void _Initialize() override
+			void _Initialize() override
 			{
 				if (Parameters.KNearest > Parameters.NPrototypes) { return;  }
 
@@ -68,10 +70,10 @@ namespace MLPrototyping
 				}
 			}
 
-			virtual void _Use(const FFeature &Feature, FLabel &Label, bool_t bTraining) override
+			void _Use(const typename FModel::FFeature &Feature, typename FModel::FLabel &Label, bool_t bTraining) override
 			{
 				real_t Distance2;
-				FFeature Direction;
+				typename FModel::FFeature Direction;
 				const real_t One = 1;
 				const real_t OneByKNearest = One / Parameters.KNearest;
 				
@@ -95,11 +97,11 @@ namespace MLPrototyping
 				Label *= OneByKNearest;
 			}
 
-			virtual void _Train(const FLabel &Label, const FSample &Sample) override
+			void _Train(const typename FModel::FLabel &Label, const typename FModel::FSample &Sample) override
 			{
 				const real_t One = 1;
 				const real_t LearningRate = Parameters.LearningRate;
-				const FLabel Error = One - (Sample.Label - Label);
+				const typename FModel::FLabel Error = One - (Sample.Label - Label);
 				const real_t Delta = Norm(Error);
 
 				for (auto &Neighbour : State.Neighbours)
@@ -107,6 +109,14 @@ namespace MLPrototyping
 					Neighbour.Prototype->Feature += Delta * Neighbour.Direction;
 				}
 			}
+
+
 		};
+
+
+
 	}
+
+
+
 }

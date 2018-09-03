@@ -9,8 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MLPrototypingApp", "app\MLP
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MLPrototypingTests", "app\MLPrototypingTests\MLPrototypingTests.vcxproj", "{5E2B28EB-0D13-4CC9-A990-618765F2FD14}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MLPrototypingScript", "app\MLPrototypingScript\MLPrototypingScript.vcxproj", "{3ADE520C-7D7F-46C9-9498-DB20A0CFB819}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -43,14 +41,6 @@ Global
 		{5E2B28EB-0D13-4CC9-A990-618765F2FD14}.Release|x64.Build.0 = Debug|x64
 		{5E2B28EB-0D13-4CC9-A990-618765F2FD14}.Release|x86.ActiveCfg = Debug|x64
 		{5E2B28EB-0D13-4CC9-A990-618765F2FD14}.Release|x86.Build.0 = Debug|x64
-		{3ADE520C-7D7F-46C9-9498-DB20A0CFB819}.Debug|x64.ActiveCfg = Debug|x64
-		{3ADE520C-7D7F-46C9-9498-DB20A0CFB819}.Debug|x64.Build.0 = Debug|x64
-		{3ADE520C-7D7F-46C9-9498-DB20A0CFB819}.Debug|x86.ActiveCfg = Debug|Win32
-		{3ADE520C-7D7F-46C9-9498-DB20A0CFB819}.Debug|x86.Build.0 = Debug|Win32
-		{3ADE520C-7D7F-46C9-9498-DB20A0CFB819}.Release|x64.ActiveCfg = Release|x64
-		{3ADE520C-7D7F-46C9-9498-DB20A0CFB819}.Release|x64.Build.0 = Release|x64
-		{3ADE520C-7D7F-46C9-9498-DB20A0CFB819}.Release|x86.ActiveCfg = Release|Win32
-		{3ADE520C-7D7F-46C9-9498-DB20A0CFB819}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

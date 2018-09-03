@@ -60,6 +60,9 @@
     <ClInclude Include="SMDLVQ.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MLPrototyping_Configurations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

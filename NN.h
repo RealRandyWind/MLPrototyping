@@ -12,7 +12,9 @@ namespace MLPrototyping
 		template<size_t SizeFeature, size_t SizeLabel>
 		struct TNN : public TModel<SizeFeature, SizeLabel>
 		{
-			using FPrototype = FSample;
+			using FModel = TModel<SizeFeature, SizeLabel>;
+
+			using FPrototype = typename FModel::FSample;
 
 			struct FParameters
 			{
@@ -58,9 +60,9 @@ namespace MLPrototyping
 					Neighbour.Prototype = nullptr;
 				}
 				State.Neighbours.IterateAll(false);
-			}
+			};
 
-			virtual void _Use(const FFeature &Feature, FLabel &Label, bool_t bTraining) override
+			virtual void _Use(const typename FModel::FFeature &Feature, typename FModel::FLabel &Label, bool_t bTraining) override
 			{
 				real_t Distance2;
 				const real_t One = 1;
@@ -84,12 +86,20 @@ namespace MLPrototyping
 					Label += Neighbour.Prototype->Label;
 				}
 				Label *= OneByKNearest;
-			}
+			};
 
-			virtual void _Train(const FLabel &Label, const FSample &Sample) override
+			virtual void _Train(const typename FModel::FLabel &Label, const typename FModel::FSample &Sample) override
 			{
 				State.Prototypes.Add(Sample);
-			}
+			};
+
+
 		};
+
+
+
 	}
+
+
+
 }

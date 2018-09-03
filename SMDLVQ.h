@@ -12,10 +12,12 @@ namespace MLPrototyping
 		template<size_t SizeFeature, size_t SizeLabel>
 		struct TSMDLVQ : public TModel<SizeFeature, SizeLabel>
 		{
+			using FModel = TModel<SizeFeature, SizeLabel>;
+
 			struct FPrototype
 			{
 				FLabel Label;
-				FFeature Feature, Direction;
+				typename FModel::FFeature Feature, Direction;
 				real_t Positive, Negative, SD;
 				FPrototype *Partner;
 			};
@@ -30,7 +32,7 @@ namespace MLPrototyping
 			struct FNeighbour
 			{
 				real_t Distance2;
-				FFeature Direction;
+				typename FModel::FFeature Direction;
 				FPrototype *Prototype;
 			};
 
@@ -55,7 +57,7 @@ namespace MLPrototyping
 
 
 		protected:
-			virtual void _Initialize() override
+			void _Initialize() override
 			{
 				State.Prototypes.Reserve(Parameters.NPrototypes, true);
 				State.Neighbours.Reserve(Parameters.KNearest);
@@ -81,10 +83,10 @@ namespace MLPrototyping
 				State.Neighbours.IterateAll(false);
 			}
 
-			virtual void _Use(const FFeature &Feature, FLabel &Label, bool_t bTraining) override
+			void _Use(const typename FModel::FFeature &Feature, typename FModel::FLabel &Label, bool_t bTraining) override
 			{
 				real_t Distance2;
-				FFeature Direction;
+				typename FModel::FFeature Direction;
 				const real_t One = 1;
 				const real_t OneByKNearest = One / Parameters.KNearest;
 				
@@ -108,11 +110,11 @@ namespace MLPrototyping
 				Label *= OneByKNearest;
 			}
 
-			virtual void _Train(const FLabel &Label, const FSample &Sample) override
+			void _Train(const typename FModel::FLabel &Label, const typename FModel::FSample &Sample) override
 			{
 				const real_t One = 1;
 				const real_t LearningRate = Parameters.LearningRate;
-				const FLabel Error = One - (Sample.Label - Label);
+				const typename FModel::FLabel Error = One - (Sample.Label - Label);
 				const real_t Delta = Norm(Error);
 
 				for (auto &Neighbour : State.Neighbours)
@@ -120,6 +122,14 @@ namespace MLPrototyping
 					Neighbour.Prototype->Feature += Delta * Neighbour.Direction;
 				}
 			}
+
+
 		};
+
+
+
 	}
+
+
+
 }

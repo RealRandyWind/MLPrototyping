@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "QMLPrototypingApp.h"
 #include "QMLPrototypingApp.moc"
-#include "MLPrototyping_Math.h";
+#include "MLPrototyping_Math.h"
+#include "NN.h"
 
 #define MLPrototypingApp_Title tr("MLPrototyping")
 #define MLPrototypingApp_FileTitle tr("File")
@@ -182,6 +183,8 @@ void QMLPrototypingApp::GenerateRingData()
 	List[1].Readius = 2;
 	List[1].Norm = 1;
 	List[1].Mean = { -4, -4 };
+
+	LVQ::TNN<3, 3> Model2;
 
 	API->ModelData(Data, List);
 
