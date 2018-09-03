@@ -16,10 +16,11 @@ namespace MLPrototypingTest
 	public:
 		TEST_METHOD(TestQuinsor)
 		{
+			/*
 			const size_t N0 = 0, ND1 = 1, ND2 = 2, ND3 = 3, NDN = 4096;
 			const real_t Zero = 0, One = 1, Two = 2 , Half = .5;
 			size_t Index, End;
-			/*
+			
 			TPoint<ND1, real_t> P1;
 			TQuinsor<ND1, real_t> Q1, R1;
 			Q1 = Half;

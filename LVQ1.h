@@ -49,7 +49,7 @@ namespace MLPrototyping
 			}
 
 		protected:
-			void _Initialize() override
+			virtual void _Initialize() override
 			{
 				if (Parameters.KNearest > Parameters.NPrototypes) { return;  }
 
@@ -70,7 +70,7 @@ namespace MLPrototyping
 				}
 			}
 
-			void _Use(const typename FModel::FFeature &Feature, typename FModel::FLabel &Label, bool_t bTraining) override
+			virtual void _Use(const typename FModel::FFeature &Feature, typename FModel::FLabel &Label, bool_t bTraining) override
 			{
 				real_t Distance2;
 				typename FModel::FFeature Direction;
@@ -97,7 +97,7 @@ namespace MLPrototyping
 				Label *= OneByKNearest;
 			}
 
-			void _Train(const typename FModel::FLabel &Label, const typename FModel::FSample &Sample) override
+			virtual void _Train(const typename FModel::FLabel &Label, const typename FModel::FSample &Sample) override
 			{
 				const real_t One = 1;
 				const real_t LearningRate = Parameters.LearningRate;

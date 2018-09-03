@@ -15,6 +15,8 @@ namespace MLPrototypingTest
 	template<size_t SizeFeature, size_t SizeLabel>
 	struct TModelStub : TModel<SizeFeature, SizeLabel>
 	{
+		using FModel = TModel<SizeFeature, SizeLabel>;
+
 		struct FParameters
 		{
 			real_t Alpha, Weight, Difference;
@@ -24,7 +26,7 @@ namespace MLPrototypingTest
 		struct FState
 		{
 			TSequence<real_t> Weights;
-			FLabel Difference;
+			typename FModel::FLabel Difference;
 		};
 
 		FParameters Parameters;
@@ -43,17 +45,17 @@ namespace MLPrototypingTest
 			State.Difference = Parameters.Difference;
 		}
 
-		virtual void _Use(const FFeature &Feature, FLabel &Label, bool_t bTraning) override
+		virtual void _Use(const typename FModel::FFeature &Feature, typename FModel::FLabel &Label, bool_t bTraning) override
 		{
 			Label = Sum(Feature);
 		}
 
-		virtual void _Train(const FLabel &Label, const FSample &Sample) override
+		virtual void _Train(const typename FModel::FLabel &Label, const typename FModel::FSample &Sample) override
 		{
 			State.Difference = Sample.Label - Label;
 		}
 
-		virtual void _Optimize(const FSample &Sample) override
+		virtual void _Optimize(const typename FModel::FSample &Sample) override
 		{
 			State.Difference += Parameters.Weight * (Sum(Sample.Label) + Sum(Sample.Feature));
 		}

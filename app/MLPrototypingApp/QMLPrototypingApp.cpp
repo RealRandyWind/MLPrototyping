@@ -184,8 +184,6 @@ void QMLPrototypingApp::GenerateRingData()
 	List[1].Norm = 1;
 	List[1].Mean = { -4, -4 };
 
-	LVQ::TNN<3, 3> Model2;
-
 	API->ModelData(Data, List);
 
 	for (auto &Point : Data)
