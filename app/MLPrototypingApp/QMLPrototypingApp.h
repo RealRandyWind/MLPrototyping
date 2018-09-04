@@ -59,6 +59,8 @@ namespace MLPrototypingApp
 
 		QAction* GenerateRingDataAction;
 
+		QAction* GenerateUniformDataAction;
+
 
 		void CreateMain();
 
@@ -80,6 +82,7 @@ namespace MLPrototypingApp
 
 		void GenerateRingData();
 
+		void GenerateUniformData();
 	};
 
 

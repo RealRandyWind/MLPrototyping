@@ -3,6 +3,7 @@
 #include "QMLPrototypingApp.moc"
 #include "MLPrototyping_Math.h"
 #include "NN.h"
+#include "MLPrototyping_Generate.h"
 
 #define MLPrototypingApp_Title tr("MLPrototyping")
 #define MLPrototypingApp_FileTitle tr("File")
@@ -12,6 +13,7 @@
 #define MLPrototypingApp_GenerateNormalDataTile tr("Normal Data")
 #define MLPrototypingApp_GenerateGammaDataTile tr("Gamma Data")
 #define MLPrototypingApp_GenerateRingDataTile tr("Ring Data")
+#define MLPrototypingApp_GenerateUniformDataTile tr("Uniform Data")
 #define MLPrototypingApp_ScatterPlotTile tr("Scatter Plot")
 #define MLPrototypingApp_WindowSize QSize(720, 720)
 #define MLPrototypingApp_Disabled false
@@ -65,10 +67,15 @@ void QMLPrototypingApp::CreateActions()
 	GenerateRingDataAction->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::ALT + Qt::Key_R));
 	connect(GenerateRingDataAction, SIGNAL(triggered()), this, SLOT(GenerateRingData()));
 
+	GenerateUniformDataAction = new QAction(MLPrototypingApp_GenerateUniformDataTile, this);
+	GenerateUniformDataAction->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::ALT + Qt::Key_U));
+	connect(GenerateUniformDataAction, SIGNAL(triggered()), this, SLOT(GenerateUniformData()));
+
 	DataActionGroup = new QActionGroup(this);
 	DataActionGroup->addAction(GenerateNormalDataAction);
 	DataActionGroup->addAction(GenerateGammaDataAction);
 	DataActionGroup->addAction(GenerateRingDataAction);
+	DataActionGroup->addAction(GenerateUniformDataAction);
 }
 
 void QMLPrototypingApp::CreateMenus()
@@ -90,28 +97,30 @@ void QMLPrototypingApp::CreateMenus()
 
 void QMLPrototypingApp::GenerateNormalData()
 {
-	TData<FNormalDataParameters::FFeature> Data;
-	TSequence<FNormalDataParameters> List;
+	using FParameters = TNormalDataParameters<2, 3>;
+
+	TData<FParameters::FFeature> Data;
+	TSequence<FParameters> List;
 
 	Series->clear();
 	List.Reserve(3, true);
-	List[0] = FNormalDataParameters::Default();
+	List[0] = FParameters::Default();
 	List[0].N = 1024;
 	List[0].SD = 1.2;
 	List[0].Norm = 1;
 	List[0].Mean = { -3, 4 };
-	List[1] = FNormalDataParameters::Default();
+	List[1] = FParameters::Default();
 	List[1].N = 1024;
 	List[1].SD = 1;
 	List[1].Norm = 1;
 	List[1].Mean = { -4, -4 };
-	List[2] = FNormalDataParameters::Default();
+	List[2] = FParameters::Default();
 	List[2].N = 1024;
 	List[2].SD = 0.8;
 	List[2].Norm = 1;
 	List[2].Mean = { 3, 0 };
 
-	API->ModelData(Data, List);
+	ModelData(Data, List);
 
 	for (auto &Point : Data)
 	{
@@ -133,18 +142,20 @@ void QMLPrototypingApp::GenerateNormalData()
 
 void QMLPrototypingApp::GenerateGammaData()
 {
-	TData<FGammaDataParameters::FFeature> Data;
-	FGammaDataParameters Item;
+	using FParameters = TGammaDataParameters<2, 3>;
+
+	TData<FParameters::FFeature> Data;
+	FParameters Item;
 
 	Series->clear();
-	Item = FGammaDataParameters::Default();
+	Item = FParameters::Default();
 	Item.N = 1024;
 	Item.Alpha = 1.2;
 	Item.Beta = 2.8;
 	Item.Norm = 0.6;
 	Item.Mean = { -6, -6 };
 
-	API->ModelData(Data, Item);
+	ModelData(Data, Item);
 
 	for (auto &Point : Data)
 	{
@@ -166,25 +177,27 @@ void QMLPrototypingApp::GenerateGammaData()
 
 void QMLPrototypingApp::GenerateRingData()
 {
-	TData<FRingDataParameters::FFeature> Data;
-	TSequence<FRingDataParameters> List;
+	using FParameters = TRingDataParameters<2, 3>;
+
+	TData<FParameters::FFeature> Data;
+	TSequence<FParameters> List;
 	
 	Series->clear();
 	List.Reserve(2, true);
-	List[0] = FRingDataParameters::Default();
+	List[0] = FParameters::Default();
 	List[0].N = 1024;
 	List[0].SD = 1.0;
 	List[0].Readius = 4;
 	List[0].Norm = 1;
 	List[0].Mean = { 2, 2 };
-	List[1] = FRingDataParameters::Default();
+	List[1] = FParameters::Default();
 	List[1].N = 1024;
 	List[1].SD = 0.5;
 	List[1].Readius = 2;
 	List[1].Norm = 1;
 	List[1].Mean = { -4, -4 };
 
-	API->ModelData(Data, List);
+	ModelData(Data, List);
 
 	for (auto &Point : Data)
 	{		
@@ -192,6 +205,46 @@ void QMLPrototypingApp::GenerateRingData()
 	}
 
 	Series->setName(MLPrototypingApp_GenerateRingDataTile);
+	Series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
+	Series->setMarkerSize(6.0);
+	Series->setBorderColor(Qt::transparent);
+
+	Chart->legend()->setMarkerShape(QLegend::MarkerShapeFromSeries);
+	Chart->setTitle(MLPrototypingApp_ScatterPlotTile);
+	Chart->setDropShadowEnabled(false);
+	Chart->createDefaultAxes();
+	Chart->axisX()->setRange(-8, 8);
+	Chart->axisY()->setRange(-8, 8);
+}
+
+void QMLPrototypingApp::GenerateUniformData()
+{
+	using FParameters = TUniformDataParameters<2, 3>;
+
+	TData<FParameters::FFeature> Data;
+	TSequence<FParameters> List;
+
+	Series->clear();
+	List.Reserve(2, true);
+	List[0] = FParameters::Default();
+	List[0].N = 1024;
+	List[0].Radius = 5;
+	List[0].Norm = 1;
+	List[0].Mean = { 2, 2 };
+	List[1] = FParameters::Default();
+	List[1].N = 1024;
+	List[1].Radius = 3;
+	List[1].Norm = 1;
+	List[1].Mean = { -4, -4 };
+
+	ModelData(Data, List);
+
+	for (auto &Point : Data)
+	{
+		Series->append(Point[0], Point[1]);
+	}
+
+	Series->setName(MLPrototypingApp_GenerateUniformDataTile);
 	Series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
 	Series->setMarkerSize(6.0);
 	Series->setBorderColor(Qt::transparent);

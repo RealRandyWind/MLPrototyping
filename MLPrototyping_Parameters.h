@@ -10,6 +10,35 @@
 namespace MLPrototyping
 {
 	template<size_t SizeFeature, size_t SizeLabel>
+	struct TUniformDataParameters
+	{
+		using FModel = TModel<SizeFeature, SizeLabel>;
+
+		using FFeature = typename FModel::FFeature;
+
+		using FLabel = typename FModel::FLabel;
+
+		using FSample = typename FModel::FSample;
+
+		size_t N;
+		real_t Norm, Radius;
+		FFeature Mean;
+		FLabel Label;
+
+		static TUniformDataParameters<SizeFeature, SizeLabel> Default()
+		{
+			TUniformDataParameters<SizeFeature, SizeLabel> Item;
+			Item.N = 1024;
+			Item.Norm = 1;
+			Item.Radius = 1;
+			Item.Mean = 0;
+			Item.Label = 0;
+			Item.Label[0] = 1;
+			return Item;
+		}
+	};
+
+	template<size_t SizeFeature, size_t SizeLabel>
 	struct TNormalDataParameters
 	{
 		using FModel = TModel<SizeFeature, SizeLabel>;
@@ -37,44 +66,6 @@ namespace MLPrototyping
 			return Item;
 		}
 	};
-
-	template struct MLPrototyping_Exports TNormalDataParameters<2, 3>;
-
-	using FNormalDataParameters = TNormalDataParameters<2, 3>;
-	
-	template<size_t SizeFeature, size_t SizeLabel>
-	struct TRingDataParameters
-	{
-		using FModel = TModel<SizeFeature, SizeLabel>;
-
-		using FFeature = typename FModel::FFeature;
-
-		using FLabel = typename FModel::FLabel;
-
-		using FSample = typename FModel::FSample;
-
-		size_t N;
-		real_t SD, Readius, Norm;
-		FFeature Mean;
-		FLabel Label;
-
-		static TRingDataParameters<SizeFeature, SizeLabel> Default()
-		{
-			TRingDataParameters<SizeFeature, SizeLabel> Item;
-			Item.N = 1024;
-			Item.SD = .5;
-			Item.Norm = 1;
-			Item.Mean = 0;
-			Item.Readius = 1;
-			Item.Label = 0;
-			Item.Label[0] = 1;
-			return Item;
-		}
-	};
-
-	template struct MLPrototyping_Exports TRingDataParameters<2, 3>;
-
-	using FRingDataParameters = TRingDataParameters<2, 3>;
 
 	template<size_t SizeFeature, size_t SizeLabel>
 	struct TGammaDataParameters
@@ -107,8 +98,37 @@ namespace MLPrototyping
 			return Item;
 		}
 	};
+	
+	template<size_t SizeFeature, size_t SizeLabel>
+	struct TRingDataParameters
+	{
+		using FModel = TModel<SizeFeature, SizeLabel>;
 
-	template struct MLPrototyping_Exports TGammaDataParameters<2, 3>;
+		using FFeature = typename FModel::FFeature;
 
-	using FGammaDataParameters = TGammaDataParameters<2, 3>;
+		using FLabel = typename FModel::FLabel;
+
+		using FSample = typename FModel::FSample;
+
+		size_t N;
+		real_t SD, Readius, Norm;
+		FFeature Mean;
+		FLabel Label;
+
+		static TRingDataParameters<SizeFeature, SizeLabel> Default()
+		{
+			TRingDataParameters<SizeFeature, SizeLabel> Item;
+			Item.N = 1024;
+			Item.SD = .5;
+			Item.Norm = 1;
+			Item.Mean = 0;
+			Item.Readius = 1;
+			Item.Label = 0;
+			Item.Label[0] = 1;
+			return Item;
+		}
+	};
+
+
+
 }

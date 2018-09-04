@@ -236,7 +236,7 @@ PowerShell.exe -Command Copy-Item $(OutDir)$(ProjectName).lib $(ProjectDir)lib\$
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Data.h" />
-    <ClInclude Include="Generate.h" />
+    <ClInclude Include="MLPrototyping_Generate.h" />
     <ClInclude Include="LVQ1.h" />
     <ClInclude Include="MLPrototyping.h" />
     <ClInclude Include="MLPrototyping_Configurations.h" />

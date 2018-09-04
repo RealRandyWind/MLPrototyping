@@ -63,7 +63,7 @@
     <ClInclude Include="MLPrototyping_Configurations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Generate.h">
+    <ClInclude Include="MLPrototyping_Generate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
