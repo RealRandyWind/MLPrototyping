@@ -95,7 +95,6 @@ namespace MLPrototyping
 
 			if (!_bInitialized) { return; }
 
-
 			End = Samples.Size();
 			Errors.Reserve(End, true);
 			for (Index = 0; Index < End; ++Index)

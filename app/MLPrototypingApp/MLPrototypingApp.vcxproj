@@ -298,13 +298,11 @@ PowerShell.exe -ExecutionPolicy bypass -File $(ProjectDir)QtMoc.ps1 $(ProjectDir
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="MLPrototypingApp_Definitions.h" />
-    <ClInclude Include="QMLPrototypingApp.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MLPrototypingApp.cpp" />
-    <ClCompile Include="QMLPrototypingApp.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|x64'">Create</PrecompiledHeader>
@@ -318,9 +316,6 @@ PowerShell.exe -ExecutionPolicy bypass -File $(ProjectDir)QtMoc.ps1 $(ProjectDir
     <ProjectReference Include="..\..\MLPrototyping.vcxproj">
       <Project>{f879799c-86c8-43bd-ae28-5a65821cb4fc}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="QMLPrototypingApp.moc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
