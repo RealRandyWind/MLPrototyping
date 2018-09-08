@@ -141,7 +141,7 @@ namespace MLPrototyping
 		{
 			Error.Value = Sample.Label - Error.Label;
 			Error.Weight = 1;
-			Error.WorkerID = 1; 
+			Error.WorkerID = 0; 
 			Error.Epsilon = TLimit<real_t>::Epsilon();
 			Error.Significance = TLimit<size_t>::Infinity();
 		}

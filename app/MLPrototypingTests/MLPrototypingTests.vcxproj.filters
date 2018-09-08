@@ -41,5 +41,8 @@
     <ClCompile Include="unittestMLPrototypingLVQ.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="unittestMLPrototypingGenerate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

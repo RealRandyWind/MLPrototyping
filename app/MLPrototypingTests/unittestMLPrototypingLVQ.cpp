@@ -41,7 +41,6 @@ namespace MLPrototypingTest
 			}
 
 			Model.Parameters.KNearest = K;
-			Model.Parameters.NPrototypes = N;
 			Model.Initialize();
 
 			Model.Train(Samples);
@@ -78,7 +77,7 @@ namespace MLPrototypingTest
 			Model.Parameters.LearningRate = Alpha;
 			Model.Initialize();
 
-			for (auto &Prototype : Model.Prototypes())
+			for (auto &Prototype : Model.State.Prototypes)
 			{
 				Distribution(Prototype.Feature);
 				Distribution(Prototype.Label);
@@ -121,7 +120,7 @@ namespace MLPrototypingTest
 			Model.Parameters.SplitTreshold = Gamma;
 			Model.Initialize();
 
-			for (auto &Prototype : Model.Prototypes())
+			for (auto &Prototype : Model.State.Prototypes)
 			{
 				Distribution(Prototype.Feature);
 				Distribution(Prototype.Label);

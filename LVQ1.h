@@ -37,16 +37,7 @@ namespace MLPrototyping
 
 			FParameters Parameters;
 			FState State;
-			
-			TSequence<FPrototype> &Prototypes()
-			{
-				return State.Prototypes;
-			}
 
-			const TSequence<const FPrototype> &Prototypes() const
-			{
-				return State.Prototypes;
-			}
 
 		protected:
 			virtual void_t _Initialize() override

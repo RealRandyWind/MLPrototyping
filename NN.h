@@ -18,7 +18,7 @@ namespace MLPrototyping
 
 			struct FParameters
 			{
-				size_t KNearest, NPrototypes;
+				size_t KNearest;
 			};
 
 			struct FNeighbour
@@ -35,22 +35,11 @@ namespace MLPrototyping
 
 			FParameters Parameters;
 			FState State;
-			
-			const TSequence<const FPrototype> &Prototypes() const
-			{
-				return State.Prototypes;
-			}
-			
-			const TSequence<const FNeighbour> &Neighbours() const
-			{
-				return State.Neighbours;
-			}
 
 
 		protected:
 			virtual void_t _Initialize() override
 			{
-				State.Prototypes.Reserve(Parameters.NPrototypes);
 				State.Neighbours.Reserve(Parameters.KNearest);
 				
 				State.Neighbours.IterateAll();
