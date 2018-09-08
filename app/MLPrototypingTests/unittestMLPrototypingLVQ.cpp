@@ -44,6 +44,7 @@ namespace MLPrototypingTest
 			Model.Initialize();
 
 			Model.Train(Samples);
+			Assert::AreEqual(DN, Model.State.Prototypes.Size());
 			Model.Validate(Samples, Errors);
 			Model.Use(Features, Labels);
 			Model.Optimize(Samples);

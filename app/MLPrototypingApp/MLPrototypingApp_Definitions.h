@@ -44,15 +44,6 @@ namespace MLPrototypingScript
 		if (!Validate) { Validate = new QScatterSeries(); }
 		if (!Prototypes) { Prototypes = new QScatterSeries(); }
 
-		for (auto &Marker : Chart->legend()->markers())
-		{
-			Marker->setVisible(false);
-		}
-
-		Chart->addSeries(Train);
-		Chart->addSeries(Validate);
-		Chart->addSeries(Prototypes);
-
 		Train->setName("Train");
 		Train->setMarkerShape(QScatterSeries::MarkerShapeCircle);
 		Train->setMarkerSize(3.0);
@@ -71,6 +62,10 @@ namespace MLPrototypingScript
 		Prototypes->setOpacity(0.4);
 		Prototypes->setBorderColor(Qt::transparent);
 
+		Chart->addSeries(Train);
+		Chart->addSeries(Validate);
+		Chart->addSeries(Prototypes);
+
 		Chart->legend()->setMarkerShape(QLegend::MarkerShapeFromSeries);
 		Chart->setTitle("Scatter Plot Data");
 		Chart->setDropShadowEnabled(false);
@@ -80,10 +75,8 @@ namespace MLPrototypingScript
 
 		Window->setWindowTitle("Measure Model Normal Data");
 		Window->setCentralWidget(ChartView);
-		
 		Window->setFixedSize(720, 720);
 		Window->show();
-
 		return Window;
 	}
 
