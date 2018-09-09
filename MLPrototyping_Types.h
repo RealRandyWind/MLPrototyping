@@ -18,7 +18,7 @@ namespace MLPrototyping
 
 	using size_t = size_t;
 
-	using real_t = float;
+	using real_t = double;
 
 	using raw_t = uint8_t;
 

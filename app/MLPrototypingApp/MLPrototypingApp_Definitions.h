@@ -20,6 +20,11 @@ using namespace MLPrototyping;
 
 namespace MLPrototypingScript
 {
+	struct FMeta
+	{
+		string_t Titel, Name;
+	};
+
 	const size_t _NMinimum = 8;
 
 	using FxScatterSeries = std::function<void(QScatterSeries *)> ;
@@ -52,13 +57,12 @@ namespace MLPrototypingScript
 		Validate->setName("Validate");
 		Validate->setMarkerShape(QScatterSeries::MarkerShapeCircle);
 		Validate->setMarkerSize(3.0);
-		Validate->setOpacity(0.7);
 		Validate->setBorderColor(Qt::transparent);
 
 		Prototypes->setName("Prototype");
 		Prototypes->setMarkerShape(QScatterSeries::MarkerShapeCircle);
 		Prototypes->setMarkerSize(8.0);
-		Prototypes->setOpacity(0.4);
+		Prototypes->setOpacity(0.3);
 		Prototypes->setBorderColor(Qt::transparent);
 
 		Chart->addSeries(Train);
@@ -71,6 +75,8 @@ namespace MLPrototypingScript
 		Chart->createDefaultAxes();
 		Chart->axisX()->setRange(-8, 8);
 		Chart->axisY()->setRange(-8, 8);
+		Chart->layout()->setContentsMargins(0, 0, 0, 0);
+		Chart->setBackgroundRoundness(0);
 
 		Window->setWindowTitle("Measure Model Normal Data");
 		Window->setCentralWidget(ChartView);
@@ -79,10 +85,8 @@ namespace MLPrototypingScript
 		return Window;
 	}
 
-
 	QMainWindow *MeasureNormal(FModelF2L3 &Model, TData<FModelF2L3::FError> &Errors, size_t Factor = 1, FxScatterSeries Populate = nullptr)
 	{
-		const real_t SDA = 1.2, SDB = 1, SDC = 0.8;
 		using FModel = FModelF2L3;
 		using FParameters = FNormalDataParametersF2L3;
 
@@ -93,19 +97,19 @@ namespace MLPrototypingScript
 		
 		List[0] = FParameters::Default();
 		List[0].N = Factor * _NMinimum;
-		List[0].SD = SDA;
+		List[0].SD = 1.2;
 		List[0].Norm = 1;
 		List[0].Mean = { -3, 4 };
 
 		List[1] = FParameters::Default();
 		List[1].N = Factor * _NMinimum;
-		List[1].SD = SDB;
+		List[1].SD = 1;
 		List[1].Norm = 1;
 		List[1].Mean = { -4, -4 };
 
 		List[2] = FParameters::Default();
 		List[2].N = Factor * _NMinimum;
-		List[2].SD = SDC;
+		List[2].SD = 0.8;
 		List[2].Norm = 1;
 		List[2].Mean = { 3, 0 };
 
@@ -126,7 +130,7 @@ namespace MLPrototypingScript
 		for (const auto &Point : Train) { SeriesTrain->append(Point.Feature[0], Point.Feature[1]); }
 		for (const auto &Point : Validate) { SeriesValidate->append(Point.Feature[0], Point.Feature[1]); }
 		if (Populate) { Populate(SeriesPrototype); }
-
+			
 		return DisplayMeasure(SeriesTrain, SeriesValidate, SeriesPrototype);
 	}
 

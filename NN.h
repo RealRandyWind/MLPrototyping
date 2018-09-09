@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 #include "MLPrototyping_Types.h"
 #include "MLPrototyping_Math.h"
 #include "Model.h"
@@ -16,15 +18,18 @@ namespace MLPrototyping
 
 			using FPrototype = typename FModel::FSample;
 
-			struct FParameters
-			{
-				size_t KNearest;
-			};
-
 			struct FNeighbour
 			{
 				real_t Distance2;
 				FPrototype *Prototype;
+			};
+
+			using FxOutput = std::function<void(TSequence<FNeighbour>&, typename FModel::FLabel&)>;
+
+			struct FParameters
+			{
+				size_t KNearest;
+				FxOutput OutputFunction;
 			};
 
 			struct FState
@@ -35,6 +40,19 @@ namespace MLPrototyping
 
 			FParameters Parameters;
 			FState State;
+
+			void_t UseDefaultParameters()
+			{
+				Parameters.KNearest = 3;
+				Parameters.OutputFunction = [](auto &Neighbours, auto &Label) {
+					Label = 0;
+					for (const auto &Neighbour : Neighbours)
+					{
+						Label += Neighbour.Prototype->Label;
+					}
+					Label *= (real_t) Neighbours.Size();
+				};
+			}
 
 
 		protected:
@@ -55,7 +73,6 @@ namespace MLPrototyping
 			{
 				real_t Distance2;
 				const real_t One = 1;
-				const real_t OneByKNearest = One / Parameters.KNearest;
 				
 				if (bTraining) { return; }
 				
@@ -68,13 +85,7 @@ namespace MLPrototyping
 						State.Neighbours.Swap({ Distance2, &Prototype });
 					}
 				}
-
-				Label = 0;
-				for (const auto &Neighbour : State.Neighbours)
-				{
-					Label += Neighbour.Prototype->Label;
-				}
-				Label *= OneByKNearest;
+				Parameters.OutputFunction(State.Neighbours, Label);
 			};
 
 			virtual void_t _Train(const typename FModel::FLabel &Label, const typename FModel::FSample &Sample) override
