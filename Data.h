@@ -23,17 +23,15 @@ namespace MLPrototyping
 			_Data = nullptr;
 		}
 
-		TData(size_t ReserveSize, bool_t SetSizeToReserveSize = false) : TData()
+		TData(size_t ReserveSize, bool_t bSetSizeToReserveSize = false) : TData()
 		{
-			Reserve(ReserveSize, SetSizeToReserveSize);
+			Reserve(ReserveSize, bSetSizeToReserveSize);
 		}
 
 		~TData()
 		{
-			if (_bHeap && _bClearDataOnDestroy && _Data)
-			{
-				free(_Data);
-			}
+			bool_t bFree = _bHeap && _bClearDataOnDestroy && _Data;
+			if (bFree) { free(_Data); }
 			_Data = nullptr;
 		}
 
@@ -119,7 +117,9 @@ namespace MLPrototyping
 
 		TypeData *Data(TypeData *Pointer, size_t SizeData, size_t SizeBuffer = 0, bool_t bHeap = true)
 		{
-			if (_bHeap && _bClearDataOnReplace && _Data) { free(_Data); _Data = nullptr; }
+			bool_t bFree = _bHeap && _bClearDataOnReplace && _Data;
+
+			if (bFree) { free(_Data); }
 			if (SizeBuffer < SizeData) { SizeBuffer = SizeData; }
 			_Size = SizeData;
 			_BufferSize = SizeBuffer;
@@ -152,16 +152,15 @@ namespace MLPrototyping
 			return _Data[Index];
 		}
 
-		void_t Reserve(size_t ReserveSize, bool_t SetSizeToReserveSize = false)
+		void_t Reserve(size_t ReserveSize, bool_t bSetSizeToReserveSize = false)
 		{
 			if (_bHeap)
 			{
-				_Data = nullptr;
 				_bHeap = true;
 				_bClearDataOnDestroy = true;
 			}
 			_Data = (TypeData *) realloc(_Data, ReserveSize * sizeof(TypeData));
-			if (SetSizeToReserveSize) { _Size = ReserveSize; }
+			if (bSetSizeToReserveSize) { _Size = ReserveSize; }
 			_BufferSize = ReserveSize;
 			if (ReserveSize < _Size) { _Size = ReserveSize;  }
 		}

@@ -47,7 +47,6 @@ namespace MLPrototypingScript
 		Train->setName("Train");
 		Train->setMarkerShape(QScatterSeries::MarkerShapeCircle);
 		Train->setMarkerSize(3.0);
-		Train->setOpacity(0.9);
 		Train->setBorderColor(Qt::transparent);
 
 		Validate->setName("Validate");
@@ -83,6 +82,7 @@ namespace MLPrototypingScript
 
 	QMainWindow *MeasureNormal(FModelF2L3 &Model, TData<FModelF2L3::FError> &Errors, size_t Factor = 1, FxScatterSeries Populate = nullptr)
 	{
+		const real_t SDA = 1.2, SDB = 1, SDC = 0.8;
 		using FModel = FModelF2L3;
 		using FParameters = FNormalDataParametersF2L3;
 
@@ -93,19 +93,19 @@ namespace MLPrototypingScript
 		
 		List[0] = FParameters::Default();
 		List[0].N = Factor * _NMinimum;
-		List[0].SD = 1.2;
+		List[0].SD = SDA;
 		List[0].Norm = 1;
 		List[0].Mean = { -3, 4 };
 
 		List[1] = FParameters::Default();
 		List[1].N = Factor * _NMinimum;
-		List[1].SD = 1;
+		List[1].SD = SDB;
 		List[1].Norm = 1;
 		List[1].Mean = { -4, -4 };
 
 		List[2] = FParameters::Default();
 		List[2].N = Factor * _NMinimum;
-		List[2].SD = 0.8;
+		List[2].SD = SDC;
 		List[2].Norm = 1;
 		List[2].Mean = { 3, 0 };
 

@@ -27,17 +27,16 @@ namespace MLPrototyping
 			_Data = nullptr;
 		}
 
-		TSequence(size_t ReserveSize, bool_t SetSizeToReserveSize = false) : TSequence()
+		TSequence(size_t ReserveSize, bool_t bSetSizeToReserveSize = false) : TSequence()
 		{
-			Reserve(ReserveSize, SetSizeToReserveSize);
+			Reserve(ReserveSize, bSetSizeToReserveSize);
 		}
 
 		~TSequence()
 		{
-			if (_bHeap && _bClearDataOnDestroy && _Data)
-			{
-				free((void_t *) _Data);
-			}
+			bool_t bFree = _bHeap && _bClearDataOnDestroy && _Data;
+
+			if (bFree) { free(_Data); }
 			_Data = nullptr;
 		}
 
@@ -90,10 +89,7 @@ namespace MLPrototyping
 		{
 			bool_t bResize = !_bFixedSize && _Size >= _BufferSize;
 
-			if (bResize)
-			{
-				Reserve(_BufferSize + _IncrementSize);
-			}
+			if (bResize) { Reserve(_Size + _IncrementSize); }
 			_Data[_Size] = Rhs;
 			++_Size;
 		}
@@ -196,7 +192,9 @@ namespace MLPrototyping
 
 		TypeData *Data(TypeData *Pointer, size_t SizeData, size_t SizeBuffer = 0, bool_t bHeap = true)
 		{
-			if (_bHeap && _bClearDataOnReplace && _Data) { free((void_t *) _Data); _Data = nullptr; }
+			bool_t bFree = _bHeap && _bClearDataOnReplace && _Data;
+
+			if (bFree) { free(_Data); }
 			if (SizeBuffer < SizeData) { SizeBuffer = SizeData; }
 			_Size = SizeData;
 			_BufferSize = SizeBuffer;
@@ -235,16 +233,15 @@ namespace MLPrototyping
 			return _Data[Index];
 		}
 
-		void_t Reserve(size_t ReserveSize, bool_t SetSizeToReserveSize = false)
+		void_t Reserve(size_t ReserveSize, bool_t bSetSizeToReserveSize = false)
 		{
 			if (_bHeap)
 			{
-				_Data = nullptr;
 				_bHeap = true;
 				_bClearDataOnDestroy = true;
 			}
 			_Data = (TypeData *) realloc(_Data, ReserveSize * sizeof(TypeData));
-			if (SetSizeToReserveSize) { _Size = ReserveSize; }
+			if (bSetSizeToReserveSize) { _Size = ReserveSize; }
 			_BufferSize = ReserveSize;
 			if (ReserveSize < _Size) { _Size = ReserveSize; }
 		}

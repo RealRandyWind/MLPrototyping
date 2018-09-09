@@ -29,9 +29,9 @@ namespace MLPrototypingTest
 			auto API = CMLPrototyping::Instance();
 
 			ModelData(Data, Item);
-			Assert::AreEqual(NN, Data.Size(), L"", LINE_INFO());
+			Assert::AreEqual(NN, Data.Size(), nullptr, LINE_INFO());
 			ModelData(SData, Item);
-			Assert::AreEqual(NN, SData.Size(), L"", LINE_INFO());
+			Assert::AreEqual(NN, SData.Size(), nullptr, LINE_INFO());
 
 			List.Reserve(NK, true);
 			for (auto &Parameters : List)
@@ -39,9 +39,9 @@ namespace MLPrototypingTest
 				Parameters = Item;
 			}
 			ModelData(Data, List);
-			Assert::AreEqual(NK * NN, Data.Size(), L"", LINE_INFO());
+			Assert::AreEqual(NK * NN, Data.Size(), nullptr, LINE_INFO());
 			ModelData(SData, List);
-			Assert::AreEqual(NK * NN, SData.Size(), L"", LINE_INFO());
+			Assert::AreEqual(NK * NN, SData.Size(), nullptr, LINE_INFO());
 		}
 
 		TEST_METHOD(ModelDataGamma)
@@ -59,9 +59,9 @@ namespace MLPrototypingTest
 			auto API = CMLPrototyping::Instance();
 
 			ModelData(Data, Item);
-			Assert::AreEqual(NN, Data.Size(), L"", LINE_INFO());
+			Assert::AreEqual(NN, Data.Size(), nullptr, LINE_INFO());
 			ModelData(SData, Item);
-			Assert::AreEqual(NN, SData.Size(), L"", LINE_INFO());
+			Assert::AreEqual(NN, SData.Size(), nullptr, LINE_INFO());
 
 			List.Reserve(NK, true);
 			for (auto &Parameters : List)
@@ -69,9 +69,9 @@ namespace MLPrototypingTest
 				Parameters = Item;
 			}
 			ModelData(Data, List);
-			Assert::AreEqual(NK * NN, Data.Size(), L"", LINE_INFO());
+			Assert::AreEqual(NK * NN, Data.Size(), nullptr, LINE_INFO());
 			ModelData(SData, List);
-			Assert::AreEqual(NK * NN, SData.Size(), L"", LINE_INFO());
+			Assert::AreEqual(NK * NN, SData.Size(), nullptr, LINE_INFO());
 		}
 
 		TEST_METHOD(ModelDataRing)
@@ -89,9 +89,9 @@ namespace MLPrototypingTest
 			auto API = CMLPrototyping::Instance();
 
 			ModelData(Data, Item);
-			Assert::AreEqual(NN, Data.Size(), L"", LINE_INFO());
+			Assert::AreEqual(NN, Data.Size(), nullptr, LINE_INFO());
 			ModelData(SData, Item);
-			Assert::AreEqual(NN, SData.Size(), L"", LINE_INFO());
+			Assert::AreEqual(NN, SData.Size(), nullptr, LINE_INFO());
 
 			List.Reserve(NK, true);
 			for (auto &Parameters : List)
@@ -99,9 +99,9 @@ namespace MLPrototypingTest
 				Parameters = Item;
 			}
 			ModelData(Data, List);
-			Assert::AreEqual(NK * NN, Data.Size(), L"", LINE_INFO());
+			Assert::AreEqual(NK * NN, Data.Size(), nullptr, LINE_INFO());
 			ModelData(SData, List);
-			Assert::AreEqual(NK * NN, SData.Size(), L"", LINE_INFO());
+			Assert::AreEqual(NK * NN, SData.Size(), nullptr, LINE_INFO());
 		}
 
 		TEST_METHOD(ModelDataUniform)
@@ -119,9 +119,9 @@ namespace MLPrototypingTest
 			auto API = CMLPrototyping::Instance();
 
 			ModelData(Data, Item);
-			Assert::AreEqual(NN, Data.Size(), L"", LINE_INFO());
+			Assert::AreEqual(NN, Data.Size(), nullptr, LINE_INFO());
 			ModelData(SData, Item);
-			Assert::AreEqual(NN, SData.Size(), L"", LINE_INFO());
+			Assert::AreEqual(NN, SData.Size(), nullptr, LINE_INFO());
 
 			List.Reserve(NK, true);
 			for (auto &Parameters : List)
@@ -129,9 +129,9 @@ namespace MLPrototypingTest
 				Parameters = Item;
 			}
 			ModelData(Data, List);
-			Assert::AreEqual(NK * NN, Data.Size(), L"", LINE_INFO());
+			Assert::AreEqual(NK * NN, Data.Size(), nullptr, LINE_INFO());
 			ModelData(SData, List);
-			Assert::AreEqual(NK * NN, SData.Size(), L"", LINE_INFO());
+			Assert::AreEqual(NK * NN, SData.Size(), nullptr, LINE_INFO());
 		}
 
 

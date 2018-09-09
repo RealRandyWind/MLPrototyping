@@ -21,7 +21,8 @@ namespace MLPrototypingTest
 	public:
 		TEST_METHOD(TestNN)
 		{
-			const size_t K = 3, N = 9, DN = 512, FN = 3, LN = 3;
+			const real_t One = 1, Two = 2, Five = 5;
+			const size_t Zero = 0,  K = 3, N = 9, DN = 512, FN = 3, LN = 3;
 			TNN<FN, LN> Model;
 			TData<TNN<FN, LN>::FSample> Samples(DN, true);
 			TData<TNN<FN, LN>::FFeature> Features(DN, true);
@@ -31,20 +32,25 @@ namespace MLPrototypingTest
 
 			for (auto &Sample : Samples)
 			{
-				Distribution(Sample.Feature);
-				Distribution(Sample.Label);
+				Sample.Feature = Two;
+				Sample.Label = Five;
 			}
 
 			for (auto &Feature : Features)
 			{
-				Distribution(Feature);
+				Feature = One;
 			}
 
 			Model.Parameters.KNearest = K;
 			Model.Initialize();
 
 			Model.Train(Samples);
-			Assert::AreEqual(DN, Model.State.Prototypes.Size());
+			Assert::AreEqual(DN, Model.State.Prototypes.Size(), nullptr, LINE_INFO());
+			for (const auto &Prototype : Model.State.Prototypes)
+			{
+				Assert::AreEqual(Five, Prototype.Label[Zero], nullptr, LINE_INFO());
+				Assert::AreEqual(Two, Prototype.Feature[Zero], nullptr, LINE_INFO());
+			}
 			Model.Validate(Samples, Errors);
 			Model.Use(Features, Labels);
 			Model.Optimize(Samples);
@@ -136,6 +142,8 @@ namespace MLPrototypingTest
 			Model.Parameters.bDynamic = true;
 			Model.Use(Features, Labels);
 		}
+
+
 	};
 
 

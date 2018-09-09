@@ -27,12 +27,12 @@ namespace MLPrototypingTest
 			Q1[ND1 - 1] = 1;
 			P1 = Two;
 			IntoPoint(P1, Q1);
-			Assert::AreEqual(One, Norm(P1), L"", LINE_INFO());
+			Assert::AreEqual(One, Norm(P1), nullptr, LINE_INFO());
 			IntoQuinsor(R1, P1);
 			End = ND1;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(Q1[Index], R1[Index], L"", LINE_INFO());
+				Assert::AreEqual(Q1[Index], R1[Index], nullptr, LINE_INFO());
 			}
 			*/
 		}
@@ -47,14 +47,14 @@ namespace MLPrototypingTest
 			C1.Point = One;
 			C2.Point = OneHalf;
 			C0.Point += C1.Point;
-			Assert::AreNotEqual(C0.Point.Size(), Empty, L"", LINE_INFO());
+			Assert::AreNotEqual(C0.Point.Size(), Empty, nullptr, LINE_INFO());
 			End = C0.Point.Size();
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(C0.Point[Index], C2.Point[Index], L"", LINE_INFO());
+				Assert::AreEqual(C0.Point[Index], C2.Point[Index], nullptr, LINE_INFO());
 			}
 			C0.G = 0.5;
-			Assert::AreEqual(C0.G, C0.Point[Green], L"", LINE_INFO());
+			Assert::AreEqual(C0.G, C0.Point[Green], nullptr, LINE_INFO());
 		}
 
 		TEST_METHOD(TestLimit)
@@ -69,14 +69,14 @@ namespace MLPrototypingTest
 			Epsilon = TLimit<real_t>::Epsilon();
 			NaN = TLimit<real_t>::NaN();
 
-			Assert::IsTrue(Epsilon > Zero, L"", LINE_INFO());
-			Assert::IsTrue(Epsilon < One, L"", LINE_INFO());
-			Assert::IsTrue(Maximum > Upper, L"", LINE_INFO());
-			Assert::IsTrue(Minimum < Lower, L"", LINE_INFO());
-			Assert::AreEqual(Min(Minimum, Lower), Minimum, L"", LINE_INFO());
-			Assert::AreEqual(Max(Upper, Maximum), Maximum, L"", LINE_INFO());
-			Assert::AreEqual(Max(Minimum, Lower), Lower, L"", LINE_INFO());
-			Assert::AreEqual(Min(Maximum, Upper), Upper, L"", LINE_INFO());
+			Assert::IsTrue(Epsilon > Zero, nullptr, LINE_INFO());
+			Assert::IsTrue(Epsilon < One, nullptr, LINE_INFO());
+			Assert::IsTrue(Maximum > Upper, nullptr, LINE_INFO());
+			Assert::IsTrue(Minimum < Lower, nullptr, LINE_INFO());
+			Assert::AreEqual(Min(Minimum, Lower), Minimum, nullptr, LINE_INFO());
+			Assert::AreEqual(Max(Upper, Maximum), Maximum, nullptr, LINE_INFO());
+			Assert::AreEqual(Max(Minimum, Lower), Lower, nullptr, LINE_INFO());
+			Assert::AreEqual(Min(Maximum, Upper), Upper, nullptr, LINE_INFO());
 		}
 
 		TEST_METHOD(TestDistribution)
@@ -121,22 +121,22 @@ namespace MLPrototypingTest
 			TPoint<ND1, real_t> P1D;
 			P1D = Two;
 			Result = Sum(P1D);
-			Assert::AreEqual(Result, R1, L"", LINE_INFO());
+			Assert::AreEqual(Result, R1, nullptr, LINE_INFO());
 
 			TPoint<ND2, real_t> P2D;
 			P2D = Two;
 			Result = Sum(P2D);
-			Assert::AreEqual(Result, R2, L"", LINE_INFO());
+			Assert::AreEqual(Result, R2, nullptr, LINE_INFO());
 
 			TPoint<ND3, real_t> P3D;
 			P3D = Two;
 			Result = Sum(P3D);
-			Assert::AreEqual(Result, R3, L"", LINE_INFO());
+			Assert::AreEqual(Result, R3, nullptr, LINE_INFO());
 
 			TPoint<NDN, real_t> PND;
 			PND = Two;
 			Result = Sum(PND);
-			Assert::AreEqual(Result, RN, L"", LINE_INFO());
+			Assert::AreEqual(Result, RN, nullptr, LINE_INFO());
 		}
 
 		TEST_METHOD(TestNorm2)
@@ -149,22 +149,22 @@ namespace MLPrototypingTest
 			TPoint<ND1, real_t> P1D;
 			P1D = Two;
 			Result = Norm2(P1D);
-			Assert::AreEqual(Result, R1, L"", LINE_INFO());
+			Assert::AreEqual(Result, R1, nullptr, LINE_INFO());
 
 			TPoint<ND2, real_t> P2D;
 			P2D = Two;
 			Result = Norm2(P2D);
-			Assert::AreEqual(Result, R2, L"", LINE_INFO());
+			Assert::AreEqual(Result, R2, nullptr, LINE_INFO());
 
 			TPoint<ND3, real_t> P3D;
 			P3D = Two;
 			Result = Norm2(P3D);
-			Assert::AreEqual(Result, R3, L"", LINE_INFO());
+			Assert::AreEqual(Result, R3, nullptr, LINE_INFO());
 
 			TPoint<NDN, real_t> PND;
 			PND = Two;
 			Result = Norm2(PND);
-			Assert::AreEqual(Result, RN, L"", LINE_INFO());
+			Assert::AreEqual(Result, RN, nullptr, LINE_INFO());
 		}
 
 		TEST_METHOD(TestNorm)
@@ -177,22 +177,22 @@ namespace MLPrototypingTest
 			TPoint<ND1, real_t> P1D;
 			P1D = Two;
 			Result = Norm(P1D);
-			Assert::AreEqual(Result, R1, L"", LINE_INFO());
+			Assert::AreEqual(Result, R1, nullptr, LINE_INFO());
 
 			TPoint<ND2, real_t> P2D;
 			P2D = Two;
 			Result = Norm(P2D);
-			Assert::AreEqual(Result, R2, L"", LINE_INFO());
+			Assert::AreEqual(Result, R2, nullptr, LINE_INFO());
 
 			TPoint<ND3, real_t> P3D;
 			P3D = Two;
 			Result = Norm(P3D);
-			Assert::AreEqual(Result, R3, L"", LINE_INFO());
+			Assert::AreEqual(Result, R3, nullptr, LINE_INFO());
 
 			TPoint<NDN, real_t> PND;
 			PND = Two;
 			Result = Norm(PND);
-			Assert::AreEqual(Result, RN, L"", LINE_INFO());
+			Assert::AreEqual(Result, RN, nullptr, LINE_INFO());
 		}
 
 		TEST_METHOD(TestNormalize)
@@ -209,7 +209,7 @@ namespace MLPrototypingTest
 			End = ND1;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(R1[Index], P1D[Index], L"", LINE_INFO());
+				Assert::AreEqual(R1[Index], P1D[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<ND2, real_t> P2D, R2;
@@ -219,7 +219,7 @@ namespace MLPrototypingTest
 			End = ND2;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(R2[Index], P2D[Index], L"", LINE_INFO());
+				Assert::AreEqual(R2[Index], P2D[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<ND3, real_t> P3D, R3;
@@ -229,7 +229,7 @@ namespace MLPrototypingTest
 			End = ND3;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(R3[Index], P3D[Index], L"", LINE_INFO());
+				Assert::AreEqual(R3[Index], P3D[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<NDN, real_t> PND, RN;
@@ -239,7 +239,7 @@ namespace MLPrototypingTest
 			End = NDN;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(RN[Index], PND[Index], L"", LINE_INFO());
+				Assert::AreEqual(RN[Index], PND[Index], nullptr, LINE_INFO());
 			}
 		}
 
@@ -257,7 +257,7 @@ namespace MLPrototypingTest
 			End = ND1;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(R1[Index], P1D[Index], L"", LINE_INFO());
+				Assert::AreEqual(R1[Index], P1D[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<ND2, real_t> P2D, R2;
@@ -267,7 +267,7 @@ namespace MLPrototypingTest
 			End = ND2;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(R2[Index], P2D[Index], L"", LINE_INFO());
+				Assert::AreEqual(R2[Index], P2D[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<ND3, real_t> P3D, R3;
@@ -277,7 +277,7 @@ namespace MLPrototypingTest
 			End = ND3;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(R3[Index], P3D[Index], L"", LINE_INFO());
+				Assert::AreEqual(R3[Index], P3D[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<NDN, real_t> PND, RN;
@@ -287,7 +287,7 @@ namespace MLPrototypingTest
 			End = NDN;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(RN[Index], PND[Index], L"", LINE_INFO());
+				Assert::AreEqual(RN[Index], PND[Index], nullptr, LINE_INFO());
 			}
 		}
 
@@ -308,7 +308,7 @@ namespace MLPrototypingTest
 			End = ND1;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(R1[Index], P3D1[Index], L"", LINE_INFO());
+				Assert::AreEqual(R1[Index], P3D1[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<ND2, real_t> P1D2, P2D2, P3D2, R2;
@@ -322,7 +322,7 @@ namespace MLPrototypingTest
 			End = ND2;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(R2[Index], P3D2[Index], L"", LINE_INFO());
+				Assert::AreEqual(R2[Index], P3D2[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<ND3, real_t> P1D3, P2D3, P3D3, R3;
@@ -336,7 +336,7 @@ namespace MLPrototypingTest
 			End = ND3;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(R3[Index], P3D3[Index], L"", LINE_INFO());
+				Assert::AreEqual(R3[Index], P3D3[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<NDN, real_t> P1DN, P2DN, P3DN, RN;
@@ -350,7 +350,7 @@ namespace MLPrototypingTest
 			End = NDN;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(RN[Index], P3DN[Index], L"", LINE_INFO());
+				Assert::AreEqual(RN[Index], P3DN[Index], nullptr, LINE_INFO());
 			}
 		}
 
@@ -371,7 +371,7 @@ namespace MLPrototypingTest
 			End = ND1;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(R1[Index], P3D1[Index], L"", LINE_INFO());
+				Assert::AreEqual(R1[Index], P3D1[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<ND2, real_t> P1D2, P2D2, P3D2, R2;
@@ -385,7 +385,7 @@ namespace MLPrototypingTest
 			End = ND2;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(R2[Index], P3D2[Index], L"", LINE_INFO());
+				Assert::AreEqual(R2[Index], P3D2[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<ND3, real_t> P1D3, P2D3, P3D3, R3;
@@ -399,7 +399,7 @@ namespace MLPrototypingTest
 			End = ND3;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(R3[Index], P3D3[Index], L"", LINE_INFO());
+				Assert::AreEqual(R3[Index], P3D3[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<NDN, real_t> P1DN, P2DN, P3DN, RN;
@@ -413,7 +413,7 @@ namespace MLPrototypingTest
 			End = NDN;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(RN[Index], P3DN[Index], L"", LINE_INFO());
+				Assert::AreEqual(RN[Index], P3DN[Index], nullptr, LINE_INFO());
 			}
 		}
 
@@ -431,13 +431,13 @@ namespace MLPrototypingTest
 			End = ND1;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P3D1[Index], R1[Index], L"", LINE_INFO());
+				Assert::AreEqual(P3D1[Index], R1[Index], nullptr, LINE_INFO());
 			}
 			R1 = -Two;
 			P3D1 = P2D1 - P1D1;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P3D1[Index], R1[Index], L"", LINE_INFO());
+				Assert::AreEqual(P3D1[Index], R1[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<ND2, real_t> P1D2, P2D2, P3D2, R2;
@@ -448,13 +448,13 @@ namespace MLPrototypingTest
 			End = ND2;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P3D2[Index], R2[Index], L"", LINE_INFO());
+				Assert::AreEqual(P3D2[Index], R2[Index], nullptr, LINE_INFO());
 			}
 			R2 = -Two;
 			P3D2 = P2D2 - P1D2;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P3D2[Index], R2[Index], L"", LINE_INFO());
+				Assert::AreEqual(P3D2[Index], R2[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<ND3, real_t> P1D3, P2D3, P3D3, R3;
@@ -465,13 +465,13 @@ namespace MLPrototypingTest
 			End = ND3;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P3D3[Index], R3[Index], L"", LINE_INFO());
+				Assert::AreEqual(P3D3[Index], R3[Index], nullptr, LINE_INFO());
 			}
 			R3 = -Two;
 			P3D3 = P2D3 - P1D3;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P3D3[Index], R3[Index], L"", LINE_INFO());
+				Assert::AreEqual(P3D3[Index], R3[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<NDN, real_t> P1DN, P2DN, P3DN, RN;
@@ -482,13 +482,13 @@ namespace MLPrototypingTest
 			End = NDN;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P3DN[Index], RN[Index], L"", LINE_INFO());
+				Assert::AreEqual(P3DN[Index], RN[Index], nullptr, LINE_INFO());
 			}
 			RN = -Two;
 			P3DN = P2DN - P1DN;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P3DN[Index], RN[Index], L"", LINE_INFO());
+				Assert::AreEqual(P3DN[Index], RN[Index], nullptr, LINE_INFO());
 			}
 		}
 
@@ -506,7 +506,7 @@ namespace MLPrototypingTest
 			End = ND1;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P1D1[Index], R1[Index], L"", LINE_INFO());
+				Assert::AreEqual(P1D1[Index], R1[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<ND2, real_t> P1D2, P2D2, R2;
@@ -517,7 +517,7 @@ namespace MLPrototypingTest
 			End = ND2;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P1D2[Index], R2[Index], L"", LINE_INFO());
+				Assert::AreEqual(P1D2[Index], R2[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<ND3, real_t> P1D3, P2D3, R3;
@@ -528,7 +528,7 @@ namespace MLPrototypingTest
 			End = ND3;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P1D3[Index], R3[Index], L"", LINE_INFO());
+				Assert::AreEqual(P1D3[Index], R3[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<NDN, real_t> P1DN, P2DN, RN;
@@ -539,7 +539,7 @@ namespace MLPrototypingTest
 			End = NDN;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P1DN[Index], RN[Index], L"", LINE_INFO());
+				Assert::AreEqual(P1DN[Index], RN[Index], nullptr, LINE_INFO());
 			}
 		}
 
@@ -558,13 +558,13 @@ namespace MLPrototypingTest
 			End = ND1;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P3D1[Index], R1[Index], L"", LINE_INFO());
+				Assert::AreEqual(P3D1[Index], R1[Index], nullptr, LINE_INFO());
 			}
 			R1 = Two;
 			P3D1 = R1D1 - P1D1;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P3D1[Index], R1[Index], L"", LINE_INFO());
+				Assert::AreEqual(P3D1[Index], R1[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<ND2, real_t> P1D2, P3D2, R2;
@@ -576,13 +576,13 @@ namespace MLPrototypingTest
 			End = ND2;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P3D2[Index], R2[Index], L"", LINE_INFO());
+				Assert::AreEqual(P3D2[Index], R2[Index], nullptr, LINE_INFO());
 			}
 			R2 = Two;
 			P3D2 = R1D2 - P1D2;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P3D2[Index], R2[Index], L"", LINE_INFO());
+				Assert::AreEqual(P3D2[Index], R2[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<ND3, real_t> P1D3, P3D3, R3;
@@ -594,13 +594,13 @@ namespace MLPrototypingTest
 			End = ND3;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P3D3[Index], R3[Index], L"", LINE_INFO());
+				Assert::AreEqual(P3D3[Index], R3[Index], nullptr, LINE_INFO());
 			}
 			R3 = Two;
 			P3D3 = R1D3 - P1D3;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P3D3[Index], R3[Index], L"", LINE_INFO());
+				Assert::AreEqual(P3D3[Index], R3[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<NDN, real_t> P1DN, P3DN, RN;
@@ -612,13 +612,13 @@ namespace MLPrototypingTest
 			End = NDN;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P3DN[Index], RN[Index], L"", LINE_INFO());
+				Assert::AreEqual(P3DN[Index], RN[Index], nullptr, LINE_INFO());
 			}
 			RN = Two;
 			P3DN = R1DN - P1DN;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P3DN[Index], RN[Index], L"", LINE_INFO());
+				Assert::AreEqual(P3DN[Index], RN[Index], nullptr, LINE_INFO());
 			}
 		}
 
@@ -637,7 +637,7 @@ namespace MLPrototypingTest
 			End = ND1;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P1D1[Index], R1[Index], L"", LINE_INFO());
+				Assert::AreEqual(P1D1[Index], R1[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<ND2, real_t> P1D2, R2;
@@ -649,7 +649,7 @@ namespace MLPrototypingTest
 			End = ND2;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P1D2[Index], R2[Index], L"", LINE_INFO());
+				Assert::AreEqual(P1D2[Index], R2[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<ND3, real_t> P1D3, R3;
@@ -661,7 +661,7 @@ namespace MLPrototypingTest
 			End = ND3;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P1D3[Index], R3[Index], L"", LINE_INFO());
+				Assert::AreEqual(P1D3[Index], R3[Index], nullptr, LINE_INFO());
 			}
 
 			TPoint<NDN, real_t> P1DN, RN;
@@ -673,7 +673,7 @@ namespace MLPrototypingTest
 			End = NDN;
 			for (Index = 0; Index < End; ++Index)
 			{
-				Assert::AreEqual(P1DN[Index], RN[Index], L"", LINE_INFO());
+				Assert::AreEqual(P1DN[Index], RN[Index], nullptr, LINE_INFO());
 			}
 		}
 	};
