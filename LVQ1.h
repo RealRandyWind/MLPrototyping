@@ -70,6 +70,7 @@ namespace MLPrototyping
 				for (auto &Prototype : State.Prototypes)
 				{
 					Prototype.Label = 0;
+					Prototype.Label[0] = 1;
 					Prototype.Feature = 0;
 				}
 				

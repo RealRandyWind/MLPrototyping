@@ -235,12 +235,18 @@ namespace MLPrototyping
 
 		void_t Reserve(size_t ReserveSize, bool_t bSetSizeToReserveSize = false)
 		{
+			pointer_t Pointer;
+			bool_t bFaildResize;
+
+			Pointer = realloc(_Data, ReserveSize * sizeof(TypeData));
+			bFaildResize = _Data && !Pointer && ReserveSize;
+			if (bFaildResize) { exit(failure); }
 			if (_bHeap)
 			{
 				_bHeap = true;
 				_bClearDataOnDestroy = true;
 			}
-			_Data = (TypeData *) realloc(_Data, ReserveSize * sizeof(TypeData));
+			_Data = (TypeData *) Pointer;
 			if (bSetSizeToReserveSize) { _Size = ReserveSize; }
 			_BufferSize = ReserveSize;
 			if (ReserveSize < _Size) { _Size = ReserveSize; }
