@@ -42,48 +42,6 @@
     <ClInclude Include="MLPrototyping_Generate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NDev.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NDevData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NDevDefinitions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NDevMath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NDevMathAliases.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NDevMathDistributions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NDevMathExtend.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NDevMathPoint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NDevModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NDevPoint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NDevResource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NDevSequence.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NDevSimulation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NDevTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -93,9 +51,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NDevResource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

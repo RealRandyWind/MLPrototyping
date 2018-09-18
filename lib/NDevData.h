@@ -47,19 +47,19 @@ namespace NDev
 			return !_Size || !_Data;
 		}
 
-		FVoid IterateAll(FBoolean IsTrue = True)
+		FVoid IterateAll(FBoolean bTrue = True)
 		{
-			_bIterateAll = IsTrue;
+			_bIterateAll = bTrue;
 		}
 
-		FVoid ClearDataOnDestroy(FBoolean IsTrue = True)
+		FVoid ClearDataOnDestroy(FBoolean bTrue = True)
 		{
-			_bClearDataOnDestroy = IsTrue;
+			_bClearDataOnDestroy = bTrue;
 		}
 
-		FVoid ClearDataOnReplace(FBoolean IsTrue = True)
+		FVoid ClearDataOnReplace(FBoolean bTrue = True)
 		{
-			_bClearDataOnReplace = IsTrue;
+			_bClearDataOnReplace = bTrue;
 		}
 
 		FSize Stride()

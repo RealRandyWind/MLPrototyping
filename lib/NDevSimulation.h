@@ -70,8 +70,8 @@ namespace NDev
             _bContinue = True;
             while(_bContinue)
             {
+				++_NSteps;
                 _Step(Result);
-				++_NSteps;	
             }
 			_Result(Result);
 		}

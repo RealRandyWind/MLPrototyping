@@ -1,7 +1,5 @@
 #pragma once
 
-#include "MLPrototyping_Configurations.h"
-
 #include "NDevTypes.h"
 #include "NDevSequence.h"
 
@@ -9,17 +7,15 @@ namespace NDev
 {
 	using namespace Types;
 
-	class MLPrototyping_Exports CResource;
+	class CResource;
 	
-	struct MLPrototyping_Exports _FResource
+	struct _FResource
 	{
 		FSize Id;
 		CResource *Pointer;
 	};
 
-	template struct MLPrototyping_Exports TSequence<_FResource>;
-
-	class MLPrototyping_Exports CResource
+	class CResource
 	{
 	public:
 		CResource();
