@@ -9,7 +9,7 @@
 
 namespace MLPrototyping
 {
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	using TQuinsor = TPoint<Size, Type>;
 
 	template<typename Type>
@@ -60,7 +60,7 @@ namespace MLPrototyping
 	{
 		Type &operator()(Type &Value) { Value = Next();  return Value; }
 
-		template<size_t SizeLhs>
+		template<FSize SizeLhs>
 		TPoint<SizeLhs, Type> &operator()(TPoint<SizeLhs, Type> &Point)
 		{
 			for (auto &Value : Point) { Value = Next(); }
@@ -69,7 +69,7 @@ namespace MLPrototyping
 
 		Type operator()() { return Next(); }
 
-		template<size_t SizeLhs>
+		template<FSize SizeLhs>
 		TPoint<SizeLhs, Type> operator()()
 		{
 			TPoint<SizeLhs, Type> Point;
@@ -78,11 +78,11 @@ namespace MLPrototyping
 			return Point;
 		}
 
-		virtual void_t Seed(size_t SeedIn) = 0;
+		virtual FVoid Seed(FSize SeedIn) = 0;
 
 		virtual Type Next() = 0;
 
-		virtual void_t Reset() = 0;
+		virtual FVoid Reset() = 0;
 	};
 
 	template<typename Type>
@@ -100,12 +100,12 @@ namespace MLPrototyping
 
 		~TNormal() { }
 
-		void_t Parameters(Type Mean, Type SD)
+		FVoid Parameters(Type Mean, Type SD)
 		{
 			Distribution.param(std::normal_distribution<Type>::param_type(Mean, SD));
 		}
 
-		virtual void_t Seed(size_t SeedIn) override
+		virtual FVoid Seed(FSize SeedIn) override
 		{
 			return Generator.seed(static_cast<unsigned int>(SeedIn));
 		}
@@ -115,7 +115,7 @@ namespace MLPrototyping
 			return Distribution(Generator);
 		}
 
-		virtual void_t Reset() override
+		virtual FVoid Reset() override
 		{
 			Distribution.reset();
 		}
@@ -136,12 +136,12 @@ namespace MLPrototyping
 
 		~TGamma() { }
 
-		void_t Parameters(Type Alpha, Type Beta)
+		FVoid Parameters(Type Alpha, Type Beta)
 		{
 			Distribution.param(std::gamma_distribution<Type>::param_type(Alpha, Beta));
 		}
 
-		virtual void_t Seed(size_t SeedIn) override
+		virtual FVoid Seed(FSize SeedIn) override
 		{
 			return Generator.seed(static_cast<unsigned int>(SeedIn));
 		}
@@ -151,7 +151,7 @@ namespace MLPrototyping
 			return Distribution(Generator);
 		}
 
-		virtual void_t Reset() override
+		virtual FVoid Reset() override
 		{
 			Distribution.reset();
 		}
@@ -172,12 +172,12 @@ namespace MLPrototyping
 
 		~TUniform() { }
 
-		void_t Parameters(Type Lower, Type Upper)
+		FVoid Parameters(Type Lower, Type Upper)
 		{
 			Distribution.param(std::uniform_real_distribution<Type>::param_type(Lower, Upper));
 		}
 
-		virtual void_t Seed(size_t SeedIn) override
+		virtual FVoid Seed(FSize SeedIn) override
 		{
 			return Generator.seed(static_cast<unsigned int>(SeedIn));
 		}
@@ -187,7 +187,7 @@ namespace MLPrototyping
 			return Distribution(Generator);
 		}
 
-		virtual void_t Reset() override
+		virtual FVoid Reset() override
 		{
 			Distribution.reset();
 		}
@@ -230,10 +230,10 @@ namespace MLPrototyping
 
 	/* Vector @ Vector */
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> operator-(const TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 		TPoint<Size, Type> Result;
 
 		End = Size;
@@ -244,10 +244,10 @@ namespace MLPrototyping
 		return Result;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> operator+(const TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 		TPoint<Size, Type> Result;
 
 		End = Size;
@@ -258,10 +258,10 @@ namespace MLPrototyping
 		return Result;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> operator*(const TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 		TPoint<Size, Type> Result;
 
 		End = Size;
@@ -272,10 +272,10 @@ namespace MLPrototyping
 		return Result;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> operator/(const TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 		TPoint<Size, Type> Result;
 
 		End = Size;
@@ -289,10 +289,10 @@ namespace MLPrototyping
 
 	/* Vector @= Vector */
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> &operator+=(TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 
 		End = Size;
 		for (Index = 0; Index < End; ++Index)
@@ -302,10 +302,10 @@ namespace MLPrototyping
 		return Lhs;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> &operator-=(TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 
 		End = Size;
 		for (Index = 0; Index < End; ++Index)
@@ -315,10 +315,10 @@ namespace MLPrototyping
 		return Lhs;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> &operator*=(TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 
 		End = Size;
 		for (Index = 0; Index < End; ++Index)
@@ -328,10 +328,10 @@ namespace MLPrototyping
 		return Lhs;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> &operator/=(TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 
 		End = Size;
 		for (Index = 0; Index < End; ++Index)
@@ -344,10 +344,10 @@ namespace MLPrototyping
 
 	/* Alpha @ Vector */
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> operator+(const Type &Lhs, const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 		TPoint<Size, Type> Result;
 
 		End = Size;
@@ -358,10 +358,10 @@ namespace MLPrototyping
 		return Result;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> operator-(const Type &Lhs, const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 		TPoint<Size, Type> Result;
 
 		End = Size;
@@ -372,10 +372,10 @@ namespace MLPrototyping
 		return Result;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> operator*(const Type &Lhs, const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 		TPoint<Size, Type> Result;
 
 		End = Size;
@@ -386,10 +386,10 @@ namespace MLPrototyping
 		return Result;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> operator/(const Type &Lhs, const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 		TPoint<Size, Type> Result;
 
 		End = Size;
@@ -403,10 +403,10 @@ namespace MLPrototyping
 
 	/* Vector @ Alpha */
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> operator+(const TPoint<Size, Type> &Lhs, const Type &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 		TPoint<Size, Type> Result;
 
 		End = Size;
@@ -417,10 +417,10 @@ namespace MLPrototyping
 		return Result;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> operator-(const TPoint<Size, Type> &Lhs, const Type &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 		TPoint<Size, Type> Result;
 
 		End = Size;
@@ -431,10 +431,10 @@ namespace MLPrototyping
 		return Result;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> operator*(const TPoint<Size, Type> &Lhs, const Type &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 		TPoint<Size, Type> Result;
 
 		End = Size;
@@ -445,10 +445,10 @@ namespace MLPrototyping
 		return Result;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> operator/(const TPoint<Size, Type> &Lhs, const Type &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 		TPoint<Size, Type> Result;
 
 		End = Size;
@@ -461,10 +461,10 @@ namespace MLPrototyping
 
 	/* Vector @= Alpha */
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> &operator+=(TPoint<Size, Type> &Lhs, const Type &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 
 		End = Size;
 		for (Index = 0; Index < End; ++Index)
@@ -474,10 +474,10 @@ namespace MLPrototyping
 		return Lhs;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> &operator-=(TPoint<Size, Type> &Lhs, const Type &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 
 		End = Size;
 		for (Index = 0; Index < End; ++Index)
@@ -487,10 +487,10 @@ namespace MLPrototyping
 		return Lhs;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> &operator*=(TPoint<Size, Type> &Lhs, const Type &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 
 		End = Size;
 		for (Index = 0; Index < End; ++Index)
@@ -500,10 +500,10 @@ namespace MLPrototyping
 		return Lhs;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> &operator/=(TPoint<Size, Type> &Lhs, const Type &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 
 		End = Size;
 		for (Index = 0; Index < End; ++Index)
@@ -515,10 +515,10 @@ namespace MLPrototyping
 
 	/* Function(Vector...) */
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	Type Sum(const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 		Type Result = Type();
 
 		End = Size;
@@ -529,10 +529,10 @@ namespace MLPrototyping
 		return Result;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	Type Norm2(const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 		Type Result = Type();
 
 		End = Size;
@@ -543,34 +543,34 @@ namespace MLPrototyping
 		return Result;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	Type Norm(const TPoint<Size, Type> &Rhs)
 	{
 		return sqrt(Norm2(Rhs));
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> &Normalize2(TPoint<Size, Type> &Rhs)
 	{
-		const real_t One = 1;
-		real_t Alpha = One / Norm2(Rhs);
+		const FReal One = 1;
+		FReal Alpha = One / Norm2(Rhs);
 		Rhs *= Alpha;
 		return Rhs;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> & Normalize(TPoint<Size, Type> &Rhs)
 	{
-		const real_t One = 1;
-		real_t Alpha = One / Norm(Rhs);
+		const FReal One = 1;
+		FReal Alpha = One / Norm(Rhs);
 		Rhs *= Alpha;
 		return  Rhs;
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> Min(const TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 		TPoint<Size, Type> Result;
 
 		End = Size;
@@ -581,10 +581,10 @@ namespace MLPrototyping
 		return Result;
 	}
 
-	template<size_t Size, typename Type>
-	void_t MinInto(TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
+	template<FSize Size, typename Type>
+	FVoid MinInto(TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 
 		End = Size;
 		for (Index = 0; Index < End; ++Index)
@@ -593,10 +593,10 @@ namespace MLPrototyping
 		}
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> Max(const TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 		TPoint<Size, Type> Result;
 
 		End = Size;
@@ -607,10 +607,10 @@ namespace MLPrototyping
 		return Result;
 	}
 
-	template<size_t Size, typename Type>
-	void_t MaxInto(TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
+	template<FSize Size, typename Type>
+	FVoid MaxInto(TPoint<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 
 		End = Size;
 		for (Index = 0; Index < End; ++Index)
@@ -620,18 +620,18 @@ namespace MLPrototyping
 	}
 	
 	/*
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TPoint<Size, Type> &IntoPoint(TPoint<Size, Type> &Lhs, const TQuinsor<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 		Type Scale, Theta;
 
 	}
 
-	template<size_t Size, typename Type>
+	template<FSize Size, typename Type>
 	TQuinsor<Size, Type> &IntoQuinsor(TQuinsor<Size, Type> &Lhs, const TPoint<Size, Type> &Rhs)
 	{
-		size_t Index, End;
+		FSize Index, End;
 		Type Scale, Theta;
 	}
 	*/

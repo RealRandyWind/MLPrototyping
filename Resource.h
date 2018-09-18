@@ -11,7 +11,7 @@ namespace MLPrototyping
 	
 	struct MLPrototyping_Exports _FResource
 	{
-		size_t Id;
+		FSize Id;
 		CResource *Pointer;
 	};
 
@@ -24,24 +24,24 @@ namespace MLPrototyping
 
 		~CResource();
 
-		size_t Id();
+		FSize Id();
 
-		const size_t Id() const;
+		const FSize Id() const;
 
-		static CResource &Reference(size_t);
+		static CResource &Reference(FSize);
 
-		static CResource *Pointer(size_t);
+		static CResource *Pointer(FSize);
 
-		static size_t ResourceCount();
+		static FSize ResourceCount();
 
-		static size_t ResourceBufferSize();
+		static FSize ResourceBufferSize();
 
 
 	private:
-		size_t _Id;
+		FSize _Id;
 
-		static size_t _NextId;
-		static size_t _Count;
+		static FSize _NextId;
+		static FSize _Count;
 		static TSequence<_FResource> _List;
 
 

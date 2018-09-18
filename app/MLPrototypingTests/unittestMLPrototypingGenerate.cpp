@@ -15,7 +15,7 @@ namespace MLPrototypingTest
 	public:
 		TEST_METHOD(ModelDataNormal)
 		{
-			const size_t N0 = 0, NK = 32, NN = 2048;
+			const FSize N0 = 0, NK = 32, NN = 2048;
 
 			using FNormalDataParameters = TNormalDataParameters<3, 3>;
 			FNormalDataParameters Item;
@@ -29,24 +29,24 @@ namespace MLPrototypingTest
 			auto API = CMLPrototyping::Instance();
 
 			ModelData(Data, Item);
-			Assert::AreEqual(NN, Data.Size(), nullptr, LINE_INFO());
+			Assert::AreEqual(NN, Data.Size(), NullPtr, LINE_INFO());
 			ModelData(SData, Item);
-			Assert::AreEqual(NN, SData.Size(), nullptr, LINE_INFO());
+			Assert::AreEqual(NN, SData.Size(), NullPtr, LINE_INFO());
 
-			List.Reserve(NK, true);
+			List.Reserve(NK, True);
 			for (auto &Parameters : List)
 			{
 				Parameters = Item;
 			}
 			ModelData(Data, List);
-			Assert::AreEqual(NK * NN, Data.Size(), nullptr, LINE_INFO());
+			Assert::AreEqual(NK * NN, Data.Size(), NullPtr, LINE_INFO());
 			ModelData(SData, List);
-			Assert::AreEqual(NK * NN, SData.Size(), nullptr, LINE_INFO());
+			Assert::AreEqual(NK * NN, SData.Size(), NullPtr, LINE_INFO());
 		}
 
 		TEST_METHOD(ModelDataGamma)
 		{
-			const size_t N0 = 0, NK = 32, NN = 2048;
+			const FSize N0 = 0, NK = 32, NN = 2048;
 			using FGammaDataParameters = TGammaDataParameters<3, 3>;
 			FGammaDataParameters Item;
 			TSequence<FGammaDataParameters> List;
@@ -59,24 +59,24 @@ namespace MLPrototypingTest
 			auto API = CMLPrototyping::Instance();
 
 			ModelData(Data, Item);
-			Assert::AreEqual(NN, Data.Size(), nullptr, LINE_INFO());
+			Assert::AreEqual(NN, Data.Size(), NullPtr, LINE_INFO());
 			ModelData(SData, Item);
-			Assert::AreEqual(NN, SData.Size(), nullptr, LINE_INFO());
+			Assert::AreEqual(NN, SData.Size(), NullPtr, LINE_INFO());
 
-			List.Reserve(NK, true);
+			List.Reserve(NK, True);
 			for (auto &Parameters : List)
 			{
 				Parameters = Item;
 			}
 			ModelData(Data, List);
-			Assert::AreEqual(NK * NN, Data.Size(), nullptr, LINE_INFO());
+			Assert::AreEqual(NK * NN, Data.Size(), NullPtr, LINE_INFO());
 			ModelData(SData, List);
-			Assert::AreEqual(NK * NN, SData.Size(), nullptr, LINE_INFO());
+			Assert::AreEqual(NK * NN, SData.Size(), NullPtr, LINE_INFO());
 		}
 
 		TEST_METHOD(ModelDataRing)
 		{
-			const size_t N0 = 0, NK = 32, NN = 2048;
+			const FSize N0 = 0, NK = 32, NN = 2048;
 			using FRingDataParameters = TRingDataParameters<3, 3>;
 			FRingDataParameters Item;
 			TSequence<FRingDataParameters> List;
@@ -89,24 +89,24 @@ namespace MLPrototypingTest
 			auto API = CMLPrototyping::Instance();
 
 			ModelData(Data, Item);
-			Assert::AreEqual(NN, Data.Size(), nullptr, LINE_INFO());
+			Assert::AreEqual(NN, Data.Size(), NullPtr, LINE_INFO());
 			ModelData(SData, Item);
-			Assert::AreEqual(NN, SData.Size(), nullptr, LINE_INFO());
+			Assert::AreEqual(NN, SData.Size(), NullPtr, LINE_INFO());
 
-			List.Reserve(NK, true);
+			List.Reserve(NK, True);
 			for (auto &Parameters : List)
 			{
 				Parameters = Item;
 			}
 			ModelData(Data, List);
-			Assert::AreEqual(NK * NN, Data.Size(), nullptr, LINE_INFO());
+			Assert::AreEqual(NK * NN, Data.Size(), NullPtr, LINE_INFO());
 			ModelData(SData, List);
-			Assert::AreEqual(NK * NN, SData.Size(), nullptr, LINE_INFO());
+			Assert::AreEqual(NK * NN, SData.Size(), NullPtr, LINE_INFO());
 		}
 
 		TEST_METHOD(ModelDataUniform)
 		{
-			const size_t N0 = 0, NK = 32, NN = 2048;
+			const FSize N0 = 0, NK = 32, NN = 2048;
 			using FUniformDataParameters = TUniformDataParameters<3, 3>;
 			FUniformDataParameters Item;
 			TSequence<FUniformDataParameters> List;
@@ -119,19 +119,19 @@ namespace MLPrototypingTest
 			auto API = CMLPrototyping::Instance();
 
 			ModelData(Data, Item);
-			Assert::AreEqual(NN, Data.Size(), nullptr, LINE_INFO());
+			Assert::AreEqual(NN, Data.Size(), NullPtr, LINE_INFO());
 			ModelData(SData, Item);
-			Assert::AreEqual(NN, SData.Size(), nullptr, LINE_INFO());
+			Assert::AreEqual(NN, SData.Size(), NullPtr, LINE_INFO());
 
-			List.Reserve(NK, true);
+			List.Reserve(NK, True);
 			for (auto &Parameters : List)
 			{
 				Parameters = Item;
 			}
 			ModelData(Data, List);
-			Assert::AreEqual(NK * NN, Data.Size(), nullptr, LINE_INFO());
+			Assert::AreEqual(NK * NN, Data.Size(), NullPtr, LINE_INFO());
 			ModelData(SData, List);
-			Assert::AreEqual(NK * NN, SData.Size(), nullptr, LINE_INFO());
+			Assert::AreEqual(NK * NN, SData.Size(), NullPtr, LINE_INFO());
 		}
 
 

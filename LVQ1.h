@@ -11,7 +11,7 @@ namespace MLPrototyping
 {
 	namespace LVQ
 	{
-		template<size_t SizeFeature, size_t SizeLabel>
+		template<FSize SizeFeature, FSize SizeLabel>
 		struct TLVQ1 : public TModel<SizeFeature, SizeLabel>
 		{
 			using FModel = TModel<SizeFeature, SizeLabel>;
@@ -20,7 +20,7 @@ namespace MLPrototyping
 
 			struct FNeighbour
 			{
-				real_t Distance2;
+				FReal Distance2;
 				typename FModel::FFeature Direction;
 				FPrototype *Prototype;
 			};
@@ -29,8 +29,8 @@ namespace MLPrototyping
 
 			struct FParameters
 			{
-				real_t LearningRate;
-				size_t KNearest, NPrototypes;
+				FReal LearningRate;
+				FSize KNearest, NPrototypes;
 				FOnOutput OnOutput;
 			};
 
@@ -43,7 +43,7 @@ namespace MLPrototyping
 			FParameters Parameters;
 			FState State;
 
-			void_t UseDefaultParameters()
+			FVoid UseDefaultParameters()
 			{
 				Parameters.KNearest = 1;
 				Parameters.NPrototypes = 3;
@@ -54,18 +54,18 @@ namespace MLPrototyping
 					{
 						Label += Neighbour.Prototype->Label;
 					}
-					Label *= (real_t) Neighbours.Size();
+					Label *= (FReal) Neighbours.Size();
 				};
 			}
 
 
 		protected:
-			virtual void_t _Initialize() override
+			virtual FVoid _Initialize() override
 			{
 				if (Parameters.KNearest > Parameters.NPrototypes) { return;  }
 
-				State.Prototypes.Reserve(Parameters.NPrototypes, true);
-				State.Neighbours.Reserve(Parameters.KNearest, true);
+				State.Prototypes.Reserve(Parameters.NPrototypes, True);
+				State.Neighbours.Reserve(Parameters.KNearest, True);
 				
 				for (auto &Prototype : State.Prototypes)
 				{
@@ -76,17 +76,17 @@ namespace MLPrototyping
 				
 				for (auto &Neighbour : State.Neighbours)
 				{
-					Neighbour.Distance2 = TLimit<real_t>::Infinity();
+					Neighbour.Distance2 = TLimit<FReal>::Infinity();
 					Neighbour.Direction = 0;
-					Neighbour.Prototype = nullptr;
+					Neighbour.Prototype = NullPtr;
 				}
 			}
 
-			virtual void_t _Use(const typename FModel::FFeature &Feature, typename FModel::FLabel &Label, bool_t bTraining) override
+			virtual FVoid _Use(const typename FModel::FFeature &Feature, typename FModel::FLabel &Label, FBoolean bTraining) override
 			{
-				real_t Distance2;
+				FReal Distance2;
 				typename FModel::FFeature Direction;
-				const real_t One = 1;
+				const FReal One = 1;
 				
 				State.Neighbours.Reset();
 				for (auto &Prototype : State.Prototypes)
@@ -102,12 +102,12 @@ namespace MLPrototyping
 				Parameters.OnOutput(State.Neighbours, Label);
 			}
 
-			virtual void_t _Train(const typename FModel::FLabel &Label, const typename FModel::FSample &Sample) override
+			virtual FVoid _Train(const typename FModel::FLabel &Label, const typename FModel::FSample &Sample) override
 			{
-				const real_t One = 1;
-				const real_t LearningRate = Parameters.LearningRate;
+				const FReal One = 1;
+				const FReal LearningRate = Parameters.LearningRate;
 				const typename FModel::FLabel Error = One - (Sample.Label - Label);
-				const real_t Delta = Norm(Error) * LearningRate;
+				const FReal Delta = Norm(Error) * LearningRate;
 
 				for (auto &Neighbour : State.Neighbours)
 				{

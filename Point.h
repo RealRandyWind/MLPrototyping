@@ -5,39 +5,39 @@
 
 namespace MLPrototyping
 {
-	template<size_t SizeData, typename TypeData>
+	template<FSize SizeData, typename TypeData>
 	struct TPoint
 	{
 		TypeData _Data[SizeData];
 
-		size_t Size()
+		FSize Size()
 		{
 			return SizeData;
 		}
 
-		const size_t Size() const
+		const FSize Size() const
 		{
 			return SizeData;
 		}
 
-		size_t SizeOf()
+		FSize SizeOf()
 		{
 			return sizeof(TypeData) * SizeData;
 		}
 
-		const size_t SizeOf() const
+		const FSize SizeOf() const
 		{
 			return sizeof(TypeData) * SizeData;
 		}
 
-		byte_t * Bytes()
+		FByte * Bytes()
 		{
-			return (byte_t *) &_Data[0];
+			return (FByte *) &_Data[0];
 		}
 
-		const byte_t * Bytes() const
+		const FByte * Bytes() const
 		{
-			return (byte_t *) &_Data[0];
+			return (FByte *) &_Data[0];
 		}
 
 		TypeData * Data()
@@ -54,22 +54,22 @@ namespace MLPrototyping
 		{
 			FDescriptor _Descriptor;
 
-			_Descriptor.Type = none;
+			_Descriptor.Type = None;
 			_Descriptor.SizeOf = sizeof(TypeData);
 			_Descriptor.Size = SizeData;
 			_Descriptor._Size = SizeData;
 			_Descriptor.N = 0;
-			_Descriptor.bHeap = false;
-			_Descriptor.Pointer = (pointer_t) &_Data[0];
+			_Descriptor.bHeap = False;
+			_Descriptor.Pointer = (FPointer) &_Data[0];
 			return _Descriptor;
 		}
 
-		TypeData & operator[](size_t Index)
+		TypeData & operator[](FSize Index)
 		{
 			return _Data[Index];
 		}
 
-		const TypeData & operator[](size_t Index) const
+		const TypeData & operator[](FSize Index) const
 		{
 			return _Data[Index];
 		}
@@ -94,11 +94,11 @@ namespace MLPrototyping
 			return &_Data[SizeData];
 		}
 
-		template<size_t SizeLhs, typename TypeLhs>
+		template<FSize SizeLhs, typename TypeLhs>
 		operator TPoint<SizeLhs, TypeLhs>()
 		{
 			TPoint<SizeLhs, TypeLhs> Lhs;
-			size_t Index, End;
+			FSize Index, End;
 
 			End = Min(SizeData, SizeLhs);
 			for (Index = 0; Index < End; ++Index)
@@ -116,7 +116,7 @@ namespace MLPrototyping
 		template<typename TypeRhs>
 		TPoint<SizeData, TypeData> & operator=(const TypeRhs &Rhs)
 		{
-			size_t Index, End;
+			FSize Index, End;
 
 			End = SizeData;
 			for (Index = 0; Index < End; ++Index)
@@ -126,10 +126,10 @@ namespace MLPrototyping
 			return *this;
 		}
 
-		template<size_t SizeRhs, typename TypRhs>
+		template<FSize SizeRhs, typename TypRhs>
 		TPoint<SizeData, TypeData> & operator=(const TPoint<SizeRhs, TypRhs> &Rhs)
 		{
-			size_t Index, End;
+			FSize Index, End;
 
 			End = Min(SizeData, SizeRhs);
 			for (Index = 0; Index < End; ++Index)

@@ -21,14 +21,14 @@ namespace MLPrototypingTest
 	public:
 		TEST_METHOD(TestNN)
 		{
-			const real_t One = 1, Two = 2, Five = 5;
-			const size_t Zero = 0,  K = 3, N = 9, DN = 512, FN = 3, LN = 3;
+			const FReal One = 1, Two = 2, Five = 5;
+			const FSize Zero = 0,  K = 3, N = 9, DN = 512, FN = 3, LN = 3;
 			
 			using FModel = TNN<FN, LN>;
 
 			FModel Model;
-			TData<FModel::FSample> Samples(DN, true);
-			TData<FModel::FFeature> Features(DN, true);
+			TData<FModel::FSample> Samples(DN, True);
+			TData<FModel::FFeature> Features(DN, True);
 			TData<FModel::FLabel> Labels;
 			TData<FModel::FError> Errors;
 
@@ -48,12 +48,12 @@ namespace MLPrototypingTest
 			Model.Initialize();
 
 			Model.Train(Samples);
-			Assert::AreEqual(DN, Model.State.Prototypes.Size(), nullptr, LINE_INFO());
+			Assert::AreEqual(DN, Model.State.Prototypes.Size(), NullPtr, LINE_INFO());
 			
 			for (const auto &Prototype : Model.State.Prototypes)
 			{
-				Assert::AreEqual(Five, Prototype.Label[Zero], nullptr, LINE_INFO());
-				Assert::AreEqual(Two, Prototype.Feature[Zero], nullptr, LINE_INFO());
+				Assert::AreEqual(Five, Prototype.Label[Zero], NullPtr, LINE_INFO());
+				Assert::AreEqual(Two, Prototype.Feature[Zero], NullPtr, LINE_INFO());
 			}
 			
 			Model.Validate(Samples, Errors);
@@ -64,16 +64,16 @@ namespace MLPrototypingTest
 
 		TEST_METHOD(TestLVQ1)
 		{
-			const size_t K = 3, N = 9, DN = 512, FN = 3, LN = 3;
+			const FSize K = 3, N = 9, DN = 512, FN = 3, LN = 3;
 
 			using FModel = TLVQ1<FN, LN>;
 
 			FModel Model;
-			TData<FModel::FSample> Samples(DN, true);
-			TData<FModel::FFeature> Features(DN, true);
+			TData<FModel::FSample> Samples(DN, True);
+			TData<FModel::FFeature> Features(DN, True);
 			TData<FModel::FLabel> Labels;
 			TData<FModel::FError> Errors;
-			TNormal<real_t> Distribution;
+			TNormal<FReal> Distribution;
 
 			for (auto &Sample : Samples)
 			{
@@ -106,16 +106,16 @@ namespace MLPrototypingTest
 
 		TEST_METHOD(TestSMDLVQ)
 		{
-			const size_t K = 3, N = 9, DN = 512, FN = 3, LN = 3;
+			const FSize K = 3, N = 9, DN = 512, FN = 3, LN = 3;
 
 			using FModel = TSMDLVQ<FN, LN>;
 
 			FModel Model;
-			TData<FModel::FSample> Samples(DN, true);
-			TData<FModel::FFeature> Features(DN, true);
+			TData<FModel::FSample> Samples(DN, True);
+			TData<FModel::FFeature> Features(DN, True);
 			TData<FModel::FLabel> Labels;
 			TData<FModel::FError> Errors;
-			TNormal<real_t> Distribution;
+			TNormal<FReal> Distribution;
 
 			for (auto &Sample : Samples)
 			{
@@ -145,7 +145,7 @@ namespace MLPrototypingTest
 			Model.Optimize(Samples);
 			Model.Optimize();
 
-			Model.Parameters.bDynamic = true;
+			Model.Parameters.bDynamic = True;
 			Model.Use(Features, Labels);
 		}
 

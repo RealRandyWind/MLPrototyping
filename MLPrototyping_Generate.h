@@ -9,7 +9,7 @@
 
 namespace MLPrototyping
 {
-	template<size_t SizeFeature, size_t SizeLabel>
+	template<FSize SizeFeature, FSize SizeLabel>
 	struct TUniformDataParameters
 	{
 		using FModel = TModel<SizeFeature, SizeLabel>;
@@ -20,8 +20,8 @@ namespace MLPrototyping
 
 		using FSample = typename FModel::FSample;
 
-		size_t N;
-		real_t Norm, Radius;
+		FSize N;
+		FReal Norm, Radius;
 		FFeature Mean;
 		FLabel Label;
 
@@ -38,7 +38,7 @@ namespace MLPrototyping
 		}
 	};
 
-	template<size_t SizeFeature, size_t SizeLabel>
+	template<FSize SizeFeature, FSize SizeLabel>
 	struct TNormalDataParameters
 	{
 		using FModel = TModel<SizeFeature, SizeLabel>;
@@ -49,8 +49,8 @@ namespace MLPrototyping
 
 		using FSample = typename FModel::FSample;
 
-		size_t N;
-		real_t SD, Norm;
+		FSize N;
+		FReal SD, Norm;
 		FFeature Mean;
 		FLabel Label;
 
@@ -67,7 +67,7 @@ namespace MLPrototyping
 		}
 	};
 
-	template<size_t SizeFeature, size_t SizeLabel>
+	template<FSize SizeFeature, FSize SizeLabel>
 	struct TGammaDataParameters
 	{
 		using FModel = TModel<SizeFeature, SizeLabel>;
@@ -78,8 +78,8 @@ namespace MLPrototyping
 
 		using FSample = typename FModel::FSample;
 
-		size_t N;
-		real_t Alpha, Beta, Norm;
+		FSize N;
+		FReal Alpha, Beta, Norm;
 		FFeature Mean, Along;
 		FLabel Label;
 
@@ -99,7 +99,7 @@ namespace MLPrototyping
 		}
 	};
 
-	template<size_t SizeFeature, size_t SizeLabel>
+	template<FSize SizeFeature, FSize SizeLabel>
 	struct TRingDataParameters
 	{
 		using FModel = TModel<SizeFeature, SizeLabel>;
@@ -110,8 +110,8 @@ namespace MLPrototyping
 
 		using FSample = typename FModel::FSample;
 
-		size_t N;
-		real_t SD, Readius, Norm;
+		FSize N;
+		FReal SD, Readius, Norm;
 		FFeature Mean;
 		FLabel Label;
 
@@ -129,25 +129,25 @@ namespace MLPrototyping
 		}
 	};
 
-	template<size_t SizeFeature, size_t SizeLabel>
-	static void_t ModelData(TData<typename TUniformDataParameters<SizeFeature, SizeLabel>::FFeature> &Data, TUniformDataParameters<SizeFeature, SizeLabel> &Parameters, size_t Seed = 0)
+	template<FSize SizeFeature, FSize SizeLabel>
+	static FVoid ModelData(TData<typename TUniformDataParameters<SizeFeature, SizeLabel>::FFeature> &Data, TUniformDataParameters<SizeFeature, SizeLabel> &Parameters, FSize Seed = 0)
 	{
 		TSequence<TUniformDataParameters<SizeFeature, SizeLabel>> List;
 
-		List.Data(&Parameters, 1, 1, false);
+		List.Data(&Parameters, 1, 1, False);
 		ModelData(Data, List, Seed);
 	}
 
-	template<size_t SizeFeature, size_t SizeLabel>
-	static void_t ModelData(TData<typename TUniformDataParameters<SizeFeature, SizeLabel>::FFeature> &Data, TSequence<TUniformDataParameters<SizeFeature, SizeLabel>> &List, size_t Seed = 0)
+	template<FSize SizeFeature, FSize SizeLabel>
+	static FVoid ModelData(TData<typename TUniformDataParameters<SizeFeature, SizeLabel>::FFeature> &Data, TSequence<TUniformDataParameters<SizeFeature, SizeLabel>> &List, FSize Seed = 0)
 	{
-		const real_t Zero = 0;
-		size_t Index, End = 0, Offset = 0, N = 0;
-		TUniform<real_t> Distribution;
+		const FReal Zero = 0;
+		FSize Index, End = 0, Offset = 0, N = 0;
+		TUniform<FReal> Distribution;
 		Distribution.Seed(Seed);
 
 		for (const auto &Parameters : List) { N += Parameters.N; }
-		Data.Reserve(N, true);
+		Data.Reserve(N, True);
 
 		for (const auto &Parameters : List)
 		{
@@ -164,25 +164,25 @@ namespace MLPrototyping
 		}
 	}
 
-	template<size_t SizeFeature, size_t SizeLabel>
-	static void_t ModelData(TData<typename TUniformDataParameters<SizeFeature, SizeLabel>::FSample> &Data, TUniformDataParameters<SizeFeature, SizeLabel> &Parameters, size_t Seed = 0)
+	template<FSize SizeFeature, FSize SizeLabel>
+	static FVoid ModelData(TData<typename TUniformDataParameters<SizeFeature, SizeLabel>::FSample> &Data, TUniformDataParameters<SizeFeature, SizeLabel> &Parameters, FSize Seed = 0)
 	{
 		TSequence<TUniformDataParameters<SizeFeature, SizeLabel>> List;
 
-		List.Data(&Parameters, 1, 1, false);
+		List.Data(&Parameters, 1, 1, False);
 		ModelData(Data, List, Seed);
 	}
 
-	template<size_t SizeFeature, size_t SizeLabel>
-	static void_t ModelData(TData<typename TUniformDataParameters<SizeFeature, SizeLabel>::FSample> &Data, TSequence<TUniformDataParameters<SizeFeature, SizeLabel>> &List, size_t Seed = 0)
+	template<FSize SizeFeature, FSize SizeLabel>
+	static FVoid ModelData(TData<typename TUniformDataParameters<SizeFeature, SizeLabel>::FSample> &Data, TSequence<TUniformDataParameters<SizeFeature, SizeLabel>> &List, FSize Seed = 0)
 	{
-		const real_t Zero = 0;
-		size_t Index, End = 0, Offset = 0, N = 0;
-		TUniform<real_t> Distribution;
+		const FReal Zero = 0;
+		FSize Index, End = 0, Offset = 0, N = 0;
+		TUniform<FReal> Distribution;
 		Distribution.Seed(Seed);
 
 		for (const auto &Parameters : List) { N += Parameters.N; }
-		Data.Reserve(N, true);
+		Data.Reserve(N, True);
 
 		for (const auto &Parameters : List)
 		{
@@ -200,25 +200,25 @@ namespace MLPrototyping
 		}
 	}
 
-	template<size_t SizeFeature, size_t SizeLabel>
-	static void_t ModelData(TData<typename TNormalDataParameters<SizeFeature, SizeLabel>::FFeature> &Data, TNormalDataParameters<SizeFeature, SizeLabel> &Parameters, size_t Seed = 0)
+	template<FSize SizeFeature, FSize SizeLabel>
+	static FVoid ModelData(TData<typename TNormalDataParameters<SizeFeature, SizeLabel>::FFeature> &Data, TNormalDataParameters<SizeFeature, SizeLabel> &Parameters, FSize Seed = 0)
 	{
 		TSequence<TNormalDataParameters<SizeFeature, SizeLabel>> List;
 
-		List.Data(&Parameters, 1, 1, false);
+		List.Data(&Parameters, 1, 1, False);
 		ModelData(Data, List, Seed);
 	}
 
-	template<size_t SizeFeature, size_t SizeLabel>
-	static void_t ModelData(TData<typename TNormalDataParameters<SizeFeature, SizeLabel>::FFeature> &Data, TSequence<TNormalDataParameters<SizeFeature, SizeLabel>> &List, size_t Seed = 0)
+	template<FSize SizeFeature, FSize SizeLabel>
+	static FVoid ModelData(TData<typename TNormalDataParameters<SizeFeature, SizeLabel>::FFeature> &Data, TSequence<TNormalDataParameters<SizeFeature, SizeLabel>> &List, FSize Seed = 0)
 	{
-		const real_t Zero = 0;
-		size_t Index, End = 0, Offset = 0, N = 0;
-		TNormal<real_t> Distribution;
+		const FReal Zero = 0;
+		FSize Index, End = 0, Offset = 0, N = 0;
+		TNormal<FReal> Distribution;
 		Distribution.Seed(Seed);
 
 		for (const auto &Parameters : List) { N += Parameters.N; }
-		Data.Reserve(N, true);
+		Data.Reserve(N, True);
 
 		for (const auto &Parameters : List)
 		{
@@ -235,25 +235,25 @@ namespace MLPrototyping
 		}
 	}
 
-	template<size_t SizeFeature, size_t SizeLabel>
-	static void_t ModelData(TData<typename TNormalDataParameters<SizeFeature, SizeLabel>::FSample> &Data, TNormalDataParameters<SizeFeature, SizeLabel> &Parameters, size_t Seed = 0)
+	template<FSize SizeFeature, FSize SizeLabel>
+	static FVoid ModelData(TData<typename TNormalDataParameters<SizeFeature, SizeLabel>::FSample> &Data, TNormalDataParameters<SizeFeature, SizeLabel> &Parameters, FSize Seed = 0)
 	{
 		TSequence<TNormalDataParameters<SizeFeature, SizeLabel>> List;
 
-		List.Data(&Parameters, 1, 1, false);
+		List.Data(&Parameters, 1, 1, False);
 		ModelData(Data, List, Seed);
 	}
 
-	template<size_t SizeFeature, size_t SizeLabel>
-	static void_t ModelData(TData<typename TNormalDataParameters<SizeFeature, SizeLabel>::FSample> &Data, TSequence<TNormalDataParameters<SizeFeature, SizeLabel>> &List, size_t Seed = 0)
+	template<FSize SizeFeature, FSize SizeLabel>
+	static FVoid ModelData(TData<typename TNormalDataParameters<SizeFeature, SizeLabel>::FSample> &Data, TSequence<TNormalDataParameters<SizeFeature, SizeLabel>> &List, FSize Seed = 0)
 	{
-		const real_t Zero = 0;
-		size_t Index, End = 0, Offset = 0, N = 0;
-		TNormal<real_t> Distribution;
+		const FReal Zero = 0;
+		FSize Index, End = 0, Offset = 0, N = 0;
+		TNormal<FReal> Distribution;
 		Distribution.Seed(Seed);
 
 		for (const auto &Parameters : List) { N += Parameters.N; }
-		Data.Reserve(N, true);
+		Data.Reserve(N, True);
 
 		for (const auto &Parameters : List)
 		{
@@ -271,24 +271,24 @@ namespace MLPrototyping
 		}
 	}
 
-	template<size_t SizeFeature, size_t SizeLabel>
-	static void_t ModelData(TData<typename TGammaDataParameters<SizeFeature, SizeLabel>::FFeature> &Data, TGammaDataParameters<SizeFeature, SizeLabel> &Parameters, size_t Seed = 0)
+	template<FSize SizeFeature, FSize SizeLabel>
+	static FVoid ModelData(TData<typename TGammaDataParameters<SizeFeature, SizeLabel>::FFeature> &Data, TGammaDataParameters<SizeFeature, SizeLabel> &Parameters, FSize Seed = 0)
 	{
 		TSequence<TGammaDataParameters<SizeFeature, SizeLabel>> List;
 
-		List.Data(&Parameters, 1, 1, false);
+		List.Data(&Parameters, 1, 1, False);
 		ModelData(Data, List, Seed);
 	}
 
-	template<size_t SizeFeature, size_t SizeLabel>
-	static void_t ModelData(TData<typename TGammaDataParameters<SizeFeature, SizeLabel>::FFeature> &Data, TSequence<TGammaDataParameters<SizeFeature, SizeLabel>> &List, size_t Seed = 0)
+	template<FSize SizeFeature, FSize SizeLabel>
+	static FVoid ModelData(TData<typename TGammaDataParameters<SizeFeature, SizeLabel>::FFeature> &Data, TSequence<TGammaDataParameters<SizeFeature, SizeLabel>> &List, FSize Seed = 0)
 	{
-		size_t Index, End = 0, Offset = 0, N = 0;
-		TGamma<real_t> Distribution;
+		FSize Index, End = 0, Offset = 0, N = 0;
+		TGamma<FReal> Distribution;
 		Distribution.Seed(Seed);
 
 		for (const auto &Parameters : List) { N += Parameters.N; }
-		Data.Reserve(N, true);
+		Data.Reserve(N, True);
 
 		for (const auto &Parameters : List)
 		{
@@ -305,24 +305,24 @@ namespace MLPrototyping
 		}
 	}
 
-	template<size_t SizeFeature, size_t SizeLabel>
-	static void_t ModelData(TData<typename TGammaDataParameters<SizeFeature, SizeLabel>::FSample> &Data, TGammaDataParameters<SizeFeature, SizeLabel> &Parameters, size_t Seed = 0)
+	template<FSize SizeFeature, FSize SizeLabel>
+	static FVoid ModelData(TData<typename TGammaDataParameters<SizeFeature, SizeLabel>::FSample> &Data, TGammaDataParameters<SizeFeature, SizeLabel> &Parameters, FSize Seed = 0)
 	{
 		TSequence<TGammaDataParameters<SizeFeature, SizeLabel>> List;
 
-		List.Data(&Parameters, 1, 1, false);
+		List.Data(&Parameters, 1, 1, False);
 		ModelData(Data, List, Seed);
 	}
 
-	template<size_t SizeFeature, size_t SizeLabel>
-	static void_t ModelData(TData<typename TGammaDataParameters<SizeFeature, SizeLabel>::FSample> &Data, TSequence<TGammaDataParameters<SizeFeature, SizeLabel>> &List, size_t Seed = 0)
+	template<FSize SizeFeature, FSize SizeLabel>
+	static FVoid ModelData(TData<typename TGammaDataParameters<SizeFeature, SizeLabel>::FSample> &Data, TSequence<TGammaDataParameters<SizeFeature, SizeLabel>> &List, FSize Seed = 0)
 	{
-		size_t Index, End = 0, Offset = 0, N = 0;
-		TGamma<real_t> Distribution;
+		FSize Index, End = 0, Offset = 0, N = 0;
+		TGamma<FReal> Distribution;
 		Distribution.Seed(Seed);
 
 		for (const auto &Parameters : List) { N += Parameters.N; }
-		Data.Reserve(N, true);
+		Data.Reserve(N, True);
 
 		for (const auto &Parameters : List)
 		{
@@ -340,26 +340,26 @@ namespace MLPrototyping
 		}
 	}
 
-	template<size_t SizeFeature, size_t SizeLabel>
-	static void_t ModelData(TData<typename TRingDataParameters<SizeFeature, SizeLabel>::FFeature> &Data, TRingDataParameters<SizeFeature, SizeLabel> &Parameters, size_t Seed = 0)
+	template<FSize SizeFeature, FSize SizeLabel>
+	static FVoid ModelData(TData<typename TRingDataParameters<SizeFeature, SizeLabel>::FFeature> &Data, TRingDataParameters<SizeFeature, SizeLabel> &Parameters, FSize Seed = 0)
 	{
 		TSequence<TRingDataParameters<SizeFeature, SizeLabel>> List;
 
-		List.Data(&Parameters, 1, 1, false);
+		List.Data(&Parameters, 1, 1, False);
 		ModelData(Data, List, Seed);
 	}
 
-	template<size_t SizeFeature, size_t SizeLabel>
-	static void_t ModelData(TData<typename TRingDataParameters<SizeFeature, SizeLabel>::FFeature> &Data, TSequence<TRingDataParameters<SizeFeature, SizeLabel>> &List, size_t Seed = 0)
+	template<FSize SizeFeature, FSize SizeLabel>
+	static FVoid ModelData(TData<typename TRingDataParameters<SizeFeature, SizeLabel>::FFeature> &Data, TSequence<TRingDataParameters<SizeFeature, SizeLabel>> &List, FSize Seed = 0)
 	{
-		const real_t Zero = 0;
-		size_t Index, End = 0, Offset = 0, N = 0;
+		const FReal Zero = 0;
+		FSize Index, End = 0, Offset = 0, N = 0;
 		typename TRingDataParameters<SizeFeature, SizeLabel>::FFeature Unit;
-		TNormal<real_t> Distribution;
+		TNormal<FReal> Distribution;
 		Distribution.Seed(Seed);
 
 		for (const auto &Parameters : List) { N += Parameters.N; }
-		Data.Reserve(N, true);
+		Data.Reserve(N, True);
 
 		for (const auto &Parameters : List)
 		{
@@ -379,26 +379,26 @@ namespace MLPrototyping
 		}
 	}
 
-	template<size_t SizeFeature, size_t SizeLabel>
-	static void_t ModelData(TData<typename TRingDataParameters<SizeFeature, SizeLabel>::FSample> &Data, TRingDataParameters<SizeFeature, SizeLabel> &Parameters, size_t Seed = 0)
+	template<FSize SizeFeature, FSize SizeLabel>
+	static FVoid ModelData(TData<typename TRingDataParameters<SizeFeature, SizeLabel>::FSample> &Data, TRingDataParameters<SizeFeature, SizeLabel> &Parameters, FSize Seed = 0)
 	{
 		TSequence<TRingDataParameters<SizeFeature, SizeLabel>> List;
 
-		List.Data(&Parameters, 1, 1, false);
+		List.Data(&Parameters, 1, 1, False);
 		ModelData(Data, List, Seed);
 	}
 
-	template<size_t SizeFeature, size_t SizeLabel>
-	static void_t ModelData(TData<typename TRingDataParameters<SizeFeature, SizeLabel>::FSample> &Data, TSequence<TRingDataParameters<SizeFeature, SizeLabel>> &List, size_t Seed = 0)
+	template<FSize SizeFeature, FSize SizeLabel>
+	static FVoid ModelData(TData<typename TRingDataParameters<SizeFeature, SizeLabel>::FSample> &Data, TSequence<TRingDataParameters<SizeFeature, SizeLabel>> &List, FSize Seed = 0)
 	{
-		const real_t Zero = 0;
-		size_t Index, End = 0, Offset = 0, N = 0;
+		const FReal Zero = 0;
+		FSize Index, End = 0, Offset = 0, N = 0;
 		typename TRingDataParameters<SizeFeature, SizeLabel>::FFeature Unit;
-		TNormal<real_t> Distribution;
+		TNormal<FReal> Distribution;
 		Distribution.Seed(Seed);
 
 		for (const auto &Parameters : List) { N += Parameters.N; }
-		Data.Reserve(N, true);
+		Data.Reserve(N, True);
 
 		for (const auto &Parameters : List)
 		{

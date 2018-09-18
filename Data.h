@@ -9,100 +9,100 @@ namespace MLPrototyping
 	template<typename TypeData>
 	struct TData : public CResource
 	{
-		size_t _Size, _BufferSize;
-		bool_t _bIterateAll, _bClearDataOnDestroy, _bClearDataOnReplace, _bHeap;
+		FSize _Size, _BufferSize;
+		FBoolean _bIterateAll, _bClearDataOnDestroy, _bClearDataOnReplace, _bHeap;
 		TypeData *_Data;
 
 		TData()
 		{
 			_Size = _BufferSize = 0;
-			_bIterateAll = false;
-			_bClearDataOnDestroy = true;
+			_bIterateAll = False;
+			_bClearDataOnDestroy = True;
 			_bClearDataOnReplace = _bClearDataOnDestroy;
-			_bHeap = true;
-			_Data = nullptr;
+			_bHeap = True;
+			_Data = NullPtr;
 		}
 
-		TData(size_t ReserveSize, bool_t bSetSizeToReserveSize = false) : TData()
+		TData(FSize ReserveSize, FBoolean bSetSizeToReserveSize = False) : TData()
 		{
 			Reserve(ReserveSize, bSetSizeToReserveSize);
 		}
 
 		~TData()
 		{
-			bool_t bFree = _bHeap && _bClearDataOnDestroy && _Data;
+			FBoolean bFree = _bHeap && _bClearDataOnDestroy && _Data;
 			if (bFree) { free(_Data); }
-			_Data = nullptr;
+			_Data = NullPtr;
 		}
 
-		bool_t Empty()
+		FBoolean Empty()
 		{
 			return !_Size || !_Data;
 		}
 
-		const bool_t Empty() const
+		const FBoolean Empty() const
 		{
 			return !_Size || !_Data;
 		}
 
-		void_t IterateAll(bool_t IsTrue = true)
+		FVoid IterateAll(FBoolean IsTrue = True)
 		{
 			_bIterateAll = IsTrue;
 		}
 
-		void_t ClearDataOnDestroy(bool_t IsTrue = true)
+		FVoid ClearDataOnDestroy(FBoolean IsTrue = True)
 		{
 			_bClearDataOnDestroy = IsTrue;
 		}
 
-		void_t ClearDataOnReplace(bool_t IsTrue = true)
+		FVoid ClearDataOnReplace(FBoolean IsTrue = True)
 		{
 			_bClearDataOnReplace = IsTrue;
 		}
 
-		size_t Size()
+		FSize Size()
 		{
 			return _Size;
 		}
 
-		const size_t Size() const
+		const FSize Size() const
 		{
 			return _Size;
 		}
 
-		size_t BufferSize()
+		FSize BufferSize()
 		{
 			return _BufferSize;
 		}
 
-		size_t SizeOf()
+		FSize SizeOf()
 		{
 			return sizeof(TypeData) * _Size;
 		}
 
-		const size_t SizeOf() const
+		const FSize SizeOf() const
 		{
 			return sizeof(TypeData) * _Size;
 		}
 
-		size_t BufferSizeOf()
+		FSize BufferSizeOf()
 		{
 			return sizeof(TypeData) * _BufferSize;
 		}
 
-		const size_t BufferSizeOf() const
+		const FSize BufferSizeOf() const
 		{
 			return sizeof(TypeData) * _BufferSize;
 		}
 
-		byte_t * Bytes()
+		FByte * Bytes()
 		{
-			return (byte_t *) &_Data[0];
+			return (FByte *) &_Data[0];
 		}
 
-		const byte_t * Bytes() const
+		const FByte * Bytes() const
 		{
-			return (byte_t *) &_Data[0];
+			return (FByte *) &_Data[0];
 		}
 
 		TypeData * Data()
@@ -115,9 +115,9 @@ namespace MLPrototyping
 			return &_Data[0];
 		}
 
-		TypeData *Data(TypeData *Pointer, size_t SizeData, size_t SizeBuffer = 0, bool_t bHeap = true)
+		TypeData *Data(TypeData *Pointer, FSize SizeData, FSize SizeBuffer = 0, FBoolean bHeap = True)
 		{
-			bool_t bFree = _bHeap && _bClearDataOnReplace && _Data;
+			FBoolean bFree = _bHeap && _bClearDataOnReplace && _Data;
 
 			if (bFree) { free(_Data); }
 			if (SizeBuffer < SizeData) { SizeBuffer = SizeData; }
@@ -132,38 +132,38 @@ namespace MLPrototyping
 		{
 			FDescriptor _Descriptor;
 
-			_Descriptor.Type = none;
+			_Descriptor.Type = None;
 			_Descriptor.SizeOf = sizeof(TypeData);
 			_Descriptor.Size = _Size;
 			_Descriptor._Size = _BufferSize;
 			_Descriptor.N = 0;
 			_Descriptor.bHeap = _bHeap;
-			_Descriptor.Pointer = (pointer_t) &_Data[0];
+			_Descriptor.Pointer = (FPointer) &_Data[0];
 			return _Descriptor;
 		}
 
-		TypeData & operator[](size_t Index)
+		TypeData & operator[](FSize Index)
 		{
 			return _Data[Index];
 		}
 
-		const TypeData & operator[](size_t Index) const
+		const TypeData & operator[](FSize Index) const
 		{
 			return _Data[Index];
 		}
 
-		void_t Reserve(size_t ReserveSize, bool_t bSetSizeToReserveSize = false)
+		FVoid Reserve(FSize ReserveSize, FBoolean bSetSizeToReserveSize = False)
 		{
-			pointer_t Pointer;
-			bool_t bFaildResize;
+			FPointer Pointer;
+			FBoolean bFaildResize;
 
 			Pointer = realloc(_Data, ReserveSize * sizeof(TypeData));
 			bFaildResize = _Data && !Pointer && ReserveSize;
-			if (bFaildResize) { exit(failure); }
+			if (bFaildResize) { exit(Failure); }
 			if (_bHeap)
 			{
-				_bHeap = true;
-				_bClearDataOnDestroy = true;
+				_bHeap = True;
+				_bClearDataOnDestroy = True;
 			}
 			_Data = (TypeData *) Pointer;
 			if (bSetSizeToReserveSize) { _Size = ReserveSize; }

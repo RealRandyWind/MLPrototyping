@@ -11,7 +11,7 @@ namespace MLPrototyping
 {
 	namespace LVQ
 	{
-		template<size_t SizeFeature, size_t SizeLabel>
+		template<FSize SizeFeature, FSize SizeLabel>
 		struct TNN : public TModel<SizeFeature, SizeLabel>
 		{
 			using FModel = TModel<SizeFeature, SizeLabel>;
@@ -20,7 +20,7 @@ namespace MLPrototyping
 
 			struct FNeighbour
 			{
-				real_t Distance2;
+				FReal Distance2;
 				FPrototype *Prototype;
 			};
 
@@ -28,7 +28,7 @@ namespace MLPrototyping
 
 			struct FParameters
 			{
-				size_t KNearest;
+				FSize KNearest;
 				FOnOutput OnOutput;
 			};
 
@@ -41,7 +41,7 @@ namespace MLPrototyping
 			FParameters Parameters;
 			FState State;
 
-			void_t UseDefaultParameters()
+			FVoid UseDefaultParameters()
 			{
 				Parameters.KNearest = 3;
 				Parameters.OnOutput = [](auto &Neighbours, auto &Label) {
@@ -50,29 +50,29 @@ namespace MLPrototyping
 					{
 						Label += Neighbour.Prototype->Label;
 					}
-					Label *= (real_t) Neighbours.Size();
+					Label *= (FReal) Neighbours.Size();
 				};
 			}
 
 
 		protected:
-			virtual void_t _Initialize() override
+			virtual FVoid _Initialize() override
 			{
 				State.Neighbours.Reserve(Parameters.KNearest);
 				
 				State.Neighbours.IterateAll();
 				for (auto &Neighbour : State.Neighbours)
 				{
-					Neighbour.Distance2 = TLimit<real_t>::Infinity();
-					Neighbour.Prototype = nullptr;
+					Neighbour.Distance2 = TLimit<FReal>::Infinity();
+					Neighbour.Prototype = NullPtr;
 				}
-				State.Neighbours.IterateAll(false);
+				State.Neighbours.IterateAll(False);
 			};
 
-			virtual void_t _Use(const typename FModel::FFeature &Feature, typename FModel::FLabel &Label, bool_t bTraining) override
+			virtual FVoid _Use(const typename FModel::FFeature &Feature, typename FModel::FLabel &Label, FBoolean bTraining) override
 			{
-				real_t Distance2;
-				const real_t One = 1;
+				FReal Distance2;
+				const FReal One = 1;
 				
 				if (bTraining) { return; }
 				
@@ -88,7 +88,7 @@ namespace MLPrototyping
 				Parameters.OnOutput(State.Neighbours, Label);
 			};
 
-			virtual void_t _Train(const typename FModel::FLabel &Label, const typename FModel::FSample &Sample) override
+			virtual FVoid _Train(const typename FModel::FLabel &Label, const typename FModel::FSample &Sample) override
 			{
 				State.Prototypes.Add(Sample);
 			};

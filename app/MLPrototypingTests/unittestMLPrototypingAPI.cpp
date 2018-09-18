@@ -15,7 +15,7 @@ namespace MLPrototypingTest
 		TEST_METHOD(GetAPI)
 		{
 			auto API = CMLPrototyping::Instance();
-			Assert::IsNotNull(API, nullptr , LINE_INFO());
+			Assert::IsNotNull(API, NullPtr , LINE_INFO());
 		}
 
 

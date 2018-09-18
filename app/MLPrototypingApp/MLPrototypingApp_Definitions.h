@@ -22,10 +22,10 @@ namespace MLPrototypingScript
 {
 	struct FMeta
 	{
-		string_t Titel, Name;
+		FString Titel, Name;
 	};
 
-	const size_t _NMinimum = 8;
+	const FSize _NMinimum = 8;
 
 	using FxScatterSeries = std::function<void(QScatterSeries *)> ;
 
@@ -71,7 +71,7 @@ namespace MLPrototypingScript
 
 		Chart->legend()->setMarkerShape(QLegend::MarkerShapeFromSeries);
 		Chart->setTitle("Scatter Plot Data");
-		Chart->setDropShadowEnabled(false);
+		Chart->setDropShadowEnabled(False);
 		Chart->createDefaultAxes();
 		Chart->axisX()->setRange(-8, 8);
 		Chart->axisY()->setRange(-8, 8);
@@ -85,7 +85,7 @@ namespace MLPrototypingScript
 		return Window;
 	}
 
-	QMainWindow *MeasureNormal(FModelF2L3 &Model, TData<FModelF2L3::FError> &Errors, size_t Factor = 1, FxScatterSeries Populate = nullptr)
+	QMainWindow *MeasureNormal(FModelF2L3 &Model, TData<FModelF2L3::FError> &Errors, FSize Factor = 1, FxScatterSeries Populate = NullPtr)
 	{
 		using FModel = FModelF2L3;
 		using FParameters = FNormalDataParametersF2L3;
@@ -93,7 +93,7 @@ namespace MLPrototypingScript
 		TData<FModel::FSample> Train, Validate;
 
 		/* Preparing Model Data Parameters */
-		TSequence<FParameters> List(3, true);
+		TSequence<FParameters> List(3, True);
 		
 		List[0] = FParameters::Default();
 		List[0].N = Factor * _NMinimum;

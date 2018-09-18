@@ -3,8 +3,8 @@
 
 using namespace MLPrototyping;
 
-size_t CResource::_NextId = 0;
-size_t CResource::_Count = 0;
+FSize CResource::_NextId = 0;
+FSize CResource::_Count = 0;
 TSequence<_FResource> CResource::_List = TSequence<_FResource>();
 
 CResource::CResource()
@@ -26,41 +26,41 @@ CResource::~CResource()
 {
 	--_Count;
 	auto &Slot = _List[_Id];
-	Slot.Pointer = nullptr;
+	Slot.Pointer = NullPtr;
 	Slot.Id = _NextId;
 	_NextId = _Id;
 }
 
-size_t CResource::Id()
+FSize CResource::Id()
 {
 	return _Id;
 }
 
-const size_t CResource::Id() const
+const FSize CResource::Id() const
 {
 	return _Id;
 }
 
-CResource &CResource::Reference(size_t ResourceId)
+CResource &CResource::Reference(FSize ResourceId)
 {
-	if (ResourceId >= _List.Size()) { exit(failure); }
+	if (ResourceId >= _List.Size()) { exit(Failure); }
 	auto Resource = _List[ResourceId].Pointer;
-	if (!Resource) { exit(failure); }
+	if (!Resource) { exit(Failure); }
 	return *Resource;
 }
 
-CResource *CResource::Pointer(size_t ResourceId)
+CResource *CResource::Pointer(FSize ResourceId)
 {
-	if (ResourceId >= _List.Size()) { return nullptr; }
+	if (ResourceId >= _List.Size()) { return NullPtr; }
 	return _List[ResourceId].Pointer;
 }
 
-size_t CResource::ResourceCount()
+FSize CResource::ResourceCount()
 {
 	return _Count;
 }
 
-size_t CResource::ResourceBufferSize()
+FSize CResource::ResourceBufferSize()
 {
 	return _List.BufferSize();
 }

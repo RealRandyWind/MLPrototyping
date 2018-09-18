@@ -6,49 +6,50 @@
 
 namespace MLPrototyping
 {
-	using void_t = void;
+	using FVoid = void;
 
-	using bool_t = bool;
+	using FBoolean = bool;
 
-	using char_t = char;
+	using FCharacter = char;
 
-	using string_t = char *;
+	using FString = char *;
 
-	using pointer_t = void *;
+	using FPointer = void *;
 
-	using size_t = size_t;
+	using FSize = size_t;
 
-	using real_t = double;
+	using FReal = double;
 
-	using raw_t = uint8_t;
+	using FRaw = uint8_t;
 
-	using block_t = uint64_t;
+	using FBlock = uint64_t;
 
-	using byte_t = char;
+	using FByte = char;
 
-	using integer_t = int;
+	using FInteger = int;
 
-	using enum_t = size_t;
+	using FEnum = size_t;
 
-	using clock_t = std::chrono::high_resolution_clock;
+	using FClock = std::chrono::high_resolution_clock;
 
-	using time_t = clock_t::time_point;
+	using FTime = FClock::time_point;
 	
-	using duration_t = clock_t::duration;
+	using FDuration = FClock::duration;
 
-	using return_t = decltype(EXIT_SUCCESS);
+	using FReturn = decltype(EXIT_SUCCESS);
 
-	const size_t bytesize = 8;
-	/*
-	const decltype(nullptr) nullptr = nullptr;
-	const decltype("") nullstr = "";
-	const decltype('\0') nullchr = '\0';
-	*/
-	const decltype(nullptr) null = nullptr;
-	const decltype(0) none = 0;
-	const decltype(0) unknown = 0;
-	const decltype(EXIT_SUCCESS) success = EXIT_SUCCESS;
-	const decltype(EXIT_FAILURE) failure = EXIT_FAILURE;
+	static const FSize ByteSize = 8;
+	
+	static const decltype("") Nullstr = "";
+	static const decltype('\0') Nullchr = '\0';
+	static const decltype(nullptr) NullPtr = nullptr;
+	static const decltype(nullptr) Null = nullptr;
+	static const decltype(true) True = true;
+	static const decltype(false) False = false;
+	static const decltype(0) None = 0;
+	static const decltype(0) Unknown = 0;
+	static const decltype(EXIT_SUCCESS) Success = EXIT_SUCCESS;
+	static const decltype(EXIT_FAILURE) Failure = EXIT_FAILURE;
 
 
 

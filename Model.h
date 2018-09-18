@@ -9,12 +9,12 @@
 
 namespace MLPrototyping
 {
-	template<size_t SizeFeature, size_t SizeLabel>
+	template<FSize SizeFeature, FSize SizeLabel>
 	struct TModel : public CResource
 	{
-		using FFeature = TPoint<SizeFeature, real_t>;
+		using FFeature = TPoint<SizeFeature, FReal>;
 
-		using FLabel = TPoint<SizeLabel, real_t>;
+		using FLabel = TPoint<SizeLabel, FReal>;
 
 		struct FSample
 		{
@@ -25,43 +25,43 @@ namespace MLPrototyping
 		struct FError
 		{
 			FLabel Value, Label;
-			real_t Weight, Epsilon;
-			size_t WorkerID, Significance;
-			duration_t Time;
+			FReal Weight, Epsilon;
+			FSize WorkerID, Significance;
+			FDuration Time;
 		};
 
-		bool_t _bInitialized;
+		FBoolean _bInitialized;
 
 		TModel()
 		{
-			_bInitialized = false;
+			_bInitialized = False;
 		}
 
 		~TModel() { }
 
-		bool_t Initialized()
+		FBoolean Initialized()
 		{
 			return _bInitialized;
 		}
 
-		size_t FeatureSize()
+		FSize FeatureSize()
 		{
 			return SizeFeature;
 		}
 
-		size_t LabelSize()
+		FSize LabelSize()
 		{
 			return SizeLabel;
 		}
 
-		void_t Initialize()
+		FVoid Initialize()
 		{
-			_bInitialized = false;
+			_bInitialized = False;
 			_Initialize();
-			_bInitialized = true;
+			_bInitialized = True;
 		}
 
-		void_t Train(const TData<FSample> &Samples)
+		FVoid Train(const TData<FSample> &Samples)
 		{
 			FLabel Label;
 
@@ -69,46 +69,46 @@ namespace MLPrototyping
 			
 			for (const auto &Sample : Samples)
 			{
-				_Use(Sample.Feature, Label, true);
+				_Use(Sample.Feature, Label, True);
 				_Train(Label, Sample);
 			}
 		}
 
-		void_t Use(const TData<FFeature> &Features, TData<FLabel> &Labels)
+		FVoid Use(const TData<FFeature> &Features, TData<FLabel> &Labels)
 		{
-			size_t Index, End;
+			FSize Index, End;
 
 			if (!_bInitialized) { return; }
 
 			End = Features.Size();
-			Labels.Reserve(End, true);
+			Labels.Reserve(End, True);
 			for (Index = 0; Index < End; ++Index)
 			{
 				_Use(Features[Index], Labels[Index]);
 			}
 		}
 
-		void_t Validate(const TData<FSample> &Samples, TData<FError> &Errors)
+		FVoid Validate(const TData<FSample> &Samples, TData<FError> &Errors)
 		{
-			time_t Start;
-			size_t Index, End;
+			FTime Start;
+			FSize Index, End;
 
 			if (!_bInitialized) { return; }
 
 			End = Samples.Size();
-			Errors.Reserve(End, true);
+			Errors.Reserve(End, True);
 			for (Index = 0; Index < End; ++Index)
 			{
 				const auto &Sample = Samples[Index];
 				auto &Error = Errors[Index];
-				Start = clock_t::now();
+				Start = FClock::now();
 				_Use(Sample.Feature, Error.Label);
-				Error.Time = (clock_t::now() - Start);
+				Error.Time = (FClock::now() - Start);
 				_Validate(Sample, Error);
 			}
 		}
 
-		void_t Optimize(const TData<FSample> &Samples)
+		FVoid Optimize(const TData<FSample> &Samples)
 		{
 			if (!_bInitialized) { return; }
 
@@ -118,7 +118,7 @@ namespace MLPrototyping
 			}
 		}
 
-		void_t Optimize()
+		FVoid Optimize()
 		{
 			if (!_bInitialized) { return; }
 
@@ -127,23 +127,23 @@ namespace MLPrototyping
 
 
 	protected:
-		virtual void_t _Initialize() = 0;
+		virtual FVoid _Initialize() = 0;
 
-		virtual void_t _Use(const FFeature &, FLabel &, bool_t = false) = 0;
+		virtual FVoid _Use(const FFeature &, FLabel &, FBoolean = False) = 0;
 
-		virtual void_t _Train(const FLabel &, const FSample &) = 0;
+		virtual FVoid _Train(const FLabel &, const FSample &) = 0;
 
-		virtual void_t _Optimize(const FSample &) { }
+		virtual FVoid _Optimize(const FSample &) { }
 
-		virtual void_t _Optimize() { }
+		virtual FVoid _Optimize() { }
 
-		virtual void_t _Validate(const FSample &Sample, FError &Error)
+		virtual FVoid _Validate(const FSample &Sample, FError &Error)
 		{
 			Error.Value = Sample.Label - Error.Label;
 			Error.Weight = 1;
 			Error.WorkerID = 0; 
-			Error.Epsilon = TLimit<real_t>::Epsilon();
-			Error.Significance = TLimit<size_t>::Infinity();
+			Error.Epsilon = TLimit<FReal>::Epsilon();
+			Error.Significance = TLimit<FSize>::Infinity();
 		}
 
 

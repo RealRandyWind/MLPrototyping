@@ -6,9 +6,9 @@ namespace MLPrototyping
 {
 	struct FDescriptor
 	{
-		size_t Type, SizeOf, Size, _Size, N;
-		bool_t bHeap;
-		pointer_t Pointer;
+		FSize Type, SizeOf, Size, _Size, N;
+		FBoolean bHeap;
+		FPointer Pointer;
 	};
 
 	template<typename Type>
