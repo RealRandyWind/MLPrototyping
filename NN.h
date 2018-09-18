@@ -24,12 +24,12 @@ namespace MLPrototyping
 				FPrototype *Prototype;
 			};
 
-			using FxOutput = std::function<void(TSequence<FNeighbour>&, typename FModel::FLabel&)>;
+			using FOnOutput = std::function<void(TSequence<FNeighbour>&, typename FModel::FLabel&)>;
 
 			struct FParameters
 			{
 				size_t KNearest;
-				FxOutput OutputFunction;
+				FOnOutput OnOutput;
 			};
 
 			struct FState
@@ -44,7 +44,7 @@ namespace MLPrototyping
 			void_t UseDefaultParameters()
 			{
 				Parameters.KNearest = 3;
-				Parameters.OutputFunction = [](auto &Neighbours, auto &Label) {
+				Parameters.OnOutput = [](auto &Neighbours, auto &Label) {
 					Label = 0;
 					for (const auto &Neighbour : Neighbours)
 					{
@@ -85,7 +85,7 @@ namespace MLPrototyping
 						State.Neighbours.Swap({ Distance2, &Prototype });
 					}
 				}
-				Parameters.OutputFunction(State.Neighbours, Label);
+				Parameters.OnOutput(State.Neighbours, Label);
 			};
 
 			virtual void_t _Train(const typename FModel::FLabel &Label, const typename FModel::FSample &Sample) override
