@@ -239,20 +239,26 @@ PowerShell.exe -Command Copy-Item $(OutDir)$(ProjectName).lib $(ProjectDir)lib\$
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Data.h" />
     <ClInclude Include="MLPrototyping_Generate.h" />
     <ClInclude Include="LVQ1.h" />
     <ClInclude Include="MLPrototyping.h" />
     <ClInclude Include="MLPrototyping_Configurations.h" />
-    <ClInclude Include="MLPrototyping_Definitions.h" />
-    <ClInclude Include="MLPrototyping_Math.h" />
     <ClInclude Include="MLPrototyping_Parameters.h" />
-    <ClInclude Include="MLPrototyping_Types.h" />
-    <ClInclude Include="Model.h" />
+    <ClInclude Include="NDev.h" />
+    <ClInclude Include="NDevData.h" />
+    <ClInclude Include="NDevDefinitions.h" />
+    <ClInclude Include="NDevMath.h" />
+    <ClInclude Include="NDevMathAliases.h" />
+    <ClInclude Include="NDevMathDistributions.h" />
+    <ClInclude Include="NDevMathExtend.h" />
+    <ClInclude Include="NDevMathPoint.h" />
+    <ClInclude Include="NDevModel.h" />
+    <ClInclude Include="NDevPoint.h" />
+    <ClInclude Include="NDevResource.h" />
+    <ClInclude Include="NDevSequence.h" />
+    <ClInclude Include="NDevSimulation.h" />
+    <ClInclude Include="NDevTypes.h" />
     <ClInclude Include="NN.h" />
-    <ClInclude Include="Point.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="Sequence.h" />
     <ClInclude Include="SMDLVQ.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -260,7 +266,7 @@ PowerShell.exe -Command Copy-Item $(OutDir)$(ProjectName).lib $(ProjectDir)lib\$
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="MLPrototyping.cpp" />
-    <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="NDevResource.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

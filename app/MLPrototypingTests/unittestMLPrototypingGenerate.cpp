@@ -5,11 +5,15 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 #include "MLPrototyping.h"
 #include "MLPrototyping_Generate.h"
+#include "NDev.h"
 
 using namespace MLPrototyping;
 
 namespace MLPrototypingTest
-{		
+{	
+	using namespace NDev;
+	using namespace NDev::Types;
+
 	TEST_CLASS(UnitTestMLPrototypingGenerate)
 	{
 	public:

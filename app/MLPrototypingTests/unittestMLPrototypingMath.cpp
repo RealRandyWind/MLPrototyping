@@ -3,14 +3,13 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-#include "MLPrototyping_Math.h"
-#include "Point.h"
-#include <math.h>
-
-using namespace MLPrototyping;
+#include "NDev.h"
 
 namespace MLPrototypingTest
-{		
+{
+	using namespace NDev;
+	using namespace NDev::Types;
+
 	TEST_CLASS(UnitTestMLPrototypingMath)
 	{
 	public:

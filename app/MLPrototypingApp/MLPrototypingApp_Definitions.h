@@ -2,12 +2,9 @@
 
 #include <functional>
 
-#include "MLPrototyping_Types.h"
-#include "MLPrototyping_Math.h"
+#include "NDev.h"
 #include "MLPrototyping_Parameters.h"
 #include "MLPrototyping_Generate.h"
-#include "Model.h"
-#include "Point.h"
 
 #include <QtCore\QtCore>
 #include <QtGui\QtGui>
@@ -20,6 +17,9 @@ using namespace MLPrototyping;
 
 namespace MLPrototypingScript
 {
+	using namespace NDev;
+	using namespace NDev::Types;
+
 	struct FMeta
 	{
 		FString Titel, Name;

@@ -2,11 +2,13 @@
 
 #include "MLPrototyping_Configurations.h"
 
-#include "MLPrototyping_Types.h"
-#include "Sequence.h"
+#include "NDevTypes.h"
+#include "NDevSequence.h"
 
-namespace MLPrototyping
+namespace NDev
 {
+	using namespace Types;
+
 	class MLPrototyping_Exports CResource;
 	
 	struct MLPrototyping_Exports _FResource
@@ -46,6 +48,7 @@ namespace MLPrototyping
 
 
 	};
+
 
 
 }

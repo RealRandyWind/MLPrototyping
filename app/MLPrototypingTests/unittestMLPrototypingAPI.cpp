@@ -4,11 +4,14 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 #include "MLPrototyping.h"
+#include "NDev.h"
 
 using namespace MLPrototyping;
 
 namespace MLPrototypingTest
-{		
+{
+	using namespace NDev::Types;
+
 	TEST_CLASS(UnitTestMLPrototypingAPI)
 	{
 	public:

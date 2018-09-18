@@ -1,14 +1,16 @@
 #pragma once
 
-#include "MLPrototyping_Types.h"
-#include "MLPrototyping_Definitions.h"
-#include "MLPrototyping_Math.h"
-#include "Resource.h"
-#include "Point.h"
-#include "Data.h"
+#include "NDevTypes.h"
+#include "NDevResource.h"
+#include "NDevPoint.h"
+#include "NDevData.h"
+#include "NDevMathExtend.h"
+#include "NDevMathPoint.h"
 
-namespace MLPrototyping
+namespace NDev
 {
+	using namespace Types;
+
 	template<FSize SizeFeature, FSize SizeLabel>
 	struct TModel : public CResource
 	{
@@ -29,6 +31,19 @@ namespace MLPrototyping
 			FSize WorkerID, Significance;
 			FDuration Time;
 		};
+
+		using FOnVisualizeSample = TFunction<void(TData<FSample> &)>;
+
+		using FOnVisualizeFeature = TFunction<void(TData<FFeature> &)>;
+
+		using FOnVisualizeLabel = TFunction<void(TData<FLabel> &)>;
+
+		using FOnVisualizeError = TFunction<void(TData<FError> &)>;
+
+		FOnVisualizeSample OnVisualizeSample;
+		FOnVisualizeFeature OnVisualizeFeature;
+		FOnVisualizeLabel OnVisualizeLabel;
+		FOnVisualizeError OnVisualizeError;
 
 		FBoolean _bInitialized;
 

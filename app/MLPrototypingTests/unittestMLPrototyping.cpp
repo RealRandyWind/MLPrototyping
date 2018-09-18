@@ -3,17 +3,15 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-#include "Resource.h"
-#include "Point.h"
-#include "Sequence.h"
-#include "Data.h"
-#include "Model.h"
+#include "NDev.h"
 #include "ModelStub.h"
 
-using namespace MLPrototyping;
 
 namespace MLPrototypingTest
-{		
+{
+	using namespace NDev;
+	using namespace NDev::Types;
+
 	TEST_CLASS(UnitTestMLPrototyping)
 	{
 	public:

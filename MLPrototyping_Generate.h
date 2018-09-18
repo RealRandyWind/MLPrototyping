@@ -1,14 +1,12 @@
 #pragma once
 
-#include "MLPrototyping_Types.h"
-#include "MLPrototyping_Math.h"
-#include "Point.h"
-#include "Data.h"
-#include "Model.h"
-#include "Sequence.h"
+#include "NDev.h"
 
 namespace MLPrototyping
 {
+	using namespace NDev;
+	using namespace NDev::Types;
+
 	template<FSize SizeFeature, FSize SizeLabel>
 	struct TUniformDataParameters
 	{

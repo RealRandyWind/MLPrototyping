@@ -1,41 +1,38 @@
 #pragma once
 
-#include "MLPrototyping_Types.h"
-#include "MLPrototyping_Definitions.h"
+#include "NDevTypes.h"
+#include "NDevDefinitions.h"
+#include "NDevResource.h"
 
-namespace MLPrototyping
+namespace NDev
 {
+	using namespace Types;
+
 	template<typename TypeData>
-	struct TSequence
+	struct TData : public CResource
 	{
-		FSize _Size, _BufferSize, _ActiveIndex, _LastIndex, _IncrementSize;
-		FBoolean _bIterateAll, _bClearDataOnDestroy, _bClearDataOnReplace, _bFixedSize, _bResizeOnAccess, _bSizeOnAccess, _bHeap;
+		FSize _Size, _BufferSize;
+		FBoolean _bIterateAll, _bClearDataOnDestroy, _bClearDataOnReplace, _bHeap;
 		TypeData *_Data;
 
-		TSequence()
+		TData()
 		{
-			_IncrementSize = 64;
 			_Size = _BufferSize = 0;
-			_ActiveIndex = _LastIndex = 0;
 			_bIterateAll = False;
 			_bClearDataOnDestroy = True;
 			_bClearDataOnReplace = _bClearDataOnDestroy;
-			_bFixedSize = False;
-			_bResizeOnAccess = True;
-			_bSizeOnAccess = False;
 			_bHeap = True;
 			_Data = NullPtr;
 		}
 
-		TSequence(FSize ReserveSize, FBoolean bSetSizeToReserveSize = False) : TSequence()
+		TData(FSize ReserveSize, FBoolean bSetSizeToReserveSize = False) : TData()
 		{
 			Reserve(ReserveSize, bSetSizeToReserveSize);
 		}
 
-		~TSequence()
+		~TData()
 		{
 			FBoolean bFree = _bHeap && _bClearDataOnDestroy && _Data;
-
 			if (bFree) { free(_Data); }
 			_Data = NullPtr;
 		}
@@ -65,69 +62,24 @@ namespace MLPrototyping
 			_bClearDataOnReplace = IsTrue;
 		}
 
-		FVoid FixedSize(FBoolean IsTrue = True)
+		FSize Stride()
 		{
-			_bFixedSize = IsTrue;
+			return 0;
 		}
 
-		FVoid ResizeOnAccess(FBoolean IsTrue = True)
+		const FSize Stride() const
 		{
-			_bResizeOnAccess = IsTrue;
+			return 0;
 		}
 
-		FVoid SizeOnAccess(FBoolean IsTrue = True)
+		FSize Offset()
 		{
-			_bSizeOnAccess = IsTrue;
-		}
-		
-		FVoid Reset()
-		{
-			_Size = _ActiveIndex = _LastIndex = 0;
+			return 0;
 		}
 
-		FVoid Add(TypeData Rhs)
+		const FSize Offset() const
 		{
-			FBoolean bResize = !_bFixedSize && _Size >= _BufferSize;
-
-			if (bResize) { Reserve(_Size + _IncrementSize); }
-			_Data[_Size] = Rhs;
-			++_Size;
-		}
-
-		FVoid Swap(TypeData Rhs)
-		{
-			if (_Size < _BufferSize)
-			{
-				++_Size;
-			}
-
-			++_ActiveIndex;
-			if (_ActiveIndex >= _BufferSize)
-			{
-				_ActiveIndex = 0;
-			}
-
-			_Data[_ActiveIndex] = Rhs;
-		}
-
-		TypeData & Active()
-		{
-			return _Data[_ActiveIndex];
-		}
-
-		const TypeData & Active() const
-		{
-			return _Data[_ActiveIndex];
-		}
-
-		TypeData & Last()
-		{
-			return _Data[_LastIndex];
-		}
-
-		const TypeData & Last() const
-		{
-			return _Data[_LastIndex];
+			return 0;
 		}
 
 		FSize Size()
@@ -141,11 +93,6 @@ namespace MLPrototyping
 		}
 
 		FSize BufferSize()
-		{
-			return _BufferSize;
-		}
-
-		const FSize BufferSize() const
 		{
 			return _BufferSize;
 		}
@@ -190,7 +137,12 @@ namespace MLPrototyping
 			return &_Data[0];
 		}
 
-		TypeData *Data(TypeData *Pointer, FSize SizeData, FSize SizeBuffer = 0, FBoolean bHeap = True)
+		TypeData *Data(const FDescriptor Descriptor, FBoolean bNoFree = True)
+		{
+			return Data((TypeData *)Descriptor.Pointer, Descriptor.Size, Descriptor._Size, Descriptor.bHeap, bNoFree);
+		}
+
+		TypeData *Data(TypeData *Pointer, FSize SizeData, FSize SizeBuffer = 0, FBoolean bHeap = True, FBoolean bNoFree = True)
 		{
 			FBoolean bFree = _bHeap && _bClearDataOnReplace && _Data;
 
@@ -200,6 +152,7 @@ namespace MLPrototyping
 			_BufferSize = SizeBuffer;
 			_Data = Pointer;
 			_bHeap = bHeap;
+			if (bNoFree) { _bClearDataOnReplace = _bClearDataOnDestroy = !bNoFree; }
 			return &_Data[0];
 		}
 
@@ -211,25 +164,21 @@ namespace MLPrototyping
 			_Descriptor.SizeOf = sizeof(TypeData);
 			_Descriptor.Size = _Size;
 			_Descriptor._Size = _BufferSize;
+			_Descriptor.N = 0;
 			_Descriptor.bHeap = _bHeap;
-			_Descriptor.Pointer = (FPointer)&_Data[0];
+			_Descriptor.Pointer = (FPointer) &_Data[0];
+			_Descriptor.Offset = 0;
+			_Descriptor.Stride = 0;
 			return _Descriptor;
 		}
 
 		TypeData & operator[](FSize Index)
 		{
-			FBoolean bResize = !_bFixedSize && _bResizeOnAccess && _BufferSize <= Index;
-			FBoolean bSize = _bSizeOnAccess && Index >= _Size;
-
-			if (bResize) { Reserve(Index + _IncrementSize); }
-			if (bSize) { _Size = Index + 1; }
-			_LastIndex = Index;
 			return _Data[Index];
 		}
 
 		const TypeData & operator[](FSize Index) const
 		{
-			if (Index >= _Size) { exit(Failure); }
 			return _Data[Index];
 		}
 

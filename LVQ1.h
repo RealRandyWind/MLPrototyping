@@ -1,16 +1,14 @@
 #pragma once
 
-#include <functional>
-
-#include "MLPrototyping_Types.h"
-#include "MLPrototyping_Math.h"
-#include "Model.h"
-#include "Sequence.h"
+#include "NDev.h"
 
 namespace MLPrototyping
 {
 	namespace LVQ
 	{
+		using namespace NDev;
+		using namespace NDev::Types;
+
 		template<FSize SizeFeature, FSize SizeLabel>
 		struct TLVQ1 : public TModel<SizeFeature, SizeLabel>
 		{
@@ -25,7 +23,7 @@ namespace MLPrototyping
 				FPrototype *Prototype;
 			};
 
-			using FOnOutput = std::function<void(TSequence<FNeighbour>&, typename FModel::FLabel&)>;
+			using FOnOutput = TFunction<void(TSequence<FNeighbour>&, typename FModel::FLabel&)>;
 
 			struct FParameters
 			{

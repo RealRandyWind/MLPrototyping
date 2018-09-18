@@ -1,14 +1,36 @@
 #pragma once
 
-#include "MLPrototyping_Types.h"
-#include "MLPrototyping_Definitions.h"
+#include "NDevTypes.h"
+#include "NDevDefinitions.h"
 
-namespace MLPrototyping
+namespace NDev
 {
+	using namespace Types;
+	
 	template<FSize SizeData, typename TypeData>
 	struct TPoint
 	{
 		TypeData _Data[SizeData];
+
+		FSize Stride()
+		{
+			return 0;
+		}
+
+		const FSize Stride() const
+		{
+			return 0;
+		}
+
+		FSize Offset()
+		{
+			return 0;
+		}
+
+		const FSize Offset() const
+		{
+			return 0;
+		}
 
 		FSize Size()
 		{
@@ -61,6 +83,8 @@ namespace MLPrototyping
 			_Descriptor.N = 0;
 			_Descriptor.bHeap = False;
 			_Descriptor.Pointer = (FPointer) &_Data[0];
+			_Descriptor.Offset = 0;
+			_Descriptor.Stride = 0;
 			return _Descriptor;
 		}
 

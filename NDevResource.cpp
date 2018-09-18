@@ -1,7 +1,7 @@
-#include "stdafx.h"
-#include "Resource.h"
+#include "stdafx.h"	
+#include "NDevResource.h"
 
-using namespace MLPrototyping;
+using namespace NDev;
 
 FSize CResource::_NextId = 0;
 FSize CResource::_Count = 0;

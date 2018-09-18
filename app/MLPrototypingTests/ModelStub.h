@@ -1,17 +1,12 @@
 #pragma once;
 
-
-#include "MLPrototyping_Definitions.h"
-#include "MLPrototyping_Types.h"
-#include "MLPrototyping_Math.h"
-#include "Model.h"
-#include "Point.h"
-#include "Sequence.h"
-
-using namespace MLPrototyping;
+#include "NDev.h"
 
 namespace MLPrototypingTest
 {
+	using namespace NDev;
+	using namespace NDev::Types;
+
 	template<FSize SizeFeature, FSize SizeLabel>
 	struct TModelStub : TModel<SizeFeature, SizeLabel>
 	{

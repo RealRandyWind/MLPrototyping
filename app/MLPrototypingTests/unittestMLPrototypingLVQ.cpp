@@ -3,19 +3,18 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-#include "MLPrototyping_Types.h"
-#include "MLPrototyping_Math.h"
+#include "NDev.h"
 #include "NN.h"
 #include "LVQ1.h"
 #include "SMDLVQ.h"
-#include "Data.h"
-
-
-using namespace MLPrototyping;
-using namespace LVQ;
 
 namespace MLPrototypingTest
 {
+	using namespace MLPrototyping;
+	using namespace NDev;
+	using namespace NDev::Types;
+	using namespace LVQ;
+
 	TEST_CLASS(UnitTestMLPrototypingLVQ)
 	{
 	public:
