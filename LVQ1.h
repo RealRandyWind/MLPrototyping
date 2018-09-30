@@ -23,13 +23,16 @@ namespace MLPrototyping
 				FPrototype *Prototype;
 			};
 
-			using FOnOutput = TFunction<void(TSequence<FNeighbour>&, typename FModel::FLabel&)>;
-
 			struct FParameters
 			{
+				using FOnOutput = TFunction<FVoid(TSequence<FNeighbour> &, typename FModel::FLabel &)>;
+
+				using FOnWeight = TFunction<FReal(const FNeighbour &)>;
+
 				FReal LearningRate;
 				FSize KNearest, NPrototypes;
 				FOnOutput OnOutput;
+				FOnWeight OnWeight;
 			};
 
 			struct FState
@@ -38,6 +41,12 @@ namespace MLPrototyping
 				TSequence<FNeighbour> Neighbours;
 			};
 
+			using FOnTrainPrototypes = TFunction<FVoid(const TSequence<FPrototype> &)>;
+
+			using FOnUseNeighbours = TFunction<FVoid(const TSequence<FNeighbour> &)>;
+
+			FOnTrainPrototypes OnTrainPrototypes;
+			FOnUseNeighbours OnUseNeighbours;
 			FParameters Parameters;
 			FState State;
 
@@ -54,6 +63,7 @@ namespace MLPrototyping
 					}
 					Label *= (FReal) Neighbours.Size();
 				};
+				Parameters.OnWeight = NullPtr;
 			}
 
 
@@ -97,6 +107,7 @@ namespace MLPrototyping
 						State.Neighbours.Swap({ Distance2, Direction, &Prototype });
 					}
 				}
+				if (OnUseNeighbours) { OnUseNeighbours(State.Neighbours); }
 				Parameters.OnOutput(State.Neighbours, Label);
 			}
 
@@ -106,11 +117,14 @@ namespace MLPrototyping
 				const FReal LearningRate = Parameters.LearningRate;
 				const typename FModel::FLabel Error = One - (Sample.Label - Label);
 				const FReal Delta = Norm(Error) * LearningRate;
+				FReal Weight;
 
 				for (auto &Neighbour : State.Neighbours)
 				{
-					Neighbour.Prototype->Feature += Delta * Neighbour.Direction;
+					Weight = Parameters.OnWeight ? Parameters.OnWeight(Neighbour) : One;
+					Neighbour.Prototype->Feature += Delta * Weight * Neighbour.Direction;
 				}
+				if (OnTrainPrototypes) { OnTrainPrototypes(State.Prototypes); }
 			}
 
 

@@ -85,7 +85,7 @@ namespace MLPrototypingScript
 		return Window;
 	}
 
-	QMainWindow *MeasureNormal(FModelF2L3 &Model, TData<FModelF2L3::FError> &Errors, FSize Factor = 1, FxScatterSeries Populate = NullPtr)
+	QMainWindow * MeasureNormal(FModelF2L3 &Model, TData<FModelF2L3::FError> &Errors, FSize Factor = 1, FxScatterSeries Populate = NullPtr)
 	{
 		using FModel = FModelF2L3;
 		using FParameters = FNormalDataParametersF2L3;
@@ -134,6 +134,56 @@ namespace MLPrototypingScript
 		return DisplayMeasure(SeriesTrain, SeriesValidate, SeriesPrototype);
 	}
 
+	QMainWindow * MeasureRing(FModelF2L3 &Model, TData<FModelF2L3::FError> &Errors, FSize Factor = 1, FxScatterSeries Populate = NullPtr)
+	{
+		using FModel = FModelF2L3;
+		using FParameters = FRingDataParametersF2L3;
 
+		TData<FModel::FSample> Train, Validate;
+
+		/* Preparing Model Data Parameters */
+		TSequence<FParameters> List(3, True);
+
+		List[0] = FParameters::Default();
+		List[0].N = Factor * _NMinimum;
+		List[0].SD = 0.4;
+		List[0].Norm = 1;
+		List[0].Mean = { -3, 4 };
+		List[0].Readius = 3;
+
+		List[1] = FParameters::Default();
+		List[1].N = Factor * _NMinimum;
+		List[1].SD = 0.5;
+		List[1].Norm = 1;
+		List[1].Mean = { -4, -4 };
+		List[1].Readius = 2;
+
+		List[2] = FParameters::Default();
+		List[2].N = Factor * _NMinimum;
+		List[2].SD = 0.2;
+		List[2].Norm = 1;
+		List[2].Mean = { 3, 0 };
+		List[2].Readius = 1;
+
+		/* Generate Model Data */
+		ModelData(Train, List, 1);
+		ModelData(Validate, List, 2);
+
+		/* Run Model */
+		if (!Model.Initialized()) { Model.Initialize(); }
+		Model.Train(Train);
+		Model.Validate(Validate, Errors);
+
+		/* Prepairing To Display Results */
+		auto SeriesTrain = new QScatterSeries();
+		auto SeriesValidate = new QScatterSeries();
+		auto SeriesPrototype = new QScatterSeries();
+
+		for (const auto &Point : Train) { SeriesTrain->append(Point.Feature[0], Point.Feature[1]); }
+		for (const auto &Point : Validate) { SeriesValidate->append(Point.Feature[0], Point.Feature[1]); }
+		if (Populate) { Populate(SeriesPrototype); }
+
+		return DisplayMeasure(SeriesTrain, SeriesValidate, SeriesPrototype);
+	}
 
 }

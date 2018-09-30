@@ -22,10 +22,10 @@ namespace MLPrototyping
 				FPrototype *Prototype;
 			};
 
-			using FOnOutput = TFunction<void(TSequence<FNeighbour>&, typename FModel::FLabel&)>;
-
 			struct FParameters
 			{
+				using FOnOutput = TFunction<FVoid(TSequence<FNeighbour>&, typename FModel::FLabel&)>;
+
 				FSize KNearest;
 				FOnOutput OnOutput;
 			};
@@ -36,6 +36,12 @@ namespace MLPrototyping
 				TSequence<FNeighbour> Neighbours;
 			};
 
+			using FOnTrainPrototypes = TFunction<FVoid(const TSequence<FPrototype> &)>;
+
+			using FOnUseNeighbours = TFunction<FVoid(const TSequence<FNeighbour> &)>;
+
+			FOnTrainPrototypes OnTrainPrototypes;
+			FOnUseNeighbours OnUseNeighbours;
 			FParameters Parameters;
 			FState State;
 
@@ -83,12 +89,14 @@ namespace MLPrototyping
 						State.Neighbours.Swap({ Distance2, &Prototype });
 					}
 				}
+				if (OnUseNeighbours) { OnUseNeighbours(State.Neighbours); }
 				Parameters.OnOutput(State.Neighbours, Label);
 			};
 
 			virtual FVoid _Train(const typename FModel::FLabel &Label, const typename FModel::FSample &Sample) override
 			{
 				State.Prototypes.Add(Sample);
+				if (OnTrainPrototypes) { OnTrainPrototypes(State.Prototypes); }
 			};
 
 
