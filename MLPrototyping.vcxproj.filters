@@ -15,42 +15,30 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
+    <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MLPrototyping.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MLPrototyping_Parameters.h">
+    <ClInclude Include="NN.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LVQ1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NN.h">
+    <ClInclude Include="Generate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SMDLVQ.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MLPrototyping_Configurations.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MLPrototyping_Generate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MLPrototyping.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
