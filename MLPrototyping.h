@@ -16,7 +16,7 @@ namespace MLPrototyping
 		using TOnResults = TFunction<FVoid(const TData<typename TModel<SizeFeature, SizeLabel>::FError> &, const TData<typename TModel<SizeFeature, SizeLabel>::FSample> &, const TData<typename TModel<SizeFeature, SizeLabel>::FSample> &, const TData<typename TModel<SizeFeature, SizeLabel>::FSample> &, FBoolean)>;
 
 		template<FSize SizeFeature, FSize SizeLabel>
-		FVoid Uniform(TModel<SizeFeature, SizeLabel> &Model, TData<typename TModel<SizeFeature, SizeLabel>::FError> &Errors, FSize SeedIn = 0, TOnResults<SizeFeature, SizeLabel> OnResults = NullPtr, FSize Scale = 32, FReal Space = 3,  FBoolean bOptimize = False)
+		FVoid Uniform(TModel<SizeFeature, SizeLabel> &Model, TData<typename TModel<SizeFeature, SizeLabel>::FError> &Errors, FSize SeedIn = 0, TOnResults<SizeFeature, SizeLabel> OnResults = NullPtr, FSize Scale = 128, FReal Space = 1.5,  FBoolean bOptimize = False)
 		{
 			const FSize N = SizeFeature * Factor * Scale;
 
@@ -38,7 +38,7 @@ namespace MLPrototyping
 				Item.Label = 0;
 				Item.Label[Index] = 1;
 				Item.Norm = 1;
-				Item.Radius = (Index + 1.0) / (SizeLabel + 1.0);
+				Item.Radius = 2.0 * (Index + 1.0) / (SizeLabel + 1.0);
 				Distribution(Item.Mean);
 				++Index;
 			}
@@ -56,7 +56,7 @@ namespace MLPrototyping
 		}
 
 		template<FSize SizeFeature, FSize SizeLabel>
-		FVoid Ring(TModel<SizeFeature, SizeLabel> &Model, TData<typename TModel<SizeFeature, SizeLabel>::FError> &Errors, FSize SeedIn = 0, TOnResults<SizeFeature, SizeLabel> OnResults = NullPtr, FSize Scale = 32, FReal Space = 3, FBoolean bOptimize = False)
+		FVoid Ring(TModel<SizeFeature, SizeLabel> &Model, TData<typename TModel<SizeFeature, SizeLabel>::FError> &Errors, FSize SeedIn = 0, TOnResults<SizeFeature, SizeLabel> OnResults = NullPtr, FSize Scale = 128, FReal Space = 1.5, FBoolean bOptimize = False)
 		{
 			const FSize N = SizeFeature * Factor * Scale;
 
@@ -78,7 +78,7 @@ namespace MLPrototyping
 				Item.Label[Index] = 1;
 				Item.Norm = 1;
 				Item.Radius = (Index + 1.0) / (SizeLabel + 1.0);
-				Item.SD = Item.Radius * (1.0 / 3.0);
+				Item.SD = Item.Radius * (1.0 / 4.0);
 				Distribution(Item.Mean);
 				++Index;
 			}
@@ -96,7 +96,7 @@ namespace MLPrototyping
 		}
 
 		template<FSize SizeFeature, FSize SizeLabel>
-		FVoid Gamma(TModel<SizeFeature, SizeLabel> &Model, TData<typename TModel<SizeFeature, SizeLabel>::FError> &Errors, FSize SeedIn = 0, TOnResults<SizeFeature, SizeLabel> OnResults = NullPtr, FSize Scale = 32, FReal Space = 3, FBoolean bOptimize = False)
+		FVoid Gamma(TModel<SizeFeature, SizeLabel> &Model, TData<typename TModel<SizeFeature, SizeLabel>::FError> &Errors, FSize SeedIn = 0, TOnResults<SizeFeature, SizeLabel> OnResults = NullPtr, FSize Scale = 128, FReal Space = 1.5, FBoolean bOptimize = False)
 		{
 			const FSize N = SizeFeature * Factor * Scale;
 
@@ -137,7 +137,7 @@ namespace MLPrototyping
 		}
 
 		template<FSize SizeFeature, FSize SizeLabel>
-		FVoid Normal(TModel<SizeFeature, SizeLabel> &Model, TData<typename TModel<SizeFeature, SizeLabel>::FError> &Errors, FSize SeedIn = 0, TOnResults<SizeFeature, SizeLabel> OnResults = NullPtr, FSize Scale = 128, FReal Space = 3, FBoolean bOptimize = False)
+		FVoid Normal(TModel<SizeFeature, SizeLabel> &Model, TData<typename TModel<SizeFeature, SizeLabel>::FError> &Errors, FSize SeedIn = 0, TOnResults<SizeFeature, SizeLabel> OnResults = NullPtr, FSize Scale = 128, FReal Space = 1.5, FBoolean bOptimize = False)
 		{
 			const FSize N = SizeFeature * Factor * Scale;
 
