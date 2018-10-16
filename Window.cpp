@@ -35,11 +35,9 @@ namespace MLPrototyping
 
 static char** _InitializeArguments(char** Arguments, const int &Count)
 { 
-	const char* Name = "MLPrototyping";
-	FSize _Size = sizeof(Name);
 	Arguments = Make<char*>(Count);
 	Arguments[0] = NullPtr;
-	Arguments[0] = Copy<char>(Name, NullPtr, _Size);
+	Arguments[0] = Text("MLPrototyping");
 	return Arguments;
 }
 
@@ -90,7 +88,15 @@ FWindow::FMeta FWindow::FMeta::Default()
 	return Meta;
 }
 
-FVoid FWindow::_Display(const _FData &Data, FWindow &Window)
+FVoid FWindow::Display(const FWindow::FData::FPoints &Points, FWindow &Window, const FMeta Meta)
+{
+	FData Data;
+	Data.Meta = Meta;
+	Data.Points = Points;
+	_Display(Data, Window);
+}
+
+FVoid FWindow::_Display(const FData &Data, FWindow &Window)
 {
 	if (!_Application) { _Application = new QApplication(_ArgumentCount, _Arguments); }
 	auto Application = (QApplication *)_Application;
@@ -99,7 +105,7 @@ FVoid FWindow::_Display(const _FData &Data, FWindow &Window)
 	else { _Make(Data, Window); }
 }
 
-FVoid FWindow::_Make(const _FData &Data, FWindow &Window)
+FVoid FWindow::_Make(const FData &Data, FWindow &Window)
 {
 	_FWindow *State = new _FWindow();
 	Window._State = State;
@@ -110,7 +116,7 @@ FVoid FWindow::_Make(const _FData &Data, FWindow &Window)
 	Window.bHold = bHold;
 }
 
-FVoid FWindow::_Update(const _FData &Data, FWindow &Window)
+FVoid FWindow::_Update(const FData &Data, FWindow &Window)
 {
 	auto State = (_FWindow *) Window._State;
 	if (!Window.bHold) { State->Chart->removeAllSeries(); }

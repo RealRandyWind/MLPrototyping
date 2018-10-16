@@ -58,7 +58,6 @@ namespace MLPrototyping
 				};
 			}
 
-
 		protected:
 			virtual FVoid _Initialize() override
 			{

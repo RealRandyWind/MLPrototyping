@@ -116,7 +116,7 @@
     <PreLinkEvent>
       <Command>PowerShell.exe -Command Copy-Item $(ProjectDir)dep\$(Platform)\*.dll $(OutDir) -Force -Exclude $(OutDir)*.dll
 PowerShell.exe -Command Copy-Item $(ProjectDir)dep\*.dll $(OutDir) -Force -Exclude $(OutDir)*.dll</Command>
-      <Message>Copy dependecies</Message>
+      <Message>Copy Dependecies...</Message>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -145,7 +145,7 @@ PowerShell.exe -Command Copy-Item $(ProjectDir)dep\*.dll $(OutDir) -Force -Exclu
     <PreLinkEvent>
       <Command>PowerShell.exe -Command Copy-Item $(ProjectDir)dep\$(Platform)\*.dll $(OutDir) -Force -Exclude $(OutDir)*.dll
 PowerShell.exe -Command Copy-Item $(ProjectDir)dep\*.dll $(OutDir) -Force -Exclude $(OutDir)*.dll</Command>
-      <Message>Copy dependecies</Message>
+      <Message>Copy Dependecies...</Message>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -178,7 +178,7 @@ PowerShell.exe -Command Copy-Item $(ProjectDir)dep\*.dll $(OutDir) -Force -Exclu
     <PreLinkEvent>
       <Command>PowerShell.exe -Command Copy-Item $(ProjectDir)dep\$(Platform)\*.dll $(OutDir) -Force -Exclude $(OutDir)*.dll
 PowerShell.exe -Command Copy-Item $(ProjectDir)dep\*.dll $(OutDir) -Force -Exclude $(OutDir)*.dll</Command>
-      <Message>Copy dependecies</Message>
+      <Message>Copy Dependecies...</Message>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -211,7 +211,7 @@ PowerShell.exe -Command Copy-Item $(ProjectDir)dep\*.dll $(OutDir) -Force -Exclu
     <PreLinkEvent>
       <Command>PowerShell.exe -Command Copy-Item $(ProjectDir)dep\$(Platform)\*.dll $(OutDir) -Force -Exclude $(OutDir)*.dll
 PowerShell.exe -Command Copy-Item $(ProjectDir)dep\*.dll $(OutDir) -Force -Exclude $(OutDir)*.dll</Command>
-      <Message>Copy dependecies</Message>
+      <Message>Copy Dependecies...</Message>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -29,8 +29,9 @@ namespace MLPrototyping
 
 				using FOnWeight = TFunction<FReal(const FNeighbour &)>;
 
-				FReal LearningRate;
-				FSize KNearest, NPrototypes;
+				FReal LearningRate, DomainSD;
+				FSize KNearest, NPrototypes, Seed;
+				typename FModel::FFeature DomainOrigin;
 				FOnOutput OnOutput;
 				FOnWeight OnWeight;
 			};
@@ -52,9 +53,12 @@ namespace MLPrototyping
 
 			FVoid UseDefaultParameters()
 			{
+				Parameters.Seed = 0;
 				Parameters.KNearest = 1;
 				Parameters.NPrototypes = 3;
 				Parameters.LearningRate = 0.01;
+				Parameters.DomainSD = 1;
+				Parameters.DomainOrigin = 0;
 				Parameters.OnOutput = [](auto &Neighbours, auto &Label) {
 					Label = 0;
 					for (const auto &Neighbour : Neighbours)
@@ -70,16 +74,24 @@ namespace MLPrototyping
 		protected:
 			virtual FVoid _Initialize() override
 			{
-				if (Parameters.KNearest > Parameters.NPrototypes) { return;  }
+				FSize L = 0;
+				TNormal<FReal> Distribution;
+
+				if (Parameters.KNearest > Parameters.NPrototypes) { exit(Failure);  }
+				if (SizeLabel > Parameters.NPrototypes) { exit(Failure); }
 
 				State.Prototypes.Reserve(Parameters.NPrototypes, True);
 				State.Neighbours.Reserve(Parameters.KNearest, True);
 				
+				Distribution.Seed(Parameters.Seed);
+				Distribution.Parameters(0, Parameters.DomainSD);
+				
 				for (auto &Prototype : State.Prototypes)
 				{
 					Prototype.Label = 0;
-					Prototype.Label[0] = 1;
-					Prototype.Feature = 0;
+					Prototype.Label[L % SizeLabel] = 1;
+					Distribution(Prototype.Feature);
+					Prototype.Feature += Parameters.DomainOrigin;
 				}
 				
 				for (auto &Neighbour : State.Neighbours)
