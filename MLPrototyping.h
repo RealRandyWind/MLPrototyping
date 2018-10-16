@@ -2,10 +2,6 @@
 
 #include "NDev.h"
 #include "Generate.h"
-
-#include "NN.h"
-#include "LVQ1.h"
-#include "SMDLVQ.h"
 #include "Window.h"
 
 namespace MLPrototyping
@@ -19,30 +15,6 @@ namespace MLPrototyping
 
 		template<FSize SizeFeature, FSize SizeLabel>
 		using TOnResults = TFunction<FVoid(const TData<typename TModel<SizeFeature, SizeLabel>::FError> &, const TData<typename TModel<SizeFeature, SizeLabel>::FSample> &, const TData<typename TModel<SizeFeature, SizeLabel>::FSample> &, const TData<typename TModel<SizeFeature, SizeLabel>::FSample> &, FBoolean)>;
-
-		template<FSize SizeFeature, FSize SizeLabel, typename TypeModel>
-		TOnResults<SizeFeature, SizeLabel> OnResults(FWindow &WindowData, FWindow &WindowError, TypeModel &Model)
-		{
-			return [&Model, &WindowData, &WindowError](const auto &Errors, const auto &TSamples, const auto &OSamples, const auto &VSamples, auto bOptimized) {
-				auto EMeta = FWindow::FMeta::Default();
-				EMeta.Name = Text("Error"); EMeta.Type = FWindow::FMeta::EType::Line;
-				FWindow::Display<SizeFeature, SizeLabel>(Errors, WindowError, EMeta);
-
-				auto VMeta = FWindow::FMeta::Default();
-				VMeta.Name = Text("Validate");
-				FWindow::Display<SizeFeature, SizeLabel>(VSamples, WindowData, VMeta);
-
-				auto TMeta = FWindow::FMeta::Default();
-				TMeta.Name = Text("Train");
-				FWindow::Display<SizeFeature, SizeLabel>(TSamples, WindowData, TMeta);
-
-				TData<TypeModel::FPrototype> PSamples;
-				PSamples.Data(Model.State.Prototypes.Descriptor(), True);
-				auto PMeta = FWindow::FMeta::Default();
-				PMeta.Name = Text("Prototype"); PMeta.Size = 8.0; PMeta.Opacity = 0.5;
-				FWindow::Display<SizeFeature, SizeLabel>(PSamples, WindowData, PMeta);
-			};
-		}
 
 		template<FSize SizeFeature, FSize SizeLabel>
 		FVoid Uniform(TModel<SizeFeature, SizeLabel> &Model, TData<typename TModel<SizeFeature, SizeLabel>::FError> &Errors, FSize SeedIn = 0, TOnResults<SizeFeature, SizeLabel> OnResults = NullPtr, FSize Scale = 128, FReal Space = 1.5,  FBoolean bOptimize = False)
@@ -208,6 +180,33 @@ namespace MLPrototyping
 
 	};
 
+	template<FSize SizeFeature, FSize SizeLabel, typename TypeModel>
+	Measure::TOnResults<SizeFeature, SizeLabel> OnResults(FWindow &WindowData, FWindow &WindowError, TypeModel &Model)
+	{
+		return [&Model, &WindowData, &WindowError](const auto &Errors, const auto &TSamples, const auto &OSamples, const auto &VSamples, auto bOptimized) {
+			auto EMeta = FWindow::FMeta::Default();
+			EMeta.Name = Text("Error"); EMeta.Type = FWindow::FMeta::EType::Line;
+			FWindow::Display<SizeFeature, SizeLabel>(Errors, WindowError, EMeta);
+			
+			auto bHold = WindowData.bHold; WindowData.bHold = True;
+			
+			auto VMeta = FWindow::FMeta::Default();
+			VMeta.Name = Text("Validate");
+			FWindow::Display<SizeFeature, SizeLabel>(VSamples, WindowData, VMeta);
+
+			auto TMeta = FWindow::FMeta::Default();
+			TMeta.Name = Text("Train");
+			FWindow::Display<SizeFeature, SizeLabel>(TSamples, WindowData, TMeta);
+
+			TData<TypeModel::FPrototype> PSamples;
+			PSamples.Data(Model.State.Prototypes.Descriptor(), True);
+			auto PMeta = FWindow::FMeta::Default();
+			PMeta.Name = Text("Prototype"); PMeta.Size = 8.0; PMeta.Opacity = 0.5;
+			FWindow::Display<SizeFeature, SizeLabel>(PSamples, WindowData, PMeta);
+			
+			WindowData.bHold = bHold;
+		};
+	}
 
 	
 }

@@ -74,7 +74,7 @@ namespace MLPrototyping
 		protected:
 			virtual FVoid _Initialize() override
 			{
-				FSize L = 0;
+				FSize LabelIndex = 0;
 				TNormal<FReal> Distribution;
 
 				if (Parameters.KNearest > Parameters.NPrototypes) { exit(Failure);  }
@@ -89,7 +89,7 @@ namespace MLPrototyping
 				for (auto &Prototype : State.Prototypes)
 				{
 					Prototype.Label = 0;
-					Prototype.Label[L % SizeLabel] = 1;
+					Prototype.Label[LabelIndex % SizeLabel] = 1;
 					Distribution(Prototype.Feature);
 					Prototype.Feature += Parameters.DomainOrigin;
 				}
