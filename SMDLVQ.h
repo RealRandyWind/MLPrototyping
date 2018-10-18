@@ -16,8 +16,8 @@ namespace MLPrototyping
 
 			struct FPrototype
 			{
-				typename FModel::FLabel Label;
 				typename FModel::FFeature Feature, Direction;
+				typename FModel::FLabel Label;
 				FReal Positive, Negative, SD;
 				FPrototype *Partner;
 			};

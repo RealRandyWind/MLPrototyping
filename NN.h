@@ -50,11 +50,12 @@ namespace MLPrototyping
 				Parameters.KNearest = 3;
 				Parameters.OnOutput = [](auto &Neighbours, auto &Label) {
 					Label = 0;
+					if (Neighbours.Empty()) { return; }
 					for (const auto &Neighbour : Neighbours)
 					{
 						Label += Neighbour.Prototype->Label;
 					}
-					Label *= (FReal) Neighbours.Size();
+					Label /= (FReal) Neighbours.Size();
 				};
 			}
 

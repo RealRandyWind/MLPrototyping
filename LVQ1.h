@@ -60,12 +60,14 @@ namespace MLPrototyping
 				Parameters.DomainSD = 1;
 				Parameters.DomainOrigin = 0;
 				Parameters.OnOutput = [](auto &Neighbours, auto &Label) {
+					FSize K;
 					Label = 0;
+					if (Neighbours.Empty()) { return; }
 					for (const auto &Neighbour : Neighbours)
 					{
 						Label += Neighbour.Prototype->Label;
 					}
-					Label *= (FReal) Neighbours.Size();
+					Label /= (FReal) Neighbours.Size();
 				};
 				Parameters.OnWeight = NullPtr;
 			}
@@ -127,8 +129,8 @@ namespace MLPrototyping
 			{
 				const FReal One = 1;
 				const FReal LearningRate = Parameters.LearningRate;
-				const typename FModel::FLabel Error = One - (Sample.Label - Label);
-				const FReal Delta = Norm(Error) * LearningRate;
+				//const typename FModel::FLabel Error = One - (Sample.Label - Label);
+				const FReal Delta = Dot(Sample.Label, Label) * LearningRate;
 				FReal Weight;
 
 				for (auto &Neighbour : State.Neighbours)
